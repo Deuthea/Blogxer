@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "homepage":"http://tarunchoudhary1805.github.io/notes-taking-web-application",
+  "homepage":"http://tarunchoudhary1805.github.io/keepNotes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
