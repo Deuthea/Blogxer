@@ -1,9 +1,47 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import Blogs from "../Blog/Blogs";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div className="bg-[#242933] px-10 py-4">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold text-[#a6adba]">
+          <Link to="/home">KeepNotes</Link>
+        </h1>
+        <div>
+          <input
+            type="text"
+            className="outline-none px-3.5 py-3 mx-2 text-md rounded-lg font-semibold border  border-[#6419e6] text-[#6419e6] bg-transparent"
+            placeholder="Search"
+          />
+          <button className=" px-3.5 py-3 mx-2  text-md rounded-lg font-semibold border  border-[#6419e6] text-[#6419e6] text-white hover:bg-[#6419e6] hover:text-white">
+            SEARCH
+          </button>
+        </div>
+        <div>
+          <button className=" px-3.5 py-3  text-md rounded-lg font-semibold border  border-[#6419e6] text-[#6419e6] text-white hover:bg-[#6419e6] hover:text-white">
+            LOGOUT
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col text-[#a6adba] justify-center items-center my-20">
+        <h1 className="text-5xl  font-bold w-1/3 text-center">
+          Hello <span className="text-[#6419e6]">Tarun Choudhary!</span>
+        </h1>
+        <p className="text-1xl my-5">
+          Make your life awesome by making notes for everything.
+        </p>
+        <Link
+          to="/writeBlog"
+          className=" px-3.5 py-3  text-md rounded-lg font-semibold bg-[#6419e6] text-white hover:bg-[#48199a]"
+        >
+          CREATE NEW NOTES
+        </Link>
+      </div>
+      <Blogs />
+    </div>
+  );
+};
 
-export default Home
+export default Home;
