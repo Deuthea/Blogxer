@@ -1,8 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 
 const Register = () => {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    confirmPassword: "",
+  });
+
+  const loggedIn = useSelector((state) => state.userReducer).loggedIn;
+
+  if (loggedIn) {
+    return <Navigate to="/home" replace />;
+  }
   return (
     <div className="lg:h-screen pb-10 bg-[#242933] text-[#a6adba]">
       <Navbar />

@@ -1,9 +1,10 @@
 import { data } from "autoprefixer";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 
 const Login = () => {
+  const [data, setData] = useState({ email: "", password: "" });
   return (
     <div className="lg:h-screen h-screen pb-10 bg-[#242933] text-[#a6adba]">
       <Navbar />
