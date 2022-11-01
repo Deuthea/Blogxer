@@ -1,8 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { logoutFunction } from "../../data/reducers/user.reducer";
 import Blogs from "../Blog/Blogs";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const loggedIn = useSelector((state) => state.userReducer).loggedIn;
+
+  const logOut = () => {
+    console.log("logout ");
+    dispatch(logoutFunction());
+  };
+
+  if (!loggedIn) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className="bg-[#242933] px-10 py-4">
       <div className="flex justify-between">
@@ -20,7 +34,10 @@ const Home = () => {
           </button>
         </div>
         <div>
-          <button className=" px-3.5 py-3  text-md rounded-lg font-semibold border  border-[#6419e6] text-[#6419e6] text-white hover:bg-[#6419e6] hover:text-white">
+          <button
+            onClick={logOut}
+            className=" px-3.5 py-3  text-md rounded-lg font-semibold border  border-[#6419e6] text-[#6419e6] text-white hover:bg-[#6419e6] hover:text-white"
+          >
             LOGOUT
           </button>
         </div>

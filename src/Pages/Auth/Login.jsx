@@ -1,10 +1,35 @@
 import { data } from "autoprefixer";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
+import { loginItem } from "../../data/reducers/user.reducer";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.userReducer).loggedIn;
   const [data, setData] = useState({ email: "", password: "" });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+  const submitLoginButton = async (e) => {
+    e.preventDefault();
+    if (data.email == "" || data.password == "") {
+      alert("All fields are required");
+      return;
+    }
+    try {
+      const res = await dispatch(loginItem(data));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (loggedIn) {
+    return <Navigate to="/home" replace />;
+  }
   return (
     <div className="lg:h-screen h-screen pb-10 bg-[#242933] text-[#a6adba]">
       <Navbar />
@@ -15,7 +40,9 @@ const Login = () => {
             <br />
             <input
               type="email"
-              value=""
+              value={data.email}
+              onChange={handleChange}
+              name="email"
               placeholder="john@doe.com"
               className="p-3 my-2 w-full bg-[#2a303c] border rounded-lg outline-none border-[#a6adba]"
             />
@@ -25,13 +52,18 @@ const Login = () => {
             <br />
             <input
               type="password"
-              value=""
+              value={data.password}
+              onChange={handleChange}
+              name="password"
               placeholder="password"
               className="p-3 w-full my-2 bg-[#2a303c] border rounded-lg outline-none border-[#a6adba]"
             />
           </div>
           <div className="flex pt-4 px-3">
-            <button className="w-full px-3.5 py-3  text-md rounded-lg font-semibold bg-[#6419e6] text-white hover:bg-[#48199a]">
+            <button
+              onClick={submitLoginButton}
+              className="w-full px-3.5 py-3  text-md rounded-lg font-semibold bg-[#6419e6] text-white hover:bg-[#48199a]"
+            >
               LOGIN
             </button>
           </div>

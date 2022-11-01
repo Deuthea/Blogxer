@@ -12,9 +12,7 @@ const Navbar = () => {
           Home
         </Link>
       )}
-      <Link to="/home" className="hover:underline">
-        Home
-      </Link>
+     
       <i class="mx-4 fas fa-chevron-right"></i>
       {location.pathname == "/login" && (
         <Link to="/home" className="hover:underline">

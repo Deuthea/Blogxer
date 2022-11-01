@@ -13,7 +13,7 @@ export const loginItem = createAsyncThunk(
   }
 );
 export const signupItem = createAsyncThunk(
-  "user/loginItem",
+  "user/signupItem",
   async (payload, thunkAPI) => {
     let response = await signupAPI(payload);
     console.log("responseeee=", response);
@@ -28,11 +28,16 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     userInfo: [],
-    loggedIn: true,
+    loggedIn: false,
+    token: "",
   },
   reducers: {
     logoutFunction: (state, action) => {
       state.userInfo = "";
+      state.token = "";
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("loggedIn");
       let updateConnector = false;
       state.loggedIn = updateConnector;
     },
@@ -43,6 +48,7 @@ const userSlice = createSlice({
         state.userInfo = action.payload;
         let updateConnector = true;
         state.loggedIn = updateConnector;
+        state.token = action.payload.token;
         localStorage.setItem("loggedIn", state.loggedIn);
       } else {
         state.loggedIn = false;
@@ -53,6 +59,7 @@ const userSlice = createSlice({
         state.userInfo = action.payload;
         let updateConnector = true;
         state.loggedIn = updateConnector;
+        state.token = action.payload.token;
         localStorage.setItem("loggedIn", state.loggedIn);
       } else {
         state.loggedIn = false;

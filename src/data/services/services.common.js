@@ -1,7 +1,7 @@
 import axios from "axios";
 import { constants } from "../../config.js";
 
-export const api = constants.endpoint;
+export const api = constants.endPoint;
 console.log(api);
 export const error = (error) => {
   return { status: "error", isSuccessful: false, message: error };
