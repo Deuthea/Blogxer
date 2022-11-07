@@ -2,29 +2,35 @@ import { data } from "autoprefixer";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 import Navbar from "../../Components/Navbar";
+import Toaster from "../../Components/Toast/Toaster";
 import { loginItem } from "../../data/reducers/user.reducer";
 
 const Login = () => {
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.userReducer).loggedIn;
   const [data, setData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
   const submitLoginButton = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (data.email == "" || data.password == "") {
       alert("All fields are required");
+      setLoading(false);
       return;
     }
     try {
       const res = await dispatch(loginItem(data));
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   if (loggedIn) {
@@ -33,6 +39,7 @@ const Login = () => {
   return (
     <div className="lg:h-screen h-screen pb-10 bg-[#242933] text-[#a6adba]">
       <Navbar />
+      <Toaster />
       <div className="flex lg:flex-row flex-col-reverse lg:w-screen lg:my-20 my-2 lg:items-center justify-center">
         <div className="shadow-[#2a303c] mx-5 rounded-2xl lg:w-1/4 lg:px-5 lg:py-8 px-4 py-5 bg-[#2a303c]">
           <div className="px-3">
@@ -64,7 +71,7 @@ const Login = () => {
               onClick={submitLoginButton}
               className="w-full px-3.5 py-3  text-md rounded-lg font-semibold bg-[#6419e6] text-white hover:bg-[#48199a]"
             >
-              LOGIN
+              {loading ? <Loader /> : "LOGIN"}
             </button>
           </div>
           <br />

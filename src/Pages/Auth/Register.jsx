@@ -27,7 +27,7 @@ const Register = () => {
     }
     try {
       const res = await dispatch(signupItem(data));
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }

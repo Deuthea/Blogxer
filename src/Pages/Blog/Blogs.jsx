@@ -1,34 +1,27 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getNoteItem } from "../../data/reducers/note.reducer";
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState([
-    {
-      title: "1",
-      tags: "abcd",
-      content: "no worries",
-    },
-    {
-      title: "1",
-      tags: "abcd",
-      content: "no worries",
-    },
-    {
-      title: "1",
-      tags: "abcd",
-      content: "no worries",
-    },
-    {
-      title: "1",
-      tags: "abcd",
-      content: "no worries",
-    },
-    {
-      title: "1",
-      tags: "abcd",
-      content: "no worries",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.noteReducer).notes;
+  console.log("stateeeeee" + state);
+  const [blogs, setBlogs] = useState(state.notes);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await dispatch(getNoteItem());
+        // console.log("data" + JSON.stringify(data.payload.Notes));
+        setBlogs(data.payload.Notes);
+      } catch (error) {
+        console.log(error.message);
+      }
+    })();
+  }, []);
+
   const deleteNote = (id) => {};
   return (
     <div className="grid px-20 lg:grid-cols-3 lg:gap-10 grid-cols-1 text-[#a6adba]">

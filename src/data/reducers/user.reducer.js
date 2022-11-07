@@ -5,7 +5,7 @@ export const loginItem = createAsyncThunk(
   "user/loginItem",
   async (payload, thunkAPI) => {
     let response = await loginAPI(payload);
-    console.log("res=", response);
+    // console.log("res=", response);
     console.log("responseeee=", response);
     if (response.isSuccessful === true) {
       return response.data;
@@ -27,9 +27,9 @@ export const signupItem = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    userInfo: [],
-    loggedIn: false,
-    token: "",
+    userInfo: localStorage.getItem("userInfo"),
+    loggedIn: localStorage.getItem("loggedIn") || false,
+    token: localStorage.getItem("token") || "",
   },
   reducers: {
     logoutFunction: (state, action) => {
@@ -50,6 +50,7 @@ const userSlice = createSlice({
         state.loggedIn = updateConnector;
         state.token = action.payload.token;
         localStorage.setItem("loggedIn", state.loggedIn);
+        localStorage.setItem("token", state.token);
       } else {
         state.loggedIn = false;
       }
@@ -61,6 +62,7 @@ const userSlice = createSlice({
         state.loggedIn = updateConnector;
         state.token = action.payload.token;
         localStorage.setItem("loggedIn", state.loggedIn);
+        localStorage.setItem("token", state.token);
       } else {
         state.loggedIn = false;
       }

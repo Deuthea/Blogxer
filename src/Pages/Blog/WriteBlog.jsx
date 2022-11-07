@@ -25,7 +25,7 @@ const WriteBlog = () => {
       tags: blogData.tags,
       content: markdown,
     };
-    console.log(data);
+    // console.log(data);
     setMarkdown("");
     setBlogData({
       tags: "",

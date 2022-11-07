@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
+import Loader from "../../Components/Loader/Loader";
 import { logoutFunction } from "../../data/reducers/user.reducer";
 import Blogs from "../Blog/Blogs";
 
@@ -8,9 +9,12 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const loggedIn = useSelector((state) => state.userReducer).loggedIn;
+  const userInfo = useSelector((state) => state.userReducer).userInfo;
+
+  console.log(userInfo);
 
   const logOut = () => {
-    console.log("logout ");
+    // console.log("logout ");
     dispatch(logoutFunction());
   };
 
@@ -44,7 +48,7 @@ const Home = () => {
       </div>
       <div className="flex flex-col text-[#a6adba] justify-center items-center my-20">
         <h1 className="text-5xl  font-bold w-1/3 text-center">
-          Hello <span className="text-[#6419e6]">Tarun Choudhary!</span>
+          Hello <span className="text-[#6419e6]">{userInfo.user.name}!</span>
         </h1>
         <p className="text-1xl my-5">
           Make your life awesome by making notes for everything.
