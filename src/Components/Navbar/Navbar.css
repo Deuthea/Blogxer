@@ -2,6 +2,9 @@ nav {
   background-color: white;
   /* color: #333; */
 }
+.navbar {
+  padding: 20px 80px;
+}
 .navbar .navbar-brand {
   font-weight: bold;
   font-family: "Poppins", sans-serif;
@@ -24,6 +27,7 @@ nav {
   display: flex;
   justify-content: space-between;
 }
+
 @media (max-width: 992px) {
   nav {
     background-color: #333 !important;
