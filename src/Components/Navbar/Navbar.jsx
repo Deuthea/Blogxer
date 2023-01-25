@@ -30,7 +30,7 @@ const Navbar = () => {
       </button>
 
       <div class="collapse navbar-collapse " id="navbarNavDropdown">
-        <form class="form-inline rounded">
+        <form class="form-inline rounded" >
           <div class="input-group  ">
             <div class="input-group-prepend">
               <span
@@ -46,7 +46,7 @@ const Navbar = () => {
             <input
               type="text"
               style={{ borderLeft: "none" }}
-              class="form-control  pl-1 pt-1"
+              class="form-control  pl-1 pt-1 outline"
               placeholder="Search Blogxer"
               aria-label="Username"
               aria-describedby="basic-addon1"
