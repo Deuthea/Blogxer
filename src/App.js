@@ -5,7 +5,7 @@ import MainScreen from "./Components/MainScreen/MainScreen";
 
 function App() {
   return (
-    <div className="bg-light">
+    <div className="">
       <Navbar />
       <MainScreen />
     </div>

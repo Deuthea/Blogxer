@@ -34,7 +34,7 @@ const Navbar = () => {
           <div class="input-group  ">
             <div class="input-group-prepend">
               <span
-                class="input-group-text bg-white  pr-1"
+                class="input-group-text bg-white pt-1 pr-1"
                 style={{ borderRight: "none" }}
                 id="basic-addon1"
               >
