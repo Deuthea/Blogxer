@@ -1,13 +1,14 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "../../assets/OIP.jpg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav class="navbar navbar-expand-lg navbar-right ">
-      <a class="navbar-brand" href="#">
+      <Link to="/" class="navbar-brand underline-none" href="#">
         <img src={logo} style={{ width: "35px" }} />
-      </a>
+      </Link>
       <button
         class="navbar-toggler"
         style={{ outline: "none", border: "none" }}
@@ -30,7 +31,7 @@ const Navbar = () => {
       </button>
 
       <div class="collapse navbar-collapse " id="navbarNavDropdown">
-        <form class="form-inline rounded" >
+        <form class="form-inline rounded">
           <div class="input-group  ">
             <div class="input-group-prepend">
               <span
@@ -55,12 +56,14 @@ const Navbar = () => {
         </form>
 
         <ul class="navbar-nav d-flex align-items-center">
-          <li class="nav-item">
+          {/* <Link> */}
+          <Link to="/new-blog" class="nav-item text-decoration-none">
             <a class="nav-link" href="#">
               <span class="material-symbols-outlined pr-2">edit_square</span>
               write
             </a>
-          </li>
+          </Link>
+          {/* </Link> */}
           <li class="nav-item">
             <a class="nav-link " href="#">
               <span class="material-symbols-outlined ">notifications</span>
