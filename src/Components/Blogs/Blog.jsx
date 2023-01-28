@@ -5,9 +5,9 @@ import "./Blog.css";
 const Blog = () => {
   return (
     <>
-      <Navbar />
+      <Navbar page="blog" />
       <div className="container">
-        <div class=" mb-3 mt-2 d-flex flex-column justify-start align-items-center border-bottom col-lg-12">
+        <div class=" mb-3 mt-2 d-flex flex-column justify-start align-items-center  col-lg-12">
           <div class=" row g-0 mb-3 ">
             <div class="px-0 col-md-12 ">
               <div class="card-body">
@@ -84,7 +84,7 @@ const Blog = () => {
               </div>
             </div>
           </div>
-          <div class="px-0 py-1 col-md-10 ">
+          <div class="px-0 py-1 col-md-10 mb-5 ">
             <img
               style={{ height: "80vh", width: "60vw", objectFit: "contain" }}
               src="https://source.unsplash.com/random"

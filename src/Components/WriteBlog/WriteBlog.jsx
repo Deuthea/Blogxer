@@ -14,7 +14,7 @@ const WriteBlog = () => {
   return (
     <div>
       {" "}
-      <Navbar />
+      <Navbar page="write" />
       <div className="container my-5">
         <form>
           <input

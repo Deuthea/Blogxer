@@ -7,7 +7,7 @@ import "./MainScreen.css";
 const MainScreen = () => {
   return (
     <>
-      <Navbar />
+      <Navbar page="main" />
       <div className="main">
         <section className="blog-left">
           <Blogs />

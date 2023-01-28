@@ -3,7 +3,7 @@ import "./Navbar.css";
 import logo from "../../assets/OIP.jpg";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ page }) => {
   return (
     <nav class="navbar navbar-expand-lg navbar-right ">
       <Link to="/" class="navbar-brand underline-none" href="#">
@@ -57,12 +57,14 @@ const Navbar = () => {
 
         <ul class="navbar-nav d-flex align-items-center">
           {/* <Link> */}
-          <Link to="/new-blog" class="nav-item text-decoration-none">
-            <a class="nav-link" href="#">
-              <span class="material-symbols-outlined pr-2">edit_square</span>
-              write
-            </a>
-          </Link>
+          {page == "main" && (
+            <Link to="/new-blog" class="nav-item text-decoration-none">
+              <a class="nav-link" href="#">
+                <span class="material-symbols-outlined pr-2">edit_square</span>
+                write
+              </a>
+            </Link>
+          )}
           {/* </Link> */}
           <li class="nav-item">
             <a class="nav-link " href="#">
