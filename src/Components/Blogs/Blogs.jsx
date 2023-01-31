@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
+import { useSelector, useDispatch } from "react-redux";
+import { getBlog } from "../../features/blog/blogSlice";
 
 const Blogs = () => {
+  const blogs = useSelector((state) => state.blog.blogs);
+  console.log(blogs);
   return (
     <div>
       <Link className="text-dark text-decoration-none" to="/blog">
-        <div class=" mb-3 mt-2 border-bottom">
-          <div class=" row g-0 mb-3">
-            <div class="px-0 col-md-9">
-              <div class="card-body">
+        <div className=" mb-3 mt-2 border-bottom">
+          <div className=" row g-0 mb-3">
+            <div className="px-0 col-md-9">
+              <div className="card-body">
                 <p className="d-flex align-items-center ">
-                  <span class="material-symbols-outlined profile-blog pr-2">
+                  <span className="material-symbols-outlined profile-blog pr-2">
                     <img
                       style={{
                         height: "25px",
@@ -19,19 +23,19 @@ const Blogs = () => {
                         objectFit: "cover",
                       }}
                       src="https://source.unsplash.com/random"
-                      class="  rounded-pill "
+                      className="  rounded-pill "
                       alt="..."
                     />
                   </span>
                   <span
-                    class="card-tile font-weight-bold pt-2"
+                    className="card-tile font-weight-bold pt-2"
                     style={{ fontSize: "14px" }}
                   >
                     Tarun Choudhary
                   </span>
                   <span className="pl-2 pt-2">·</span>
                   <span
-                    class="pt-2 px-2"
+                    className="pt-2 px-2"
                     style={{
                       fontSize: "13px",
                       fontWeight: "400",
@@ -41,10 +45,10 @@ const Blogs = () => {
                     Feb 7, 2016
                   </span>
                 </p>
-                <h5 class="card-title font-weight-bold">
+                <h5 className="card-title font-weight-bold">
                   Card with an image on left
                 </h5>
-                <p class="card-text">
+                <p className="card-text">
                   This is a wider card with supporting text below as a natural
                   lead-in to additional content. This content is a little bit
                   longer.
@@ -52,7 +56,7 @@ const Blogs = () => {
                 <p className="d-flex justify-content-between">
                   <p>
                     <span
-                      class="rounded-pill"
+                      className="rounded-pill"
                       style={{
                         fontSize: "13px",
                         background: "#f0f0f0",
@@ -65,7 +69,7 @@ const Blogs = () => {
                     </span>
                     <span className="pl-2">·</span>
                     <span
-                      class=""
+                      className=""
                       style={{
                         fontSize: "13px",
                         // background: "#f0f0f0",
@@ -78,16 +82,18 @@ const Blogs = () => {
                     </span>
                   </p>
                   <p>
-                    <span class="material-symbols-outlined">bookmark_add</span>
+                    <span className="material-symbols-outlined">
+                      bookmark_add
+                    </span>
                   </p>
                 </p>
               </div>
             </div>
-            <div class="px-4 py-5 col-md-3 ">
+            <div className="px-4 py-5 col-md-3 ">
               <img
                 style={{ height: "20vh", width: "20vw", objectFit: "cover" }}
                 src="https://source.unsplash.com/random"
-                class=" img-fluid  rounded "
+                className=" img-fluid  rounded "
                 alt="..."
               />
             </div>

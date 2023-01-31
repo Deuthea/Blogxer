@@ -58,12 +58,16 @@ const Navbar = ({ page }) => {
         <ul class="navbar-nav d-flex align-items-center">
           {/* <Link> */}
           {page == "main" && (
-            <Link to="/new-blog" class="nav-item text-decoration-none">
-              <a class="nav-link" href="#">
+            <a class="nav-item text-decoration-none">
+              <Link
+                to="/new-blog"
+                class="nav-link text-decoration-none"
+                href="#"
+              >
                 <span class="material-symbols-outlined pr-2">edit_square</span>
                 write
-              </a>
-            </Link>
+              </Link>
+            </a>
           )}
           {/* </Link> */}
           <li class="nav-item">

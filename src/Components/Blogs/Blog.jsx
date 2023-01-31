@@ -7,13 +7,13 @@ const Blog = () => {
     <>
       <Navbar page="blog" />
       <div className="container">
-        <div class=" mb-3 mt-2 d-flex flex-column justify-start align-items-center  col-lg-12">
-          <div class=" row g-0 mb-3 ">
-            <div class="px-0 col-md-12 ">
-              <div class="card-body">
+        <div className=" mb-3 mt-2 d-flex flex-column justify-start align-items-center  col-lg-12">
+          <div className=" row g-0 mb-3 ">
+            <div className="px-0 col-md-12 ">
+              <div className="card-body">
                 <p className="d-flex justify-content-between">
                   <p className="d-flex align-items-center ">
-                    <span class="material-symbols-outlined profile-blog pr-2">
+                    <span className="material-symbols-outlined profile-blog pr-2">
                       <img
                         style={{
                           height: "25px",
@@ -58,10 +58,10 @@ const Blog = () => {
                     <span class="material-symbols-outlined">bookmark_add</span>
                   </p>
                 </p>
-                <h3 class="card-title font-weight-bold">
+                <h3 className="card-title font-weight-bold">
                   Card with an image on left
                 </h3>
-                <p class="card-text description">
+                <p className="card-text description">
                   This is a wider card with supporting text below as a natural
                   lead-in to additional content. This content is a little bit
                   longer. This is a wider card with supporting text below as a
@@ -84,11 +84,11 @@ const Blog = () => {
               </div>
             </div>
           </div>
-          <div class="px-0 py-1 col-md-10 mb-5 ">
+          <div className="px-0 py-1 col-md-10 mb-5 ">
             <img
               style={{ height: "80vh", width: "60vw", objectFit: "contain" }}
               src="https://source.unsplash.com/random"
-              class=" img-fluid  rounded "
+              className=" img-fluid  rounded "
               alt="..."
             />
           </div>

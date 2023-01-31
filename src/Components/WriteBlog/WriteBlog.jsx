@@ -20,7 +20,7 @@ const WriteBlog = () => {
           <input
             type="text"
             placeholder="Enter Title"
-            class="form-control mb-4 title-input border-0"
+            className="form-control mb-4 title-input border-0"
             style={{
               fontSize: "40px",
               outline: "none",
