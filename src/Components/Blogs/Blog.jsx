@@ -1,8 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
 
 const Blog = () => {
+  const params = useParams();
+  console.log(params);
+  const blog = useSelector((state) =>
+    state.blog.blogs.find((blog) => blog._id == params.id)
+  );
+  console.log(blog);
   return (
     <>
       <Navbar page="blog" />
@@ -29,7 +37,7 @@ const Blog = () => {
                       class="card-tile font-weight-bold pt-2"
                       style={{ fontSize: "14px" }}
                     >
-                      Tarun Choudhary
+                      {blog.updatedBy.name}
                     </span>
                     <span className="pl-2 pt-2">·</span>
                     <span
@@ -58,29 +66,8 @@ const Blog = () => {
                     <span class="material-symbols-outlined">bookmark_add</span>
                   </p>
                 </p>
-                <h3 className="card-title font-weight-bold">
-                  Card with an image on left
-                </h3>
-                <p className="card-text description">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer. This is a wider card with supporting text below as a
-                  natural lead-in to additional content. This content is a
-                  little bit longer. This is a wider card with supporting text
-                  below as a natural lead-in to additional content. This content
-                  is a little bit longer. This is a wider card with supporting
-                  text below as a natural lead-in to additional content. This
-                  content is a little bit longer. This is a wider card with
-                  supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.This is a wider
-                  card with supporting text below as a natural lead-in to
-                  additional content. This content is a little bit longer.This
-                  is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.This is a wider card with supporting text below as a
-                  natural lead-in to additional content. This content is a
-                  little bit longer.
-                </p>
+                <h3 className="card-title font-weight-bold">{blog.title}</h3>
+                <p className="card-text description">{blog.content}</p>
               </div>
             </div>
           </div>

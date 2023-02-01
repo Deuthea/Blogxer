@@ -10,7 +10,7 @@ const PrimaryRoutes = () => {
       <Routes>
         <Route path="/" element={<MainScreen />} />
         <Route path="/new-blog" element={<WriteBlog />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<Blog />} />
       </Routes>
     </div>
   );

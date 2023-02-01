@@ -6,11 +6,13 @@ export const blogSlice = createSlice({
     blogs: [],
   },
   reducers: {
-    getBlog: () => {},
+    getBlog: (state, action) => {
+      state.blogs = action.payload;
+    },
     updateBlog: () => {},
   },
 });
 
-export const {getBlog,updateBlog} = blogSlice.actions;
+export const { getBlog, updateBlog } = blogSlice.actions;
 
 export default blogSlice.reducer;
