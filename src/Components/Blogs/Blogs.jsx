@@ -71,7 +71,11 @@ const Blogs = () => {
                     <h5 className="card-title font-weight-bold">
                       {blog.title}
                     </h5>
-                    <p className="card-text">{blog.content}</p>
+                    <p className="card-text">{`${
+                      blog.content.length > 150
+                        ? `${blog.content.substring(0, 150)} .  .  . `
+                        : blog.content
+                    }`}</p>
                     <p className="d-flex justify-content-between">
                       <p>
                         {blog.tags?.map((tag) => (
