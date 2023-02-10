@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Blog from "../Blogs/Blog";
-import Login from "../Login/Login";
+import Login from "../Auth/Login";
 import MainScreen from "../MainScreen/MainScreen";
-import Register from "../Register/Register";
+import Register from "../Auth/Register";
 import WriteBlog from "../WriteBlog/WriteBlog";
 
 const PrimaryRoutes = () => {
