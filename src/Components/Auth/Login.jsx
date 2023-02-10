@@ -13,14 +13,12 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const submit = async (e) => {
     e.preventDefault();
-    if (data.email == "" || data.password == "") {
-      alert("All fields are required");
-      return;
-    }
+
+    console.log(data);
     const res = await fetch(`${endPoint}/api/auth/login`, {
       method: "POST",
       headers: {
-        contentType: "application/json",
+        "content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
