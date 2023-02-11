@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
+import ReactHtmlParser from "html-react-parser";
 
 const Blog = () => {
   const params = useParams();
@@ -67,7 +68,9 @@ const Blog = () => {
                   </p>
                 </p>
                 <h3 className="card-title font-weight-bold">{blog.title}</h3>
-                <p className="card-text description">{blog.content}</p>
+                <p className="card-text description">
+                  {ReactHtmlParser(blog.content)}
+                </p>
               </div>
             </div>
           </div>

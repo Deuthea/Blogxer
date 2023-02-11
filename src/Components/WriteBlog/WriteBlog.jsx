@@ -3,14 +3,42 @@ import Navbar from "../Navbar/Navbar";
 import "./WriteBlog.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { api } from "../../config.js";
+
+const endPoint = api.endPoint;
 
 let data;
 const WriteBlog = () => {
-  const [blog, setBlog] = useState({ title: "", description: "" });
+  const token = localStorage.getItem("token");
+  const [blog, setBlog] = useState({
+    title: "",
+    content: "",
+    imageUrl: "",
+    tags: [],
+  });
 
   const handleChange = (e) => {
     setBlog({ ...blog, [e.target.name]: e.target.value });
   };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log(blog);
+    const res = await fetch(`${endPoint}/api/blog/add`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(blog),
+    });
+    console.log(res);
+    const resP = await res.json();
+    // dispatch(registerUser(resP));
+    console.log(resP);
+    setBlog({ title: "", content: "" });
+  };
+
   return (
     <div>
       {" "}
@@ -40,16 +68,17 @@ const WriteBlog = () => {
               editor={ClassicEditor}
               onChange={(event, editor) => {
                 data = editor.getData();
-                setBlog({ ...blog, description: data });
+                setBlog({ ...blog, content: data });
               }}
-              name="description"
-              value={blog.description}
+              name="content"
+              value={blog.content}
             />
           </div>
           <div className="col-12 text-center">
             <button
               className="my-3 btn recommended rounded-pill"
               style={{ padding: "8px 70px" }}
+              onClick={submit}
             >
               Submit Blog
             </button>

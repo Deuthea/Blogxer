@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlog } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
+import ReactHtmlParser from "html-react-parser";
 
 const endPoint = api.endPoint;
 
@@ -71,11 +72,11 @@ const Blogs = () => {
                     <h5 className="card-title font-weight-bold">
                       {blog.title}
                     </h5>
-                    <p className="card-text">{`${
-                      blog.content.length > 150
-                        ? `${blog.content.substring(0, 150)} .  .  . `
-                        : blog.content
-                    }`}</p>
+                    <p className="card-text">
+                      {ReactHtmlParser(blog.content).length > 100
+                        ? ReactHtmlParser(blog.content).substring(0, 100)
+                        : ReactHtmlParser(blog.content)}
+                    </p>
                     <p className="d-flex justify-content-between">
                       <p>
                         {blog.tags?.map((tag) => (
