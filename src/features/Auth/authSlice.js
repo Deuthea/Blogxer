@@ -8,12 +8,25 @@ export const authSlice = createSlice({
     isAuthenticated: false,
   },
   reducers: {
-    getUser: (state, action) => {},
-    loginUser: (state, action) => {
-      state.user = action.payload;
-      state.isAuthenticated = action.payload.token ? true : false;
+    getUser: (state, action) => {
+      state.user = localStorage.getItem("user");
+      state.token = localStorage.getItem("token");
+      state.isAuthenticated = localStorage.getItem("token") ? true : false;
     },
-    registerUser: () => {},
+    loginUser: (state, action) => {
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      state.user = action.payload.user;
+      state.isAuthenticated = action.payload.token ? true : false;
+      state.token = action.payload.token;
+    },
+    registerUser: (state, action) => {
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      state.user = action.payload.user;
+      state.isAuthenticated = action.payload.token ? true : false;
+      state.token = action.payload.token;
+    },
   },
 });
 

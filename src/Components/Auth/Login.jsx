@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../../features/Auth/authSlice";
+import { loginUser, registerUser } from "../../features/Auth/authSlice";
 import { Link } from "react-router-dom";
 import { api } from "../../config.js";
 

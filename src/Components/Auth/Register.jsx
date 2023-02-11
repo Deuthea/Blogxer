@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser, registerUser } from "../../features/Auth/authSlice";
 import "./Register.css";
+import { api } from "../../config.js";
+
+const endPoint = api.endPoint;
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [data, setData] = useState({ name: "", email: "", password: "" });
+
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log(data);
+    const res = await fetch(`${endPoint}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(res);
+    const resP = await res.json();
+    dispatch(registerUser(resP));
+    console.log(resP);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
   return (
     <div className="">
       <div className="container">
@@ -30,6 +59,8 @@ const Register = () => {
                         <input
                           type="text"
                           name="name"
+                          value={data.name}
+                          onChange={handleChange}
                           className="form-control"
                           id="yourName"
                           required
@@ -43,6 +74,8 @@ const Register = () => {
                         <input
                           type="email"
                           name="email"
+                          value={data.email}
+                          onChange={handleChange}
                           className="form-control"
                           id="yourEmail"
                           required
@@ -56,6 +89,8 @@ const Register = () => {
                         <input
                           type="password"
                           name="password"
+                          value={data.password}
+                          onChange={handleChange}
                           className="form-control"
                           id="yourPassword"
                           required
@@ -66,6 +101,7 @@ const Register = () => {
                         <button
                           className="btn btn-secondary w-100"
                           type="submit"
+                          onClick={submit}
                         >
                           Create Account
                         </button>
