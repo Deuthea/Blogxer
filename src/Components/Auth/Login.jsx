@@ -3,17 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../features/Auth/authSlice";
 import { Link, Navigate } from "react-router-dom";
 import { api } from "../../config.js";
+import { toast } from "react-toastify";
+import Loader from "../Loader/Loader";
 
 const endPoint = api.endPoint;
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.auth.isAuthenticated);
   const [data, setData] = useState({ email: "", password: "" });
   const submit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    console.log(data);
+    // console.log(data);
     const res = await fetch(`${endPoint}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -21,9 +25,19 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     });
-    console.log(res);
+    // console.log(res);
     const resP = await res.json();
-    dispatch(loginUser(resP));
+    if (resP.status === "ok") {
+      toast.success("Login Successfully 🔥", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      dispatch(loginUser(resP));
+    } else {
+      toast.error(`${resP.error}!! 🙂`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+    setLoading(false);
     console.log(resP);
   };
 
@@ -89,13 +103,13 @@ const Login = () => {
                             className="btn btn-secondary w-100"
                             type="submit"
                           >
-                            Login
+                            {loading ? <Loader /> : "Login"}
                           </button>
                         </div>
                         <div className="col-12  mt-2 text-center  mb-2">
                           <p className="small mb-0">
                             Don't have an account?{" "}
-                            <Link to="/register">Log in</Link>
+                            <Link to="/register">Register</Link>
                           </p>
                         </div>
                       </form>

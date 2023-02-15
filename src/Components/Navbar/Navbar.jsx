@@ -2,8 +2,13 @@ import React from "react";
 import "./Navbar.css";
 import logo from "../../assets/OIP.jpg";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "./../../features/Auth/authSlice";
+import { toast } from "react-toastify";
 
 const Navbar = ({ page }) => {
+  const dispatch = useDispatch();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-right ">
       <Link to="/" className="navbar-brand underline-none">
@@ -79,6 +84,21 @@ const Navbar = ({ page }) => {
                 account_circle
               </span>
             </a> */}
+          </li>
+
+          <li className="nav-item">
+            <a
+              className="nav-link "
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                dispatch(logout());
+                toast.warn("Logout Successfull ✅", {
+                  position: toast.POSITION.TOP_CENTER,
+                });
+              }}
+            >
+              <span className="material-symbols-outlined">Logout</span> Logout
+            </a>
           </li>
         </ul>
       </div>

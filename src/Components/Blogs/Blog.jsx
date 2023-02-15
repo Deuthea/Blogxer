@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
 import ReactHtmlParser from "html-react-parser";
+import { useEffect } from "react";
 
 const Blog = () => {
   const params = useParams();
   console.log(params);
+  const avgWordsPM = 250;
+  const [time, setTime] = useState(0);
   const blog = useSelector((state) =>
     state.blog.blogs.find((blog) => blog._id == params.id)
   );
+  useEffect(() => {
+    const data = blog?.content.split(" ");
+    const res = Math.ceil(data.length / avgWordsPM);
+    setTime(res);
+    // console.log(data);
+  }, [blog]);
+
   console.log(blog);
   return (
     <>
@@ -49,7 +59,7 @@ const Blog = () => {
                         color: "#333",
                       }}
                     >
-                      Feb 7, 2016
+                      {new Date(blog.createdAt).toDateString}
                     </span>
                     <span className="pl-2 pt-2">·</span>
                     <span
@@ -60,7 +70,7 @@ const Blog = () => {
                         color: "#333",
                       }}
                     >
-                      6 min read
+                      {time} min read
                     </span>
                   </p>
                   <p>
@@ -69,8 +79,8 @@ const Blog = () => {
                     </span>
                   </p>
                 </p>
-                <h3 className="card-title font-weight-bold">{blog.title}</h3>
-                <p className="card-text description">
+                <h3 className="card-title font-weight-bold ">{blog.title}</h3>
+                <p className="card-text description text-justify">
                   {ReactHtmlParser(blog.content)}
                 </p>
               </div>
@@ -109,9 +119,8 @@ const Blog = () => {
                   >
                     {comment?.user?.name}
                   </span>
-                
+
                   <span
-                    
                     style={{
                       fontSize: "13px",
                       fontWeight: "400",
