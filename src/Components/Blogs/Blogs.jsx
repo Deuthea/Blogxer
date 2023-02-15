@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import Navbar from "../Navbar/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlog } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
@@ -14,10 +13,8 @@ const Blogs = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
-      // setLoading(true);
       const response = await fetch(`${endPoint}/api/blog/`);
       const data = await response.json();
-      // console.log(data.Blogs);
       setState(data.Blogs);
       dispatch(getBlog(data.Blogs));
     })();

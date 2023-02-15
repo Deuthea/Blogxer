@@ -30,19 +30,19 @@ const Blog = () => {
                           objectFit: "cover",
                         }}
                         src="https://source.unsplash.com/random"
-                        class="  rounded-pill "
+                        className="  rounded-pill "
                         alt="..."
                       />
                     </span>
                     <span
-                      class="card-tile font-weight-bold pt-2"
+                      className="card-tile font-weight-bold pt-2"
                       style={{ fontSize: "14px" }}
                     >
                       {blog.updatedBy.name}
                     </span>
                     <span className="pl-2 pt-2">·</span>
                     <span
-                      class="pt-2 pl-2"
+                      className="pt-2 pl-2"
                       style={{
                         fontSize: "13px",
                         fontWeight: "400",
@@ -53,7 +53,7 @@ const Blog = () => {
                     </span>
                     <span className="pl-2 pt-2">·</span>
                     <span
-                      class="pt-2 px-2"
+                      className="pt-2 px-2"
                       style={{
                         fontSize: "13px",
                         fontWeight: "400",
@@ -64,7 +64,9 @@ const Blog = () => {
                     </span>
                   </p>
                   <p>
-                    <span class="material-symbols-outlined">bookmark_add</span>
+                    <span className="material-symbols-outlined">
+                      bookmark_add
+                    </span>
                   </p>
                 </p>
                 <h3 className="card-title font-weight-bold">{blog.title}</h3>
@@ -102,14 +104,14 @@ const Blog = () => {
                 </span>
                 <div className="d-flex flex-column">
                   <span
-                    class="card-tile font-weight-bold pt-2"
+                    className="card-tile font-weight-bold pt-2"
                     style={{ fontSize: "14px" }}
                   >
                     {comment?.user?.name}
                   </span>
-                  {/* <span className="pl-2 pt-2">·</span> */}
+                
                   <span
-                    class=""
+                    
                     style={{
                       fontSize: "13px",
                       fontWeight: "400",

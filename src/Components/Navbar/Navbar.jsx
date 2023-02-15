@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ page }) => {
   return (
-    <nav class="navbar navbar-expand-lg navbar-right ">
-      <Link to="/" class="navbar-brand underline-none" href="#">
-        <img src={logo} style={{ width: "35px" }} />
+    <nav className="navbar navbar-expand-lg navbar-right ">
+      <Link to="/" className="navbar-brand underline-none">
+        <img alt="image" src={logo} style={{ width: "35px" }} />
       </Link>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         style={{ outline: "none", border: "none" }}
         type="button"
         data-toggle="collapse"
@@ -21,7 +21,7 @@ const Navbar = ({ page }) => {
       >
         <div className="d-flex align-items-center">
           <span
-            class="navbar-toggler-icon "
+            className="navbar-toggler-icon "
             style={{ width: "1.3em", height: "1.1em" }}
           ></span>{" "}
           <span className="" style={{ height: "1.1em" }}>
@@ -30,24 +30,24 @@ const Navbar = ({ page }) => {
         </div>
       </button>
 
-      <div class="collapse navbar-collapse " id="navbarNavDropdown">
-        <form class="form-inline rounded">
-          <div class="input-group  ">
-            <div class="input-group-prepend">
+      <div className="collapse navbar-collapse " id="navbarNavDropdown">
+        <form className="form-inline rounded">
+          <div className="input-group  ">
+            <div className="input-group-prepend">
               <span
-                class="input-group-text bg-white pt-1 pr-1"
+                className="input-group-text bg-white pt-1 pr-1"
                 style={{ borderRight: "none" }}
                 id="basic-addon1"
               >
-                <span class="material-symbols-outlined ">Search </span>
+                <span className="material-symbols-outlined ">Search </span>
               </span>
-              {/* <i class="bi bi-search text-dark"></i> */}
-              {/* <i class="fa-solid fa-magnifying-glass"></i> */}
+              {/* <i className="bi bi-search text-dark"></i> */}
+              {/* <i className="fa-solid fa-magnifying-glass"></i> */}
             </div>
             <input
               type="text"
               style={{ borderLeft: "none" }}
-              class="form-control  pl-1 pt-1 outline"
+              className="form-control  pl-1 pt-1 outline"
               placeholder="Search Blogxer"
               aria-label="Username"
               aria-describedby="basic-addon1"
@@ -55,32 +55,30 @@ const Navbar = ({ page }) => {
           </div>
         </form>
 
-        <ul class="navbar-nav d-flex align-items-center">
+        <ul className="navbar-nav d-flex align-items-center">
           {/* <Link> */}
-          {page == "main" && (
-            <a class="nav-item text-decoration-none">
-              <Link
-                to="/new-blog"
-                class="nav-link text-decoration-none"
-                href="#"
-              >
-                <span class="material-symbols-outlined pr-2">edit_square</span>
+          {page === "main" && (
+            <a className="nav-item text-decoration-none">
+              <Link to="/new-blog" className="nav-link text-decoration-none">
+                <span className="material-symbols-outlined pr-2">
+                  edit_square
+                </span>
                 write
               </Link>
             </a>
           )}
           {/* </Link> */}
-          <li class="nav-item">
-            <a class="nav-link " href="#">
-              <span class="material-symbols-outlined ">notifications</span>
-            </a>
+          <li className="nav-item">
+            {/* <a className="nav-link ">
+              <span className="material-symbols-outlined ">notifications</span>
+            </a> */}
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="material-symbols-outlined profile ">
+          <li className="nav-item">
+            {/* <a className="nav-link">
+              <span className="material-symbols-outlined profile ">
                 account_circle
               </span>
-            </a>
+            </a> */}
           </li>
         </ul>
       </div>

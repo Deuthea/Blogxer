@@ -34,7 +34,6 @@ const WriteBlog = () => {
     });
     console.log(res);
     const resP = await res.json();
-    // dispatch(registerUser(resP));
     console.log(resP);
     setBlog({ title: "", content: "" });
   };
