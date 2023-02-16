@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlog } from "../../features/blog/blogSlice";
+import { currentBlog, getBlog } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 
@@ -11,6 +11,9 @@ const Blogs = () => {
   const blogs1 = useSelector((state) => state.blog.blogs);
   const [state, setState] = useState(blogs1);
   const dispatch = useDispatch();
+  const avgWordsPM = 250;
+  const [time, setTime] = useState(0);
+
   useEffect(() => {
     (async () => {
       const response = await fetch(`${endPoint}/api/blog/`);
@@ -28,8 +31,9 @@ const Blogs = () => {
         state?.map((blog) => (
           <Link
             key={blog._id}
+            onClick={() => dispatch(currentBlog(blog))}
             className="text-dark text-decoration-none"
-            to={`/blog/${blog._id}`}
+            to={`/blog`}
           >
             <div className=" mb-3 mt-2 border-bottom">
               <div className=" row g-0 mb-3">
@@ -52,7 +56,7 @@ const Blogs = () => {
                         className="card-tile font-weight-bold pt-2"
                         style={{ fontSize: "14px" }}
                       >
-                        Tarun Choudhary
+                        {blog.updatedBy.name}
                       </span>
                       <span className="pl-2 pt-2">·</span>
                       <span
@@ -63,15 +67,16 @@ const Blogs = () => {
                           color: "#333",
                         }}
                       >
-                        Feb 7, 2016
+                        {new Date(blog.createdAt).toDateString()}
                       </span>
                     </p>
                     <h5 className="card-title font-weight-bold">
                       {blog.title}
                     </h5>
-                    <p className="card-text">
-                      {ReactHtmlParser(blog.content).length > 100
-                        ? ReactHtmlParser(blog.content).substring(0, 100)
+                    <p className="card-text-blog">
+                      {/* {console.log(blog.content.length > 100)} */}
+                      {blog.content.length > 100
+                        ? ReactHtmlParser(blog.content.substring(0, 100))
                         : ReactHtmlParser(blog.content)}
                     </p>
                     <p className="d-flex justify-content-between">
@@ -102,7 +107,10 @@ const Blogs = () => {
                             color: "#666",
                           }}
                         >
-                          6 min read
+                          {Math.ceil(
+                            blog?.content.split(" ").length / avgWordsPM
+                          )}{" "}
+                          min read
                         </span>
                       </p>
                       <p>

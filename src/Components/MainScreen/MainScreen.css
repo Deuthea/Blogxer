@@ -3,9 +3,9 @@
   display: flex;
 }
 .main .blog-left {
-  width: 70%;
+  width: 100%;
   padding: 2% 4%;
-  border-right: 0.5px solid #f0f0f0;
+  /* border-right: 0.5px solid #f0f0f0; */
 }
 
 .main .blog-right {

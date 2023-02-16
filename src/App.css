@@ -9,8 +9,13 @@ input:focus {
   outline: none !important;
 }
 
+.dark-mode{
+  /* background: #585858; */
+}
+
 .mode {
   position: fixed;
   bottom: 5%;
   left: 5%;
+  border: none;
 }

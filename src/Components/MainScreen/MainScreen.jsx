@@ -17,9 +17,9 @@ const MainScreen = () => {
           <section className="blog-left">
             <Blogs />
           </section>
-          <section className="blog-right">
+          {/* <section className="blog-right">
             <BlogsRecommend />
-          </section>
+          </section> */}
         </div>
       </>
     );
