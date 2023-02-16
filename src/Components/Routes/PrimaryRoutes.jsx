@@ -5,6 +5,7 @@ import Login from "../Auth/Login";
 import MainScreen from "../MainScreen/MainScreen";
 import Register from "../Auth/Register";
 import WriteBlog from "../WriteBlog/WriteBlog";
+import Profile from "../Profile/Profile";
 
 const PrimaryRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const PrimaryRoutes = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
