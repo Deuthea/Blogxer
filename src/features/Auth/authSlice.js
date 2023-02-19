@@ -9,7 +9,7 @@ export const authSlice = createSlice({
   },
   reducers: {
     getUser: (state, action) => {
-      state.user = localStorage.getItem("user") || "";
+      state.user = JSON.parse(localStorage.getItem("user")) || "";
       state.token = localStorage.getItem("token") || "";
       state.isAuthenticated = localStorage.getItem("token") ? true : false;
     },

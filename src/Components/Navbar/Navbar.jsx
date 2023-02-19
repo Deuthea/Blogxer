@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/OIP.jpg";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./../../features/Auth/authSlice";
 import { toast } from "react-toastify";
 
 const Navbar = ({ page }) => {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.auth.user);
   const [mode, setMode] = useState(false);
   console.log(mode);
+  console.log(state);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-right ">
+    <nav className=" navbar navbar-expand-lg navbar-right ">
       <Link to="/" className="navbar-brand underline-none">
         <img alt="image" src={logo} style={{ width: "35px" }} />
       </Link>
@@ -84,15 +86,15 @@ const Navbar = ({ page }) => {
           </li> */}
           <li class="nav-item">
             <a
-              class="nav-link d-flex align-items-center"
+              class="nav-link d-flex"
               href="#"
               // data-bs-toggle="dropdown"
             >
-              <span className="material-symbols-outlined profile-blog pr-2">
+              <span className="material-symbols-outlined profile-blog ">
                 <img
                   style={{
-                    height: "25px",
-                    width: "25px",
+                    height: "30px",
+                    width: "30px",
                     objectFit: "cover",
                   }}
                   src="https://source.unsplash.com/random"
@@ -100,39 +102,50 @@ const Navbar = ({ page }) => {
                   alt="..."
                 />
               </span>
-              <span
-                class="d-none d-md-block  ps-2"
-                onClick={() => setMode(!mode)}
-              >
-                K. Anderson
+              <span className="py-1 px-2" onClick={() => setMode(!mode)}>
+                Tarun Choudhary
               </span>
             </a>
 
             <ul
-              className="bg-dark d-flex text-white flex-column px-3"
+              className={
+                mode
+                  ? "bg-white border rounded px-4 py-2  z-index-2 d-flex flex-column"
+                  : "d-none"
+              }
+              // className={`bg-white border rounded px-4 py-2  z-index-2 ${mode}d-flex flex-column`}
               style={{
                 position: "absolute",
-                display: `${mode ? "block" : "none"}`,
+                boxShadow:
+                  "0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
+
+                zIndex: "100",
               }}
             >
-              <li class="nav-link d-flex flex-column">
-                <h6>Kevin Anderson</h6>
-                <span>Web Designer</span>
+              <li class="nav-link d-flex flex-column ">
+                <h6 className="font-weight-bold">{state?.name}</h6>
+                <span className="text-center">Web Designer</span>
               </li>
               <hr class="dropdown-divider" />
 
               <li class="nav-link">
-                <a>
-                  <i class="bi bi-person"></i>
-                  <span>My Profile</span>
-                </a>
+                <Link
+                  to="/profile"
+                  className="text-decoration-none text-dark"
+                  style={{ cursor: "pointer", display: "flex" }}
+                >
+                  <span class="material-symbols-outlined pr-2">
+                    account_circle
+                  </span>
+                  My Profile
+                </Link>
               </li>
               <hr class="dropdown-divider" />
 
               <li className="nav-link">
                 <a
                   className=""
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", display: "flex" }}
                   onClick={() => {
                     dispatch(logout());
                     toast.warn("Logout Successfull ✅", {
@@ -140,28 +153,11 @@ const Navbar = ({ page }) => {
                     });
                   }}
                 >
-                  <span className="material-symbols-outlined ">Logout</span>{" "}
+                  <span className="material-symbols-outlined pr-2">Logout</span>{" "}
                   Logout
                 </a>
               </li>
             </ul>
-          </li>
-          <li className="nav-item-logout bg-dark  rounded-pill px-3">
-            <a
-              className="nav-link border-0"
-              style={{ cursor: "pointer", color: "white" }}
-              onClick={() => {
-                dispatch(logout());
-                toast.warn("Logout Successfull ✅", {
-                  position: toast.POSITION.TOP_CENTER,
-                });
-              }}
-            >
-              <span className="material-symbols-outlined text-white">
-                Logout
-              </span>{" "}
-              Logout
-            </a>
           </li>
         </ul>
       </div>

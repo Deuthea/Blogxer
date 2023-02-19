@@ -4,12 +4,15 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+body {
+  background-color: aliceblue;
+}
 
 input:focus {
   outline: none !important;
 }
 
-.dark-mode{
+.dark-mode {
   /* background: #585858; */
 }
 
