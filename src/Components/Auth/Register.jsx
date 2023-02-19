@@ -14,7 +14,12 @@ const Register = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.auth.isAuthenticated);
-  const [data, setData] = useState({ name: "", email: "", password: "" });
+  const [data, setData] = useState({
+    name: "",
+    // username: "",
+    email: "",
+    password: "",
+  });
 
   const submit = async (e) => {
     e.preventDefault();
@@ -91,6 +96,21 @@ const Register = () => {
                             required
                           />
                         </div>
+
+                        {/* <div className="col-12 mb-2">
+                          <label for="yourName" className="form-label">
+                            Username
+                          </label>
+                          <input
+                            type="text"
+                            name="username"
+                            value={data.username}
+                            onChange={handleChange}
+                            className="form-control"
+                            id="yourName"
+                            required
+                          />
+                        </div> */}
 
                         <div className="col-12 mb-2">
                           <label for="yourEmail" className="form-label">

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { currentBlog, getBlog } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
+import Loader from "../Loader/Loader";
 
 const endPoint = api.endPoint;
 
@@ -12,14 +13,17 @@ const Blogs = () => {
   const [state, setState] = useState(blogs1);
   const dispatch = useDispatch();
   const avgWordsPM = 250;
+  const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const response = await fetch(`${endPoint}/api/blog/`);
       const data = await response.json();
       setState(data.Blogs);
       dispatch(getBlog(data.Blogs));
+      setLoading(false);
     })();
   }, []);
 
@@ -27,7 +31,7 @@ const Blogs = () => {
   console.log(blogs);
   return (
     <div>
-      {state?.length > 0 ? (
+      {!loading ? (
         state?.map((blog) => (
           <div key={blog._id} className=" mb-3 mt-2 border-bottom">
             <div className=" row g-0 mb-3">
@@ -155,7 +159,9 @@ const Blogs = () => {
           </div>
         ))
       ) : (
-        <h2>No Blogs Found</h2>
+        <div className="d-flex my-5 justify-content-center">
+          <Loader />
+        </div>
       )}
     </div>
   );
