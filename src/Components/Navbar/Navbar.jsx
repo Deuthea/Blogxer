@@ -103,7 +103,7 @@ const Navbar = ({ page }) => {
                 />
               </span>
               <span className="py-1 px-2" onClick={() => setMode(!mode)}>
-                Tarun Choudhary
+                {state?.name}
               </span>
             </a>
 

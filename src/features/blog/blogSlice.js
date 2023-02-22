@@ -15,6 +15,9 @@ export const blogSlice = createSlice({
     addBlog: (state, action) => {
       state.blogs.push(action.payload);
     },
+    addComment: (state, action) => {
+      state.blogs.push(action.payload);
+    },
     currentBlog: (state, action) => {
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
       state.currentBlog = action.payload;
@@ -23,6 +26,7 @@ export const blogSlice = createSlice({
   },
 });
 
-export const { getBlog, updateBlog, addBlog, currentBlog } = blogSlice.actions;
+export const { getBlog, updateBlog, addComment, addBlog, currentBlog } =
+  blogSlice.actions;
 
 export default blogSlice.reducer;

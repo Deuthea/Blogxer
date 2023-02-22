@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
+import { addComment } from "../../features/blog/blogSlice";
+import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
+const endPoint = api.endPoint;
 
 const Blog = () => {
+  const dispatch = useDispatch();
   const params = useParams();
+  const token = localStorage.getItem("token");
   console.log(params);
   const avgWordsPM = 250;
   const [time, setTime] = useState(0);
+  const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
   const blog = useSelector((state) => state.blog.currentBlog);
+  console.log(blog);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
     const data = blog?.content.split(" ");
@@ -22,6 +30,33 @@ const Blog = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data1 = {
+      comment: comment,
+    };
+    const response = await fetch(
+      `${endPoint}/api/comment/addComment/${blog?.updatedBy?._id}/${blog?._id}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify(data1),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    blog.comments.push(data);
+    console.log(blog);
+    dispatch(addComment(blog));
+    // setState(data.Blogs);
+    // dispatch(getBlog(data.Blogs));
+    setLoading(false);
+  };
 
   console.log(blog);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -152,7 +187,9 @@ const Blog = () => {
                 padding: "5px",
               }}
               autoFocus
-              name="title"
+              onChange={(e) => setComment(e.target.value)}
+              name="comment"
+              value={comment}
               // value={blog.title}
               // onChange={handleChange}
               id="yourName"
@@ -160,6 +197,7 @@ const Blog = () => {
             />
             <div className="col-12 text-center">
               <button
+                onClick={addComment}
                 className="my-3 btn recommended rounded-pill"
                 style={{ padding: "8px 70px" }}
               >
