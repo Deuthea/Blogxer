@@ -67,6 +67,12 @@ const Blog = () => {
     });
   };
 
+  const textToSpeech = () => {
+    const text = blog.title + blog.content;
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  };
+
   console.log(blog);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
@@ -122,6 +128,13 @@ const Blog = () => {
                       </span>
                     </p>
                     <p>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={textToSpeech}
+                        class="material-symbols-outlined mx-2"
+                      >
+                        text_to_speech
+                      </span>
                       <span
                         className="material-symbols-outlined mx-2"
                         style={{ cursor: "pointer" }}

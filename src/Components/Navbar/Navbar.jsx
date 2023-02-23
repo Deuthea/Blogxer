@@ -85,10 +85,10 @@ const Navbar = ({ page }) => {
             </Link>
           </li> */}
           <li class="nav-item">
-            <a
+            {/* <a
               class="nav-link d-flex"
               href="#"
-              // data-bs-toggle="dropdown"
+               
             >
               <span className="material-symbols-outlined profile-blog ">
                 <img
@@ -105,7 +105,24 @@ const Navbar = ({ page }) => {
               <span className="py-1 px-2" onClick={() => setMode(!mode)}>
                 {state?.name}
               </span>
-            </a>
+            </a> */}
+
+            <span
+              className="contact-pill"
+              style={{ cursor: "pointer" }}
+              onClick={() => setMode(!mode)}
+            >
+              <img
+                className="rounded-pill"
+                style={{
+                  height: "40px",
+                  width: "40px",
+                  objectFit: "cover",
+                }}
+                src="https://source.unsplash.com/random"
+              />
+              {state?.name}
+            </span>
 
             <ul
               className={

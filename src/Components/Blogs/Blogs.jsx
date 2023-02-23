@@ -42,7 +42,7 @@ const Blogs = () => {
   console.log(blogs);
   return (
     <div>
-      {!loading   ? (
+      {!loading && !state?.length == 0 ? (
         state?.map((blog) => (
           <div key={blog._id} className=" mb-3 mt-2 border-bottom">
             <div className=" row g-0 mb-3">
