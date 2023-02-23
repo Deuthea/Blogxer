@@ -7,6 +7,7 @@ import { addComment } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
+const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
 const Blog = () => {
@@ -56,6 +57,14 @@ const Blog = () => {
     // setState(data.Blogs);
     // dispatch(getBlog(data.Blogs));
     setLoading(false);
+  };
+
+  const shareFunction = () => {
+    navigator.share({
+      title: `${blog.title}`,
+      text: `${blog.content}`,
+      url: `${endPointF}/blog`,
+    });
   };
 
   console.log(blog);
@@ -113,7 +122,17 @@ const Blog = () => {
                       </span>
                     </p>
                     <p>
-                      <span className="material-symbols-outlined">
+                      <span
+                        className="material-symbols-outlined mx-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={shareFunction}
+                      >
+                        share
+                      </span>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        className="material-symbols-outlined mx-2"
+                      >
                         bookmark_add
                       </span>
                     </p>

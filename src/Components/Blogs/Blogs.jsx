@@ -15,6 +15,17 @@ const Blogs = () => {
   const avgWordsPM = 250;
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(0);
+  const [newSearch, setNewSearch] = useState("");
+
+  // const handleSearch = (event) => {
+  //   const search = event.target.value;
+  //   setNewSearch(search);
+  // };
+
+  // const showSearchResults = newSearch    ? persons.filter((person) =>
+  //       person.name.toUpperCase().includes(newSearch.toUpperCase())
+  //     )
+  //   : persons;
 
   useEffect(() => {
     (async () => {
@@ -31,7 +42,7 @@ const Blogs = () => {
   console.log(blogs);
   return (
     <div>
-      {!loading ? (
+      {!loading   ? (
         state?.map((blog) => (
           <div key={blog._id} className=" mb-3 mt-2 border-bottom">
             <div className=" row g-0 mb-3">
