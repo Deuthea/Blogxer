@@ -31,7 +31,7 @@ const WriteBlog = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log(blog);
+    // console.log(blog);
     setLoading(true);
     if (
       blog.title == "" ||
@@ -53,7 +53,7 @@ const WriteBlog = () => {
       });
       const resP = await res.json();
 
-      console.log(resP);
+      // console.log(resP);
       if (resP.status == "ok") {
         toast.success(`${resP.message}`, {
           position: toast.POSITION.TOP_CENTER,

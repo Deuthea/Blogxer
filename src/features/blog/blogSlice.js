@@ -16,7 +16,7 @@ export const blogSlice = createSlice({
       state.blogs.push(action.payload);
     },
     addComment: (state, action) => {
-      state.blogs.push(action.payload);
+      state.currentBlog.comments.push(action.payload.comment);
     },
     currentBlog: (state, action) => {
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));

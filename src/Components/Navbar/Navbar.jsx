@@ -10,8 +10,8 @@ const Navbar = ({ page }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.auth.user);
   const [mode, setMode] = useState(false);
-  console.log(mode);
-  console.log(state);
+  // console.log(mode);
+  // console.log(state);
 
   return (
     <nav className=" navbar navbar-expand-lg navbar-right ">

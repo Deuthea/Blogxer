@@ -39,7 +39,7 @@ const Blogs = () => {
   }, []);
 
   const blogs = useSelector((state) => state.blog.blogs);
-  console.log(blogs);
+  // console.log(blogs);
   return (
     <div>
       {!loading && !state?.length == 0 ? (

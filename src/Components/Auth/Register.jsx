@@ -33,9 +33,9 @@ const Register = () => {
         },
         body: JSON.stringify(data),
       });
-      console.log(res);
+      // console.log(res);
       const resP = await res.json();
-      console.log(resP);
+      // console.log(resP);
       if (resP.status === "ok") {
         toast.success("Register Successfully 🔥", {
           position: toast.POSITION.TOP_CENTER,
@@ -47,7 +47,7 @@ const Register = () => {
         });
       }
     } catch (error) {
-      console.log("erorrrrrrrrrrrrrrr", error);
+      // console.log("erorrrrrrrrrrrrrrr", error);
     }
 
     setLoading(false);

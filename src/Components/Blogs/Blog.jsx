@@ -7,6 +7,8 @@ import { addComment } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
+import Loader from "../Loader/Loader";
+import { toast } from "react-toastify";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -14,32 +16,38 @@ const Blog = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const token = localStorage.getItem("token");
-  console.log(params);
+  // console.log(params);
   const avgWordsPM = 250;
   const [time, setTime] = useState(0);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const blog = useSelector((state) => state.blog.currentBlog);
-  console.log(blog);
+  const [blogData, setBlogData] = useState(blog);
+  // console.log(blog);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   useEffect(() => {
-    const data = blog?.content.split(" ");
+    const data = blogData?.content.split(" ");
     const res = Math.ceil(data.length / avgWordsPM);
     setTime(res);
     // console.log(data);
-  }, [blog]);
+    setBlogData(blog);
+  }, [blogData, blog]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const addComment = async (e) => {
-    e.preventDefault();
+  // console.log(blog);
+  const addComment1 = async (e) => {
+    // e.preventDefault();
+    if (comment == "")
+      return toast.error("Please enter some text in comment box!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     setLoading(true);
     const data1 = {
       comment: comment,
     };
     const response = await fetch(
-      `${endPoint}/api/comment/addComment/${blog?.updatedBy?._id}/${blog?._id}`,
+      `${endPoint}/api/comment/addComment/${blogData?.updatedBy?._id}/${blogData?._id}`,
       {
         method: "POST",
         headers: {
@@ -51,18 +59,20 @@ const Blog = () => {
     );
     const data = await response.json();
     console.log(data);
-    blog.comments.push(data);
-    console.log(blog);
-    dispatch(addComment(blog));
-    // setState(data.Blogs);
-    // dispatch(getBlog(data.Blogs));
+    if (data.status == "ok") {
+      dispatch(addComment(data));
+      toast.success("Comment Added 🚀🚀", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+    setComment("");
     setLoading(false);
   };
 
   const shareFunction = () => {
     navigator.share({
-      title: `${blog.title}`,
-      text: `${blog.content}`,
+      title: `${blogData.title}`,
+      text: `${blogData.content}`,
       url: `${endPointF}/blog`,
     });
   };
@@ -73,7 +83,7 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
-  console.log(blog);
+  console.log(blogData);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -102,7 +112,7 @@ const Blog = () => {
                         className="card-tile font-weight-bold pt-2"
                         style={{ fontSize: "14px" }}
                       >
-                        {blog.updatedBy.name}
+                        {blogData.updatedBy.name}
                       </span>
                       <span className="pl-2 pt-2">·</span>
                       <span
@@ -113,7 +123,7 @@ const Blog = () => {
                           color: "#333",
                         }}
                       >
-                        {new Date(blog.createdAt).toDateString()}
+                        {new Date(blogData.createdAt).toDateString()}
                       </span>
                       <span className="pl-2 pt-2">·</span>
                       <span
@@ -150,9 +160,11 @@ const Blog = () => {
                       </span>
                     </p>
                   </p>
-                  <h3 className="card-title font-weight-bold ">{blog.title}</h3>
+                  <h3 className="card-title font-weight-bold ">
+                    {blogData.title}
+                  </h3>
                   <p className="card-text description text-justify">
-                    {ReactHtmlParser(blog.content)}
+                    {ReactHtmlParser(blogData.content)}
                   </p>
                 </div>
               </div>
@@ -167,7 +179,7 @@ const Blog = () => {
             </div>
           </div>
           <h3 className="card-title font-weight-bold">Comments</h3>
-          {blog.comments.map((comment) => (
+          {blogData.comments.map((comment) => (
             <>
               <p className="m-0 p-0   d-flex justify-content-between">
                 <p className="d-flex align-items-center ">
@@ -222,18 +234,16 @@ const Blog = () => {
               onChange={(e) => setComment(e.target.value)}
               name="comment"
               value={comment}
-              // value={blog.title}
-              // onChange={handleChange}
               id="yourName"
               required
             />
             <div className="col-12 text-center">
               <button
-                onClick={addComment}
+                onClick={addComment1}
                 className="my-3 btn recommended rounded-pill"
                 style={{ padding: "8px 70px" }}
               >
-                Add comment
+                {loading ? <Loader /> : "Add comment"}
               </button>
             </div>
           </div>

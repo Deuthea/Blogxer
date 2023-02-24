@@ -38,7 +38,7 @@ const Login = () => {
       });
     }
     setLoading(false);
-    console.log(resP);
+    // console.log(resP);
   };
 
   const handleChange = (e) => {
