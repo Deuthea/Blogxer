@@ -5,6 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import { api } from "../../config.js";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
+import logo from "../../assets/OIP.jpg";
 
 const endPoint = api.endPoint;
 
@@ -15,6 +16,12 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const submit = async (e) => {
     e.preventDefault();
+    if (data.email == "" || data.password == "") {
+      toast.error(`All fields are required !! 🙂`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
     setLoading(true);
 
     // console.log(data);
@@ -49,78 +56,117 @@ const Login = () => {
   if (state) return <Navigate replace to="/" />;
   else {
     return (
-      <div className="">
-        <div className="container">
-          <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
-                  <div className="card card-auth mb-3">
-                    <div className="card-body">
-                      <div className="pt-4 pb-2">
-                        <h4 className="card-title text-center pb-0 ">
-                          Login your Account
-                        </h4>
-                        <p className="text-center small">
-                          Enter your details to create account
-                        </p>
-                      </div>
-
-                      <form className="row g-3 needs-validation" novalidate>
-                        <div className="col-12 mb-2">
-                          <label for="yourEmail" className="form-label">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            onChange={handleChange}
-                            className="form-control"
-                            id="yourEmail"
-                            required
-                          />
-                        </div>
-
-                        <div className="col-12 mb-2">
-                          <label for="yourPassword" className="form-label">
-                            Password
-                          </label>
-                          <input
-                            type="password"
-                            value={data.password}
-                            onChange={handleChange}
-                            name="password"
-                            className="form-control"
-                            id="yourPassword"
-                            required
-                          />
-                        </div>
-
-                        <div className="col-12 mb-2">
-                          <button
-                            onClick={submit}
-                            className="btn btn-secondary w-100"
-                            type="submit"
-                          >
-                            {loading ? <Loader /> : "Login"}
-                          </button>
-                        </div>
-                        <div className="col-12  mt-2 text-center  mb-2">
-                          <p className="small mb-0">
-                            Don't have an account?{" "}
-                            <Link to="/register">Register</Link>
-                          </p>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+      <>
+        <div class="mt-10 flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div class="border card-auth p-10 w-full max-w-md space-y-8">
+            <div>
+              <img class="mx-auto h-12 w-auto" src={logo} alt="Your Company" />
+              <h5 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
+                Log in to your account
+              </h5>
+              <p class="mt-2 text-center text-xl text-gray-600">
+                Enter Your Details
+              </p>
+            </div>
+            <form class="mt-8 space-y-6">
+              <input type="hidden" name="remember" value="true" />
+              <div class="-space-y-px rounded-md shadow-sm">
+                <div>
+                  <label for="email-address" class="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="email-address"
+                    name="email"
+                    onChange={handleChange}
+                    value={data.email}
+                    type="email"
+                    autocomplete="email"
+                    required
+                    class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Email address"
+                  />
+                </div>
+                <div>
+                  <label for="password" class="sr-only">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    value={data.password}
+                    onChange={handleChange}
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                    class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Password"
+                  />
                 </div>
               </div>
-            </div>
-          </section>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <label
+                    for="remember-me"
+                    class="ml-2 block text-sm text-gray-900"
+                  >
+                    Remember me
+                  </label>
+                </div>
+
+                <div class="text-sm">
+                  <a
+                    href="#"
+                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  onClick={submit}
+                  class="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <svg
+                      class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                  {loading ? <Loader /> : "Sign in"}
+                </button>
+              </div>
+              <div class="text-sm text-center">
+                <Link
+                  to="/register"
+                  href="#"
+                  class="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Don't have an account? Sign Up
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 };

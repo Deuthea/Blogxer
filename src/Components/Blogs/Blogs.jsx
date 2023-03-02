@@ -17,16 +17,6 @@ const Blogs = () => {
   const [time, setTime] = useState(0);
   const [newSearch, setNewSearch] = useState("");
 
-  // const handleSearch = (event) => {
-  //   const search = event.target.value;
-  //   setNewSearch(search);
-  // };
-
-  // const showSearchResults = newSearch    ? persons.filter((person) =>
-  //       person.name.toUpperCase().includes(newSearch.toUpperCase())
-  //     )
-  //   : persons;
-
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -39,14 +29,14 @@ const Blogs = () => {
   }, []);
 
   const blogs = useSelector((state) => state.blog.blogs);
-  // console.log(blogs);
+
   return (
     <div>
       {!loading && !state?.length == 0 ? (
         state?.map((blog) => (
           <div key={blog._id} className=" mb-3 mt-2 border-bottom">
             <div className=" row g-0 mb-3">
-              <div className="px-0 col-md-9">
+              <div className="px-0 col-lg-9">
                 <div className="card-body">
                   <p className="d-flex align-items-center ">
                     <span className="material-symbols-outlined profile-blog pr-2">
@@ -104,31 +94,33 @@ const Blogs = () => {
                         : ReactHtmlParser(blog.content)}{" "}
                     </Link>
                   </p>
-                  <p className="d-flex justify-content-between">
+                  <p className="d-flex text-3xl font-bold underline justify-content-between">
                     <p>
-                      {blog.tags?.map((tag) => (
+                      {blog.tags.slice(0, 1)?.map((tag) => (
                         <span
                           key={tag}
                           className="rounded-pill mr-2"
                           style={{
                             fontSize: "13px",
                             background: "#f0f0f0",
-                            padding: "5px 8px",
-                            fontWeight: "400",
+                            padding: "8px 15px",
+                            fontWeight: "600",
                             color: "#000",
                           }}
                         >
                           {tag}
                         </span>
                       ))}
-                      <span className="ml-0">·</span>
+                      <span className="ml-0" style={{ fontWeight: "600" }}>
+                        ·
+                      </span>
                       <span
                         className=""
                         style={{
                           fontSize: "13px",
                           // background: "#f0f0f0",
                           padding: "5px 8px",
-                          fontWeight: "400",
+                          fontWeight: "00",
                           color: "#666",
                         }}
                       >
@@ -139,7 +131,10 @@ const Blogs = () => {
                       </span>
                     </p>
                     <p>
-                      <span className="material-symbols-outlined">
+                      <span
+                        title="add bookmark"
+                        className="material-symbols-outlined"
+                      >
                         bookmark_add
                       </span>
                     </p>
