@@ -34,140 +34,55 @@ const Blogs = () => {
     <div>
       {!loading && !state?.length == 0 ? (
         state?.map((blog) => (
-          <div key={blog._id} className=" mb-3 mt-2 border-bottom">
-            <div className=" row g-0 mb-3">
-              <div className="px-0 col-lg-9">
-                <div className="card-body">
-                  <p className="d-flex align-items-center ">
-                    <span className="material-symbols-outlined profile-blog pr-2">
-                      <img
-                        style={{
-                          height: "25px",
-                          width: "25px",
-                          objectFit: "cover",
-                        }}
-                        src="https://source.unsplash.com/random"
-                        className="  rounded-pill "
-                        alt="..."
-                      />
-                    </span>
-                    <span
-                      className="card-tile font-weight-bold pt-2"
-                      style={{ fontSize: "14px" }}
-                    >
-                      {blog.updatedBy.name}
-                    </span>
-                    <span className="pl-2 pt-2">·</span>
-                    <span
-                      className="pt-2 px-2"
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "400",
-                        color: "#333",
-                      }}
-                    >
-                      {new Date(blog.createdAt).toDateString()}
-                    </span>
-                  </p>
-                  <h5 className="card-title font-weight-bold">
-                    <Link
-                      key={blog._id}
-                      onClick={() => dispatch(currentBlog(blog))}
-                      className="text-dark text-decoration-none"
-                      to={`/blog`}
-                    >
+          <div key={blog._id} className="mb-3 mt-2 border-bottom">
+            <Link
+              to={`/blog`}
+              onClick={() => dispatch(currentBlog(blog))}
+              class="mb-10 block  sm:flex   lg:flex  rounded-lg p-4  shadow-3xl  shadow-gray-100"
+            >
+              <img
+                alt="Home"
+                src="https://source.unsplash.com/random"
+                class="h-56 w-full sm:w-1/2 lg:w-1/3  mr-5 rounded-md object-cover"
+              />
+
+              <div class="mt-2">
+                <dl>
+                  <div>
+                    <dt class="sr-only">Title</dt>
+
+                    <dd class=" text-xl font-medium mb-2"> {blog.title}</dd>
+                  </div>
+                  <div>
+                    <dt class="sr-only">Date</dt>
+
+                    <dd class="text-sm text-gray-500">
                       {" "}
-                      {blog.title}
-                    </Link>
-                  </h5>
-                  <p className="card-text-blog">
-                    {/* {console.log(blog.content.length > 100)} */}
-                    <Link
-                      key={blog._id}
-                      onClick={() => dispatch(currentBlog(blog))}
-                      className="text-dark text-decoration-none"
-                      to={`/blog`}
-                    >
-                      {" "}
-                      {blog.content.length > 100
-                        ? ReactHtmlParser(blog.content.substring(0, 100))
-                        : ReactHtmlParser(blog.content)}{" "}
-                    </Link>
-                  </p>
-                  <p className="d-flex text-3xl font-bold underline justify-content-between">
-                    <p>
-                      {blog.tags.slice(0, 1)?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-pill mr-2"
-                          style={{
-                            fontSize: "13px",
-                            background: "#f0f0f0",
-                            padding: "8px 15px",
-                            fontWeight: "600",
-                            color: "#000",
-                          }}
-                        >
+                      {blog.updatedBy.name} ·{" "}
+                      {new Date(blog.createdAt).toDateString()} ·{" "}
+                      {Math.ceil(blog?.content.split(" ").length / avgWordsPM)}{" "}
+                      min read
+                    </dd>
+                  </div>
+                </dl>
+
+                <div class="mt-6 flex items-center gap-5 text-xs">
+                  {blog.tags?.map((tag) => (
+                    <div class="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+                      <div class="mt-1.5 sm:mt-0">
+                        <p class="font-medium border px-2 py-2 rounded-full hover:shadow-md">
                           {tag}
-                        </span>
-                      ))}
-                      <span className="ml-0" style={{ fontWeight: "600" }}>
-                        ·
-                      </span>
-                      <span
-                        className=""
-                        style={{
-                          fontSize: "13px",
-                          // background: "#f0f0f0",
-                          padding: "5px 8px",
-                          fontWeight: "00",
-                          color: "#666",
-                        }}
-                      >
-                        {Math.ceil(
-                          blog?.content.split(" ").length / avgWordsPM
-                        )}{" "}
-                        min read
-                      </span>
-                    </p>
-                    <p>
-                      <span
-                        title="add bookmark"
-                        className="material-symbols-outlined"
-                      >
-                        bookmark_add
-                      </span>
-                    </p>
-                  </p>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="px-4 py-5 col-md-3 ">
-                <Link
-                  key={blog._id}
-                  onClick={() => dispatch(currentBlog(blog))}
-                  className="text-dark text-decoration-none"
-                  to={`/blog`}
-                >
-                  {" "}
-                  <img
-                    style={{
-                      height: "20vh",
-                      width: "20vw",
-                      objectFit: "cover",
-                    }}
-                    src="https://source.unsplash.com/random"
-                    className=" img-fluid  rounded "
-                    alt="..."
-                  />
-                </Link>
-              </div>
-            </div>
+            </Link>
           </div>
         ))
       ) : (
-        <div className="d-flex my-5 justify-content-center">
-          <Loader />
-        </div>
+        <Loader />
       )}
     </div>
   );

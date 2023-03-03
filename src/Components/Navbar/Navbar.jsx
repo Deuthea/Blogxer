@@ -60,18 +60,22 @@ const Navbar = ({ page }) => {
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div class="flex flex-shrink-0 items-center">
-                <img
-                  class="block h-8 w-auto lg:hidden"
-                  src={logo}
-                  alt="Your Company"
-                />
-                <img
-                  class="hidden h-8 w-auto lg:block"
-                  src={logo}
-                  alt="Your Company"
-                />
+                <Link to="/">
+                  <img
+                    class="block h-8 w-auto lg:hidden"
+                    src={logo}
+                    alt="Your Company"
+                  />
+                </Link>
+                <Link className="flex text-white" to="/">
+                  <img
+                    class="hidden h-8 w-auto lg:block"
+                    src={logo}
+                    alt="Your Company"
+                  />{" "}
+                  <span className="my-auto mx-2 font-bold">Blogxer</span>
+                </Link>
               </div>
-              
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
@@ -187,7 +191,7 @@ const Navbar = ({ page }) => {
           </div>
         </div>
       </nav>
-      <nav className=" navbar navbar-expand-lg navbar-right ">
+      {/* <nav className=" navbar navbar-expand-lg navbar-right ">
         <Link to="/" className="navbar-brand underline-none">
           <img alt="image" src={logo} style={{ width: "35px" }} />
         </Link>
@@ -223,9 +227,7 @@ const Navbar = ({ page }) => {
                 >
                   <span className="material-symbols-outlined ">Search </span>
                 </span>
-                {/* <i className="bi bi-search text-dark"></i> */}
-                {/* <i className="fa-solid fa-magnifying-glass"></i> */}
-              </div>
+                  </div>
               <input
                 type="text"
                 style={{ borderLeft: "none" }}
@@ -238,7 +240,7 @@ const Navbar = ({ page }) => {
           </form>
 
           <ul className="navbar-nav d-flex align-items-center">
-            {/* <Link> */}
+            
             {page === "main" && (
               <li className="nav-item ">
                 <Link to="/new-blog" className="nav-link text-decoration-none">
@@ -250,35 +252,9 @@ const Navbar = ({ page }) => {
               </li>
             )}
 
-            {/* <li className="nav-item">
-            <Link to="/profile" className="nav-link text-decoration-none">
-            <span className="material-symbols-outlined profile ">
-            account_circle
-            </span>
-            </Link>
-          </li> */}
+            
             <li class="nav-item">
-              {/* <a
-              class="nav-link d-flex"
-              href="#"
-              
-              >
-              <span className="material-symbols-outlined profile-blog ">
-              <img
-              style={{
-                height: "30px",
-                width: "30px",
-                objectFit: "cover",
-              }}
-              src="https://source.unsplash.com/random"
-              className="  rounded-pill "
-              alt="..."
-              />
-              </span>
-              <span className="py-1 px-2" onClick={() => setMode(!mode)}>
-              {state?.name}
-              </span>
-            </a> */}
+               
 
               <span
                 className="contact-pill"
@@ -303,8 +279,7 @@ const Navbar = ({ page }) => {
                     ? "bg-white border rounded px-4 py-2  z-index-2 d-flex flex-column"
                     : "d-none"
                 }
-                // className={`bg-white border rounded px-4 py-2  z-index-2 ${mode}d-flex flex-column`}
-                style={{
+                 style={{
                   position: "absolute",
                   boxShadow:
                     "0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
@@ -353,7 +328,7 @@ const Navbar = ({ page }) => {
             </li>
           </ul>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 };

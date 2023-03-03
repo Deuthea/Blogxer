@@ -89,54 +89,66 @@ const Blog = () => {
     return (
       <>
         <Navbar page="blog" />
+        <div class="max-w-screen-xl mx-auto">
+          <main class="mt-10">
+            <div
+              class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative"
+              style={{ height: "24em" }}
+            >
+              <div
+                class="absolute left-0 bottom-0 w-full h-full z-10"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
+                }}
+              ></div>
+              <img
+                src="https://source.unsplash.com/random"
+                class="absolute left-0 top-0 w-full h-full z-0 object-cover"
+              />
+              <div class="p-4 absolute bottom-0 left-0 z-20">
+                {blog.tags.map((item) => (
+                  <a
+                    href="#"
+                    class="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
+                  >
+                    {item}
+                  </a>
+                ))}
+                <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
+                  {blogData.title}
+                </h2>
+                <div class="flex mt-3">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/97.jpg"
+                    class="h-10 w-10 rounded-full mr-2 object-cover"
+                  />
+                  <div>
+                    <p class="font-semibold text-gray-200 text-sm">
+                      {" "}
+                      {blogData.updatedBy.name}
+                    </p>
+                    <p class="font-semibold text-gray-400 text-xs">
+                      {" "}
+                      {new Date(blogData.createdAt).toDateString()} · {time} min
+                      read
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+              <p class="pb-6">{ReactHtmlParser(blogData.content)}</p>
+            </div>
+          </main>
+        </div>
         <div className="container">
           <div className=" mb-3 mt-2 d-flex flex-column justify-start align-items-center  col-lg-12">
             <div className=" row g-0 mb-3 col-lg-12">
               <div className="px-0 col-md-12 ">
                 <div className="card-body">
                   <p className="d-flex justify-content-between">
-                    <p className="d-flex align-items-center ">
-                      <span className="material-symbols-outlined profile-blog pr-2">
-                        <img
-                          style={{
-                            height: "25px",
-                            width: "25px",
-                            objectFit: "cover",
-                          }}
-                          src="https://source.unsplash.com/random"
-                          className="  rounded-pill "
-                          alt="..."
-                        />
-                      </span>
-                      <span
-                        className="card-tile font-weight-bold pt-2"
-                        style={{ fontSize: "14px" }}
-                      >
-                        {blogData.updatedBy.name}
-                      </span>
-                      <span className="pl-2 pt-2">·</span>
-                      <span
-                        className="pt-2 pl-2"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "400",
-                          color: "#333",
-                        }}
-                      >
-                        {new Date(blogData.createdAt).toDateString()}
-                      </span>
-                      <span className="pl-2 pt-2">·</span>
-                      <span
-                        className="pt-2 px-2"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "400",
-                          color: "#333",
-                        }}
-                      >
-                        {time} min read
-                      </span>
-                    </p>
                     <p>
                       <span
                         style={{ cursor: "pointer" }}
@@ -160,22 +172,8 @@ const Blog = () => {
                       </span>
                     </p>
                   </p>
-                  <h3 className="card-title font-weight-bold ">
-                    {blogData.title}
-                  </h3>
-                  <p className="card-text description text-justify">
-                    {ReactHtmlParser(blogData.content)}
-                  </p>
                 </div>
               </div>
-            </div>
-            <div className="px-0 py-1 col-md-10 mb-5 ">
-              <img
-                style={{ height: "80vh", width: "100vw", objectFit: "contain" }}
-                src="https://source.unsplash.com/random"
-                className=" img-fluid  rounded "
-                alt="..."
-              />
             </div>
           </div>
           <h3 className="card-title font-weight-bold">Comments</h3>
