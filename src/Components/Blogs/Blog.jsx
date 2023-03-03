@@ -176,73 +176,48 @@ const Blog = () => {
               </div>
             </div>
           </div>
-          <h3 className="card-title font-weight-bold">Comments</h3>
-          {blogData.comments.map((comment) => (
-            <>
-              <p className="m-0 p-0   d-flex justify-content-between">
-                <p className="d-flex align-items-center ">
-                  <span className="material-symbols-outlined profile-blog pr-2">
+          <div class="antialiased mx-auto max-w-screen-md">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
+
+            <div class="space-y-4">
+              {blogData.comments.map((comment) => (
+                <div key={comment._id} class="flex">
+                  <div class="flex-shrink-0 mr-3">
                     <img
-                      style={{
-                        height: "25px",
-                        width: "25px",
-                        objectFit: "cover",
-                      }}
-                      src="https://source.unsplash.com/random"
-                      class="  rounded-pill "
-                      alt="..."
+                      class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                      src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                      alt=""
                     />
-                  </span>
-                  <div className="d-flex flex-column">
-                    <span
-                      className="card-tile font-weight-bold pt-2"
-                      style={{ fontSize: "14px" }}
-                    >
-                      {comment?.user?.name}
-                    </span>
-
-                    <span
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "400",
-                        color: "#333",
-                      }}
-                    >
-                      Feb 7, 2016
-                    </span>
                   </div>
-                </p>
-              </p>
-              <p>{comment.content}</p>
-            </>
-          ))}
+                  <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                    <strong>{comment?.user?.name}</strong>{" "}
+                    <span class="text-xs text-gray-400">
+                      &nbsp; {new Date(comment.createdAt).toDateString()}
+                    </span>
+                    <p class="text-sm">{comment.content}</p>
+                  </div>
+                </div>
+              ))}
 
-          <div className="form-contol">
-            <input
-              type="text"
-              placeholder="Enter Comment"
-              className="form-control mb-4 title-input border-0"
-              style={{
-                fontSize: "30px",
-                outline: "none",
-                border: "none",
-                padding: "5px",
-              }}
-              autoFocus
-              onChange={(e) => setComment(e.target.value)}
-              name="comment"
-              value={comment}
-              id="yourName"
-              required
-            />
-            <div className="col-12 text-center">
-              <button
-                onClick={addComment1}
-                className="my-3 btn recommended rounded-pill"
-                style={{ padding: "8px 70px" }}
-              >
-                {loading ? <Loader /> : "Add comment"}
-              </button>
+              <textarea
+                id="message"
+                rows="4"
+                autoFocus
+                onChange={(e) => setComment(e.target.value)}
+                name="comment"
+                value={comment}
+                class="block outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border "
+                placeholder="Your message..."
+              ></textarea>
+              <div className="col-12 text-center">
+                <button
+                  onClick={addComment1}
+                  className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full my-2"
+                  style={{ padding: "8px 70px" }}
+                >
+                  {loading ? <Loader /> : "Add comment"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
