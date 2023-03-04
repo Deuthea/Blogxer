@@ -74,50 +74,48 @@ const WriteBlog = () => {
     <div>
       {" "}
       <Navbar page="write" />
-      <div className="container my-5">
-        <form>
-          <input
-            type="text"
-            placeholder="Enter Title"
-            className="form-control mb-4 title-input border-0"
-            style={{
-              fontSize: "40px",
-              outline: "none",
-              border: "none",
-              padding: "0",
-            }}
-            autoFocus
-            name="title"
-            value={blog.title}
-            onChange={handleChange}
-            id="yourName"
-            required
-          />
-
-          <div className="form-group">
-            <CKEditor
-              editor={ClassicEditor}
-              onChange={(event, editor) => {
-                data = editor.getData();
-                setBlog({ ...blog, content: data });
+      <div class="lg:w-3/4 lg:mx-auto px-10 ">
+        <main class="mt-10">
+          <form>
+            <input
+              type="text"
+              placeholder="Enter Title"
+              className=" mb-4 text-2xl border-0"
+              style={{
+                outline: "none",
+                border: "none",
+                padding: "0",
               }}
-              name="content"
-              value={blog.content}
+              autoFocus
+              name="title"
+              value={blog.title}
+              onChange={handleChange}
+              id="yourName"
+              required
             />
-          </div>
-          <div className="col-12 text-center">
-            <button
-              className="my-3 btn recommended rounded-pill"
-              style={{ padding: "8px 70px" }}
-              onClick={submit}
-            >
-              {loading ? <Loader /> : "Submit Blog"}
-            </button>
-          </div>
-          {/* <button type="button" className="btn btn-success" onClick={submit}>
-            Submit
-          </button> */}
-        </form>
+
+            <div className="form-group">
+              <CKEditor
+                editor={ClassicEditor}
+                onChange={(event, editor) => {
+                  data = editor.getData();
+                  setBlog({ ...blog, content: data });
+                }}
+                name="content"
+                value={blog.content}
+              />
+            </div>
+            <div className="col-12 text-center">
+              <button
+                className="my-3 btn recommended rounded-pill"
+                style={{ padding: "8px 70px" }}
+                onClick={submit}
+              >
+                {loading ? <Loader /> : "Submit Blog"}
+              </button>
+            </div>
+          </form>
+        </main>
       </div>
     </div>
   );

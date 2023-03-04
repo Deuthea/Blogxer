@@ -158,7 +158,7 @@ const Navbar = ({ page }) => {
         </div>
 
         {/* <!-- Mobile menu, show/hide based on menu state. --> */}
-        <div class="sm:hidden" id="mobile-menu">
+        <div class="sm:hidden " id="mobile-menu">
           <div class="space-y-1 px-2 pt-2 pb-3">
             <a
               href="#"

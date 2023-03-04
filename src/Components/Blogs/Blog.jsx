@@ -118,21 +118,48 @@ const Blog = () => {
                 <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
                   {blogData.title}
                 </h2>
-                <div class="flex mt-3">
-                  <img
-                    src="https://randomuser.me/api/portraits/men/97.jpg"
-                    class="h-10 w-10 rounded-full mr-2 object-cover"
-                  />
-                  <div>
-                    <p class="font-semibold text-gray-200 text-sm">
-                      {" "}
-                      {blogData.updatedBy.name}
-                    </p>
-                    <p class="font-semibold text-gray-400 text-xs">
-                      {" "}
-                      {new Date(blogData.createdAt).toDateString()} · {time} min
-                      read
-                    </p>
+                <div className="flex align-middle justify-between ">
+                  <div class="flex mt-3">
+                    <img
+                      src="https://randomuser.me/api/portraits/men/97.jpg"
+                      class="h-10 w-10 rounded-full mr-2 object-cover"
+                    />
+                    <div>
+                      <p class="font-semibold text-gray-200 text-sm">
+                        {" "}
+                        {blogData.updatedBy.name}
+                      </p>
+                      <p class="font-semibold text-gray-400 text-xs">
+                        {" "}
+                        {new Date(blogData.createdAt).toDateString()} · {time}{" "}
+                        min read
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex mt-3">
+                    <>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={textToSpeech}
+                        class="text-gray-200  border rounded-full px-2 py-2 material-symbols-outlined mx-2"
+                      >
+                        text_to_speech
+                      </span>
+                      <span
+                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={shareFunction}
+                      >
+                        share
+                      </span>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
+                      >
+                        bookmark_add
+                      </span>
+                    </>
                   </div>
                 </div>
               </div>
@@ -144,38 +171,6 @@ const Blog = () => {
           </main>
         </div>
         <div className="container">
-          <div className=" mb-3 mt-2 d-flex flex-column justify-start align-items-center  col-lg-12">
-            <div className=" row g-0 mb-3 col-lg-12">
-              <div className="px-0 col-md-12 ">
-                <div className="card-body">
-                  <p className="d-flex justify-content-between">
-                    <p>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        onClick={textToSpeech}
-                        class="material-symbols-outlined mx-2"
-                      >
-                        text_to_speech
-                      </span>
-                      <span
-                        className="material-symbols-outlined mx-2"
-                        style={{ cursor: "pointer" }}
-                        onClick={shareFunction}
-                      >
-                        share
-                      </span>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        className="material-symbols-outlined mx-2"
-                      >
-                        bookmark_add
-                      </span>
-                    </p>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="antialiased mx-auto max-w-screen-md">
             <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
 
