@@ -8,6 +8,7 @@ import WriteBlog from "../WriteBlog/WriteBlog";
 import Profile from "../Profile/Profile";
 import { Error404 } from "../Error404/Error404";
 import About from "../About/About";
+import EditProfile from "../Profile/EditProfile";
 
 const PrimaryRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const PrimaryRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
         {/* <Route path="/about" element={<About />} /> */}
         <Route path="*" element={<Error404 />} />
       </Routes>
