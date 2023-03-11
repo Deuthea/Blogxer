@@ -41,6 +41,27 @@ const EditProfile = () => {
   const prevButton = () => {
     setPageNumber(pageNumber - 1);
   };
+
+  const handleImageUpload = () => {
+    const { files } = document.querySelector('input[type="file"]');
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    // replace this with your upload preset name
+    formData.append("upload_preset", "qv5rfbwg");
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+
+    // replace cloudname with your Cloudinary cloud_name
+    return fetch(
+      "https://api.Cloudinary.com/v1_1/:cloud_name/image/upload",
+      options
+    )
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   const submit = async () => {
     console.log(data);
 

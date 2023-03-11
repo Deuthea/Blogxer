@@ -15,6 +15,8 @@ const endPoint = api.endPoint;
 const Blog = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const state = useSelector((state) => state.auth.user);
+  console.log(state);
   const token = localStorage.getItem("token");
   // console.log(params);
   const avgWordsPM = 250;
@@ -47,7 +49,7 @@ const Blog = () => {
       comment: comment,
     };
     const response = await fetch(
-      `${endPoint}/api/comment/addComment/${blogData?.updatedBy?._id}/${blogData?._id}`,
+      `${endPoint}/api/comment/addComment/${state?._id}/${blogData?._id}`,
       {
         method: "POST",
         headers: {
