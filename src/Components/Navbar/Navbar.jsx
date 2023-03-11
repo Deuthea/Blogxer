@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const Navbar = ({ page }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.auth.user);
+  const profile = useSelector((state) => state.auth.userProfile);
   const [mode, setMode] = useState(false);
   // console.log(mode);
   // console.log(state);
@@ -79,6 +80,13 @@ const Navbar = ({ page }) => {
               </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              {
+                <button class="flex rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2">
+                  <Link to="/new-blog" className="ml-2">
+                    Write Blog
+                  </Link>
+                </button>
+              }
               {page == "profile" && (
                 <button class="flex rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2">
                   <Link to="/edit-profile" className="ml-2">
@@ -99,8 +107,8 @@ const Navbar = ({ page }) => {
                     <span class="sr-only">Open user menu</span>
                     <img
                       onClick={() => setMode(!mode)}
-                      class="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      class="h-8 w-8 rounded-full  object-contain"
+                      src={profile?.profilePic}
                       alt=""
                     />
                   </button>

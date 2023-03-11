@@ -80,7 +80,7 @@ const WriteBlog = () => {
             <input
               type="text"
               placeholder="Enter Title"
-              className=" mb-4 text-2xl border-0"
+              className="w-full mb-4 text-2xl border-0"
               style={{
                 outline: "none",
                 border: "none",

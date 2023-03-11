@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className={`${mode ? "" : "dark-mode"}`}>
-      <div className="mode">
+      {/* <div className="mode">
         {" "}
         <a onClick={() => setMode(!mode)}>
           {mode ? (
@@ -38,7 +38,7 @@ function App() {
             </span>
           )}
         </a>
-      </div>
+      </div> */}
       <ToastContainer />
       <Router>
         <PrimaryRoutes />
