@@ -7,6 +7,7 @@ import { addComment } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
+import { deleteCommentRed } from "../../features/blog/blogSlice";
 import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
 const endPointF = api.frontend;
@@ -16,7 +17,7 @@ const Blog = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const state = useSelector((state) => state.auth.user);
-  console.log(state);
+  // console.log(state);
   const token = localStorage.getItem("token");
   // console.log(params);
   const avgWordsPM = 250;
@@ -25,21 +26,22 @@ const Blog = () => {
   const [loading, setLoading] = useState(false);
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
-  // console.log(blog);
+
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     const data = blogData?.content.split(" ");
     const res = Math.ceil(data.length / avgWordsPM);
     setTime(res);
-    // console.log(data);
+
     setBlogData(blog);
   }, [blogData, blog]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  // console.log(blog);
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
+
   const addComment1 = async (e) => {
-    // e.preventDefault();
     if (comment == "")
       return toast.error("Please enter some text in comment box!", {
         position: toast.POSITION.TOP_CENTER,
@@ -61,14 +63,48 @@ const Blog = () => {
     );
     const data = await response.json();
     console.log(data);
+    // const comments
     if (data.status == "ok") {
-      dispatch(addComment(data));
+      const comment = blogData;
+      console.log(comment.comments);
+      comment.comments.push(data.comment);
+      Object.preventExtensions(comment);
+      console.log(comment);
+      setBlogData(comment);
+      // dispatch(addComment(blogData));
+      console.log(comment);
       toast.success("Comment Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
     }
     setComment("");
     setLoading(false);
+  };
+
+  const deleteComment = async (e, id) => {
+    // console.log(e, id);
+    try {
+      const res = await fetch(`${endPoint}/api/comment/deleteComment/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: "Bearer " + token,
+          "content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      const blog = { ...blogData };
+
+      const comments = blog.comments.filter(
+        (comment) => comment._id != data.comment._id
+      );
+      // console.log(comments);
+      if (data.status == "ok") {
+        dispatch(deleteCommentRed(comments));
+        toast.warn("Comment Deleted 🚀🚀", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    } catch (error) {}
   };
 
   const shareFunction = () => {
@@ -85,7 +121,8 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
-  console.log(blogData);
+  // console.log(blogData);
+  // console.log();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -177,8 +214,8 @@ const Blog = () => {
             <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
 
             <div class="space-y-4">
-              {blogData.comments.map((comment) => (
-                <div key={comment._id} class="flex">
+              {blogData?.comments?.map((comment) => (
+                <div key={comment?._id} class="flex">
                   <div class="flex-shrink-0 mr-3">
                     <img
                       class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
@@ -187,11 +224,39 @@ const Blog = () => {
                     />
                   </div>
                   <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                    <strong>{comment?.user?.name}</strong>{" "}
-                    <span class="text-xs text-gray-400">
-                      &nbsp; {new Date(comment.createdAt).toDateString()}
-                    </span>
-                    <p class="text-sm">{comment.content}</p>
+                    <div className="flex justify-between">
+                      <div>
+                        {" "}
+                        <strong>{comment?.user?.name}</strong>{" "}
+                        <span class="text-xs text-gray-400">
+                          &nbsp; {new Date(comment?.createdAt).toDateString()}
+                        </span>
+                        <p class="text-sm">{comment?.content}</p>
+                      </div>
+                      {state?._id == blogData?.updatedBy?._id && (
+                        <div>
+                          <button
+                            onClick={(e) => deleteComment(e, comment?._id)}
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
