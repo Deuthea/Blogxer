@@ -65,14 +65,14 @@ const Blog = () => {
     console.log(data);
     // const comments
     if (data.status == "ok") {
-      const comment = blogData;
-      console.log(comment.comments);
-      comment.comments.push(data.comment);
-      Object.preventExtensions(comment);
-      console.log(comment);
-      setBlogData(comment);
-      // dispatch(addComment(blogData));
-      console.log(comment);
+      // const comment = blogData;
+      // console.log(comment.comments);
+      // comment.comments.push(data.comment);
+      // Object.preventExtensions(comment);
+      // console.log(comment);
+      // setBlogData(comment);
+      dispatch(addComment(blogData));
+      // console.log(comment);
       toast.success("Comment Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
