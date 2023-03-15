@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./../../features/Auth/authSlice";
 import { toast } from "react-toastify";
+import Button from "../Button/Button";
 
 const Navbar = ({ page }) => {
   const dispatch = useDispatch();
@@ -39,8 +40,8 @@ const Navbar = ({ page }) => {
 
   return (
     <>
-      <nav class="bg-white">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <nav class="bg-white border navbar">
+        <div class="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
@@ -91,23 +92,18 @@ const Navbar = ({ page }) => {
                     alt="Your Company"
                   />
                 </Link>
-                <Link className="flex text-white" to="/">
-                  <img
-                    class="hidden h-8 w-auto lg:block"
-                    src={logo}
-                    alt="Your Company"
-                  />{" "}
-                  <span className="my-auto mx-2 font-bold">Blogxer</span>
+                <Link className="flex" to="/">
+                  <Button class="bg-black text-white">Blogxer</Button>
                 </Link>
               </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {
-                <button class=" rounded-md hover:bg-blue-900 bg-blue-800 p-1   focus:outline-none  focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
-                  <Link to="/new-blog" className="px-2 font-bold text-white hover:text-gray-400">
-                    Write Blog
-                  </Link>
-                </button>
+                <Link to="/new-blog" className="px-2">
+                  <Button class="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
+                    Create Blog
+                  </Button>
+                </Link>
               }
 
               <div class="relative ml-3">

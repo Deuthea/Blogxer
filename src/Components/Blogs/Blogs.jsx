@@ -38,18 +38,18 @@ const Blogs = () => {
         {!loading && state?.length == 0 && (
           <p className="text-center"> OOPs! No blogs Found</p>
         )}
-        {!loading  ? (
+        {!loading ? (
           state?.map((blog) => (
-            <div key={blog._id} className="mb-3 mt-2 border-bottom">
+            <div key={blog._id} className="mb-3 mt-2 bg-white border-bottom">
               <Link
                 to={`/blog`}
                 onClick={() => dispatch(currentBlog(blog))}
-                class="mb-10 block  sm:flex   lg:flex  rounded-lg p-4  shadow-3xl  shadow-gray-100"
+                class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
               >
                 <img
                   alt="Home"
                   src="https://source.unsplash.com/random"
-                  class="h-56 w-full sm:w-1/2 lg:w-1/3  mr-5 rounded-md object-cover"
+                  class="h-56 md:h-80 w-full    mr-5 rounded-md object-cover"
                 />
 
                 <div class="mt-2">
