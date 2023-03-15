@@ -11,13 +11,35 @@ const Navbar = ({ page }) => {
   const state = useSelector((state) => state.auth.user);
   const profile = useSelector((state) => state.auth.userProfile);
   const [mode, setMode] = useState(false);
+  const [links, setLinks] = useState([
+    {
+      path: "/dashboard",
+      content: "DashBoard",
+    },
+    {
+      path: "/new-blog",
+      content: "Create Blog",
+    },
+    {
+      path: "/edit-profile",
+      content: "Edit Profile",
+    },
+    {
+      path: "/bookmarks",
+      content: "Bookmarks",
+    },
+    {
+      path: "/setting",
+      content: "Settings",
+    },
+  ]);
   // console.log(mode);
   // console.log(state);
   console.log(page);
 
   return (
     <>
-      <nav class="bg-gray-800">
+      <nav class="bg-white">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -81,19 +103,12 @@ const Navbar = ({ page }) => {
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {
-                <button class="flex rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2">
-                  <Link to="/new-blog" className="ml-2">
+                <button class=" rounded-md hover:bg-blue-900 bg-blue-800 p-1   focus:outline-none  focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
+                  <Link to="/new-blog" className="px-2 font-bold text-white hover:text-gray-400">
                     Write Blog
                   </Link>
                 </button>
               }
-              {page == "profile" && (
-                <button class="flex rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2">
-                  <Link to="/edit-profile" className="ml-2">
-                    Edit Profile
-                  </Link>
-                </button>
-              )}
 
               <div class="relative ml-3">
                 <div>
@@ -123,32 +138,29 @@ const Navbar = ({ page }) => {
                   aria-labelledby="user-menu-button"
                   tabindex="-1"
                 >
-                  <a class="flex align-middle justify-center pb-2 px-4 font-bold text-md text-gray-700">
-                    {state.name}
-                  </a>
-                  <hr className="border-b-2 mx-3" />
                   <Link
                     to="/profile"
-                    class="flex align-middle justify-center  px-3 py-2 text-sm text-gray-700"
-                    role="menuitem"
-                    tabindex="-1"
-                    id="user-menu-item-0"
+                    class=" flex flex-col align-middle justify-start pb-2 px-4    text-gray-700"
                   >
-                    <span className="mr-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                      </svg>
-                    </span>
-
-                    <span className="">Your Profile</span>
+                    <span className="text-lg font-bold">{state.name}</span>
+                    <span className="text-md"> @tarun_choudhary</span>
                   </Link>
                   <hr className="border-b-1 mx-3" />
+                  {links?.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      class="flex align-middle hover:text-blue-500 justify-start  px-3 py-2 text-md text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                    >
+                      <span className="mr-1"></span>
 
+                      <span className="">{link.content}</span>
+                    </Link>
+                  ))}
+                  <hr className="border-b-1 mx-3" />
                   <a
                     onClick={() => {
                       dispatch(logout());
@@ -157,211 +169,20 @@ const Navbar = ({ page }) => {
                       });
                     }}
                     // href="#"
-                    class="flex cursor-pointer justify-center px-4 py-2 text-sm text-gray-700"
+                    class="flex cursor-pointer justify-start px-3 py-2 text-md text-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-2"
                   >
-                    <span className="mr-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        class="w-5 h-5"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"
-                          clip-rule="evenodd"
-                        />
-                        <path
-                          fill-rule="evenodd"
-                          d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-.943a.75.75 0 10-1.004-1.114l-2.5 2.25a.75.75 0 000 1.114l2.5 2.25a.75.75 0 101.004-1.114l-1.048-.943h9.546A.75.75 0 0019 10z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
+                    <span className="mr-1"></span>
                     <span> Sign out</span>
                   </a>
-                  {/* <hr className="border-b-2 mx-3" /> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <!-- Mobile menu, show/hide based on menu state. --> */}
-        <div class="sm:hidden " id="mobile-menu">
-          <div class="space-y-1 px-2 pt-2 pb-3">
-            <a
-              href="#"
-              class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-              aria-current="page"
-            >
-              Dashboard
-            </a>
-
-            <a
-              href="#"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-            >
-              Team
-            </a>
-
-            <a
-              href="#"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-            >
-              Projects
-            </a>
-
-            <a
-              href="#"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-            >
-              Calendar
-            </a>
-          </div>
-        </div>
       </nav>
-      {/* <nav className=" navbar navbar-expand-lg navbar-right ">
-        <Link to="/" className="navbar-brand underline-none">
-          <img alt="image" src={logo} style={{ width: "35px" }} />
-        </Link>
-        <button
-          className="navbar-toggler"
-          style={{ outline: "none", border: "none" }}
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <div className="d-flex align-items-center">
-            <span
-              className="navbar-toggler-icon "
-              style={{ width: "1.3em", height: "1.1em" }}
-            ></span>{" "}
-            <span className="" style={{ height: "1.1em" }}>
-              MENU
-            </span>
-          </div>
-        </button>
-
-        <div className="collapse navbar-collapse " id="navbarNavDropdown">
-          <form className="form-inline rounded">
-            <div className="input-group  ">
-              <div className="input-group-prepend">
-                <span
-                  className="input-group-text bg-white pt-1 pr-1"
-                  style={{ borderRight: "none" }}
-                  id="basic-addon1"
-                >
-                  <span className="material-symbols-outlined ">Search </span>
-                </span>
-                  </div>
-              <input
-                type="text"
-                style={{ borderLeft: "none" }}
-                className="form-control  pl-1 pt-1 outline"
-                placeholder="Search Blogxer"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
-            </div>
-          </form>
-
-          <ul className="navbar-nav d-flex align-items-center">
-            
-            {page === "main" && (
-              <li className="nav-item ">
-                <Link to="/new-blog" className="nav-link text-decoration-none">
-                  <span className="material-symbols-outlined pr-2">
-                    edit_square
-                  </span>
-                  write
-                </Link>
-              </li>
-            )}
-
-            
-            <li class="nav-item">
-               
-
-              <span
-                className="contact-pill"
-                style={{ cursor: "pointer" }}
-                onClick={() => setMode(!mode)}
-              >
-                <img
-                  className="rounded-pill"
-                  style={{
-                    height: "40px",
-                    width: "40px",
-                    objectFit: "cover",
-                  }}
-                  src="https://source.unsplash.com/random"
-                />
-                {state?.name}
-              </span>
-
-              <ul
-                className={
-                  mode
-                    ? "bg-white border rounded px-4 py-2  z-index-2 d-flex flex-column"
-                    : "d-none"
-                }
-                 style={{
-                  position: "absolute",
-                  boxShadow:
-                    "0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19)",
-
-                  zIndex: "100",
-                }}
-              >
-                <li class="nav-link d-flex flex-column ">
-                  <h6 className="font-weight-bold">{state?.name}</h6>
-                  <span className="text-center">Web Designer</span>
-                </li>
-                <hr class="dropdown-divider" />
-
-                <li class="nav-link">
-                  <Link
-                    to="/profile"
-                    className="text-decoration-none text-dark"
-                    style={{ cursor: "pointer", display: "flex" }}
-                  >
-                    <span class="material-symbols-outlined pr-2">
-                      account_circle
-                    </span>
-                    My Profile
-                  </Link>
-                </li>
-                <hr class="dropdown-divider" />
-
-                <li className="nav-link">
-                  <a
-                    className=""
-                    style={{ cursor: "pointer", display: "flex" }}
-                    onClick={() => {
-                      dispatch(logout());
-                      toast.warn("Logout Successfull ✅", {
-                        position: toast.POSITION.TOP_CENTER,
-                      });
-                    }}
-                  >
-                    <span className="material-symbols-outlined pr-2">
-                      Logout
-                    </span>{" "}
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav> */}
     </>
   );
 };
