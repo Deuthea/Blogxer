@@ -40,7 +40,7 @@ const Navbar = ({ page }) => {
 
   return (
     <>
-      <nav class="bg-white border navbar">
+      <nav class=" sticky z-30 top-0 bg-white border navbar">
         <div class="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -83,7 +83,7 @@ const Navbar = ({ page }) => {
                 </svg>
               </button>
             </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div class="flex align-middle flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div class="flex flex-shrink-0 items-center">
                 <Link to="/">
                   <img
@@ -95,6 +95,27 @@ const Navbar = ({ page }) => {
                 <Link className="flex" to="/">
                   <Button class="bg-black text-white">Blogxer</Button>
                 </Link>
+                <div class="flex justify-center">
+                  <div class="mx-4 xl:w-90">
+                    <div class="relative flex w-full flex-wrap items-stretch">
+                      <input
+                        type="search"
+                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="button-addon3"
+                      />
+                      <button
+                        class="relative z-[2] rounded-r border-2 border-blue-800 px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+                        type="button"
+                        id="button-addon3"
+                        data-te-ripple-init
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

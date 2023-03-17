@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import Loader from "../Loader/Loader";
 import { addBlog } from "../../features/blog/blogSlice";
 import { useNavigate } from "react-router-dom";
+import Button from "../Button/Button";
 
 const endPoint = api.endPoint;
 
@@ -18,6 +19,7 @@ const WriteBlog = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const [tagValue, setTagValue] = useState("");
   const [blog, setBlog] = useState({
     title: "",
     content: "",
@@ -25,12 +27,24 @@ const WriteBlog = () => {
     tags: [],
   });
 
+  const addTags = (e) => {
+    if (e.keyCode === 13 && tagValue) {
+      const data = { ...blog };
+      blog.tags.push(tagValue);
+      setBlog(data);
+      setTagValue("");
+    }
+    console.log(blog);
+  };
+
   const handleChange = (e) => {
     setBlog({ ...blog, [e.target.name]: e.target.value });
   };
 
   const submit = async (e) => {
-    e.preventDefault();
+    if (e.keyCode == 13) {
+      return e.preventDefault();
+    }
     // console.log(blog);
     setLoading(true);
     if (
@@ -84,14 +98,38 @@ const WriteBlog = () => {
               style={{
                 outline: "none",
                 border: "none",
-                padding: "0",
+                padding: "10px",
               }}
               autoFocus
               name="title"
               value={blog.title}
               onChange={handleChange}
               id="yourName"
-              required
+              // required
+            />
+            <p>
+              {blog?.tags.map((item) => (
+                <Button className="text-black font-bold bg-green-400">
+                  #{item} &nbsp;
+                </Button>
+              ))}
+            </p>
+            <input
+              type="text"
+              placeholder="Enter Title"
+              className="w-full mb-4 text-2xl border-0"
+              style={{
+                outline: "none",
+                border: "none",
+                padding: "10px",
+              }}
+              autoFocus
+              name="tags"
+              value={tagValue}
+              onChange={(e) => setTagValue(e.target.value)}
+              onKeyDown={addTags}
+              id="yourName"
+              // required
             />
 
             <div className="form-group">
@@ -107,6 +145,7 @@ const WriteBlog = () => {
             </div>
             <div className="col-12 text-center">
               <button
+                type="button"
                 className="my-3 btn recommended rounded-pill"
                 style={{ padding: "8px 70px" }}
                 onClick={submit}

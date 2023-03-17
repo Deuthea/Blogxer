@@ -5,6 +5,7 @@ import BlogsRecommend from "../BlogRight/BlogsRecommend";
 import Blogs from "../Blogs/Blogs";
 import Navbar from "../Navbar/Navbar";
 import { Sidebar } from "../Sidebar/Sidebar";
+import RightSidebar from "../Sidebar/RightSideBar";
 import "./MainScreen.css";
 
 const MainScreen = () => {
@@ -14,15 +15,15 @@ const MainScreen = () => {
     return (
       <>
         <Navbar page="main" />
-        <div className="main">
-          <section className="w-0 md:w-1/5">
+        <div className="main ">
+          <section className=" relative w-0 mx-2  md:w-1/5">
             <Sidebar />
           </section>
-          <section className="w-5/5 md:w-3/5">
+          <section className=" w-5/5 md:w-3/5">
             <Blogs />
           </section>
           <section className="w-0 md:w-1/5">
-            <Sidebar />
+            <RightSidebar />
           </section>
         </div>
       </>
