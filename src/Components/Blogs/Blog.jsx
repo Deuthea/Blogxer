@@ -10,6 +10,12 @@ import { useEffect } from "react";
 import { deleteCommentRed } from "../../features/blog/blogSlice";
 import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
+import { Sidebar } from "../Sidebar/Sidebar";
+import Like from "../Icons/Like";
+import Comment from "../Icons/Comment";
+import BookMark from "../Icons/BookMark";
+import Button from "../Button/Button";
+import User from "../Icons/User";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -128,14 +134,38 @@ const Blog = () => {
     return (
       <>
         <Navbar page="blog" />
-        <div class="max-w-screen-xl mx-auto">
-          <main class="mt-10">
+        <div class="max-w-screen-xl flex mx-auto">
+          <section className="  w-0 mx-2 mt-10 md:w-1/6 ">
+            <div className="sticky top-20 flex  justify-end">
+              <div className=" flex flex-col align-middle mr-10">
+                <span className="my-3 text-md">
+                  <span>
+                    <Like />
+                    <span className="">43</span>
+                  </span>
+                </span>
+                <span className="my-2">
+                  <span>
+                    <Comment />
+                    <span>43</span>
+                  </span>
+                </span>
+                <span className="my-2">
+                  <span>
+                    <BookMark />
+                    <span>43</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </section>
+          <main class="mt-10 w-3/6 bg-white shadow  ">
             <div
-              class="mb-4 md:mb-0 w-full max-w-screen-md mx-auto relative"
+              class="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
               style={{ height: "24em" }}
             >
               <div
-                class="absolute left-0 bottom-0 w-full h-full z-10"
+                class="absolute  left-0 bottom-0 w-full h-full z-10"
                 style={{
                   backgroundImage:
                     "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
@@ -203,85 +233,145 @@ const Blog = () => {
                 </div>
               </div>
             </div>
+            <div className="px-10">
+              <div class=" px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+                <p class="pb-6">{ReactHtmlParser(blogData.content)}</p>
+              </div>
+            </div>
+            <div className="px-10 ">
+              <div class="antialiased mx-auto max-w-screen-md">
+                <h3 class="mb-4 text-lg font-semibold text-gray-900">
+                  Comments
+                </h3>
 
-            <div class="px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
-              <p class="pb-6">{ReactHtmlParser(blogData.content)}</p>
+                <div class="space-y-4">
+                  {blogData?.comments?.map((comment) => (
+                    <div key={comment?._id} class="flex">
+                      <div class="flex-shrink-0 mr-3">
+                        <img
+                          class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                          src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                          alt=""
+                        />
+                      </div>
+                      <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                        <div className="flex justify-between">
+                          <div>
+                            {" "}
+                            <strong>{comment?.user?.name}</strong>{" "}
+                            <span class="text-xs text-gray-400">
+                              &nbsp;{" "}
+                              {new Date(comment?.createdAt).toDateString()}
+                            </span>
+                            <p class="text-sm">{comment?.content}</p>
+                          </div>
+                          {state?._id == blogData?.updatedBy?._id && (
+                            <div>
+                              <button
+                                onClick={(e) => deleteComment(e, comment?._id)}
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <textarea
+                    id="message"
+                    rows="4"
+                    autoFocus
+                    onChange={(e) => setComment(e.target.value)}
+                    name="comment"
+                    value={comment}
+                    class="block  outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border "
+                    placeholder="Your message..."
+                  ></textarea>
+                  <div className="col-12 text-center">
+                    <button
+                      onClick={addComment1}
+                      className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full my-2"
+                      style={{ padding: "8px 70px" }}
+                    >
+                      {loading ? <Loader /> : "Add comment"}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </main>
-        </div>
-        <div className="container">
-          <div class="antialiased mx-auto max-w-screen-md">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
-
-            <div class="space-y-4">
-              {blogData?.comments?.map((comment) => (
-                <div key={comment?._id} class="flex">
-                  <div class="flex-shrink-0 mr-3">
-                    <img
-                      class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                      src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                      alt=""
-                    />
+          <section className="mt-10  w-0 ml-10   md:w-2/6">
+            <div class=" bg-gray-200   w-4/6 sticky top-20 flex flex-wrap items-center  justify-center  ">
+              <div class="container  bg-white  shadow-lg    transform   duration-200 easy-in-out">
+                <div class=" h-20 overflow-hidden">
+                  <img
+                    class="w-full"
+                    src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    alt=""
+                  />
+                </div>
+                <div class="flex justify-center px-5  -mt-6">
+                  <img
+                    class="h-12 w-12 bg-white p-2 rounded-full   "
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    alt=""
+                  />
+                </div>
+                <div class=" ">
+                  <div class="text-center px-10">
+                    <h2 class="text-gray-800 text-xl font-bold">
+                      Mohit Dhiman
+                    </h2>
+                    <a
+                      class="text-gray-400 mt-2 text-sm hover:text-blue-500"
+                      href="https://www.instagram.com/immohitdhiman/"
+                      target="BLANK()"
+                    >
+                      @immohitdhiman
+                    </a>
+                    <br />
+                    <Button class="bg-blue-800 text-white my-1">
+                       Follow
+                    </Button>
+                    <p class="mt-2 text-gray-500 text-sm">
+                      Lorem Ipsum is simply
+                    </p>
                   </div>
-                  <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                    <div className="flex justify-between">
-                      <div>
+                  <hr class="mt-6" />
+                  <div class="flex  bg-gray-50 ">
+                    <div class="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
+                      <p>
+                        <span class="font-semibold">2.5 k </span> Followers
+                      </p>
+                    </div>
+                    <div class="border"></div>
+                    <div class="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
+                      <p>
                         {" "}
-                        <strong>{comment?.user?.name}</strong>{" "}
-                        <span class="text-xs text-gray-400">
-                          &nbsp; {new Date(comment?.createdAt).toDateString()}
-                        </span>
-                        <p class="text-sm">{comment?.content}</p>
-                      </div>
-                      {state?._id == blogData?.updatedBy?._id && (
-                        <div>
-                          <button
-                            onClick={(e) => deleteComment(e, comment?._id)}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="w-6 h-6"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      )}
+                        <span class="font-semibold">2.0 k </span> Following
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))}
-
-              <textarea
-                id="message"
-                rows="4"
-                autoFocus
-                onChange={(e) => setComment(e.target.value)}
-                name="comment"
-                value={comment}
-                class="block outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border "
-                placeholder="Your message..."
-              ></textarea>
-              <div className="col-12 text-center">
-                <button
-                  onClick={addComment1}
-                  className="bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full my-2"
-                  style={{ padding: "8px 70px" }}
-                >
-                  {loading ? <Loader /> : "Add comment"}
-                </button>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </>
     );

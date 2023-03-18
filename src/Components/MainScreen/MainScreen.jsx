@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import BlogsRecommend from "../BlogRight/BlogsRecommend";
+ 
 import Blogs from "../Blogs/Blogs";
 import Navbar from "../Navbar/Navbar";
 import { Sidebar } from "../Sidebar/Sidebar";
