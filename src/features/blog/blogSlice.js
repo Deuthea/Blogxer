@@ -15,14 +15,22 @@ export const blogSlice = createSlice({
     addBlog: (state, action) => {
       state.blogs.push(action.payload);
     },
+
     addComment: (state, action) => {
-      state.currentBlog.comments.push(action.payload.comment);
-      // console.log("current blog reducer" + currentBlog);
-      // localStorage.setItem("currentBlog", currentBlog);
+      localStorage.setItem("currentBlog", JSON.stringify(action.payload));
+      state.currentBlog = action.payload;
+    },
+    addLike: (state, action) => {
+      localStorage.setItem("currentBlog", JSON.stringify(action.payload));
+      state.currentBlog = action.payload;
+    },
+    addUnlike: (state, action) => {
+      localStorage.setItem("currentBlog", JSON.stringify(action.payload));
+      state.currentBlog = action.payload;
     },
     deleteCommentRed: (state, action) => {
-      console.log("action.payload", action.payload);
-      state.currentBlog.comments = action.payload;
+      localStorage.setItem("currentBlog", JSON.stringify(action.payload));
+      state.currentBlog = action.payload;
     },
     currentBlog: (state, action) => {
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
@@ -39,6 +47,8 @@ export const {
   addBlog,
   currentBlog,
   deleteCommentRed,
+  addLike,
+  addUnlike,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

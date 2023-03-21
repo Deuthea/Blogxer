@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
-import { addComment } from "../../features/blog/blogSlice";
+import { addComment, addLike, addUnlike } from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
@@ -16,6 +16,9 @@ import Comment from "../Icons/Comment";
 import BookMark from "../Icons/BookMark";
 import Button from "../Button/Button";
 import User from "../Icons/User";
+import ToolTip from "../ToolTip/ToolTip";
+import moment from "moment";
+import UnLike from "../Icons/UnLike";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -32,6 +35,9 @@ const Blog = () => {
   const [loading, setLoading] = useState(false);
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
+  const user = useSelector((state) => state.auth.user);
+  let likeValue = false;
+  const [likeToggle, setLikeToggle] = useState(likeValue);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -39,13 +45,21 @@ const Blog = () => {
     const data = blogData?.content.split(" ");
     const res = Math.ceil(data.length / avgWordsPM);
     setTime(res);
-
     setBlogData(blog);
+
+    for (let index = 0; index < blogData?.like.length; index++) {
+      if (blogData?.like[index]._id == user._id) {
+        likeValue = true;
+        break;
+      }
+    }
+    console.log("like value" + likeValue);
+    setLikeToggle(likeValue);
   }, [blogData, blog]);
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const addComment1 = async (e) => {
     if (comment == "")
@@ -54,31 +68,22 @@ const Blog = () => {
       });
     setLoading(true);
     const data1 = {
-      comment: comment,
+      content: comment,
+      blogId: blogData?._id,
     };
-    const response = await fetch(
-      `${endPoint}/api/comment/addComment/${state?._id}/${blogData?._id}`,
-      {
-        method: "POST",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify(data1),
-      }
-    );
+    const response = await fetch(`${endPoint}/api/blog/addComment`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
     const data = await response.json();
     console.log(data);
-    // const comments
-    if (data.status == "ok") {
-      // const comment = blogData;
-      // console.log(comment.comments);
-      // comment.comments.push(data.comment);
-      // Object.preventExtensions(comment);
-      // console.log(comment);
-      // setBlogData(comment);
-      dispatch(addComment(blogData));
-      // console.log(comment);
+    if (data.success == true) {
+      setBlogData(data.blog);
+      dispatch(addComment(data.blog));
       toast.success("Comment Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -87,25 +92,67 @@ const Blog = () => {
     setLoading(false);
   };
 
+  const likeBlog = async (e) => {
+    const data1 = { blogId: blogData?._id };
+    const response = await fetch(`${endPoint}/api/blog/likeBlog`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
+    const data = await response.json();
+
+    if (data.success == true) {
+      setBlogData(data.blog);
+      dispatch(addLike(data.blog));
+      setLikeToggle(!likeToggle);
+      toast.success("Like Added 🚀🚀", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+
+  const UnLikeBlog = async (e) => {
+    const data1 = { blogId: blogData?._id };
+    const response = await fetch(`${endPoint}/api/blog/unlikeBlog`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
+    const data = await response.json();
+
+    if (data.success == true) {
+      setBlogData(data.blog);
+      dispatch(addUnlike(data.blog));
+      setLikeToggle(!likeToggle);
+      toast.success("Like Added 🚀🚀", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+
   const deleteComment = async (e, id) => {
     // console.log(e, id);
     try {
-      const res = await fetch(`${endPoint}/api/comment/deleteComment/${id}`, {
-        method: "DELETE",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      const blog = { ...blogData };
-
-      const comments = blog.comments.filter(
-        (comment) => comment._id != data.comment._id
+      const res = await fetch(
+        `${endPoint}/api/blog/deleteComment/${blogData?._id}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: "Bearer " + token,
+            "content-Type": "application/json",
+          },
+        }
       );
-      // console.log(comments);
-      if (data.status == "ok") {
-        dispatch(deleteCommentRed(comments));
+      const data = await res.json();
+      if (data.success == true) {
+        dispatch(deleteCommentRed(data.blog));
+        setBlogData(data.blog);
         toast.warn("Comment Deleted 🚀🚀", {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -127,8 +174,8 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
-  // console.log(blogData);
-  // console.log();
+  console.log(state?._id);
+  console.log(blogData?.postedBy?._id);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -138,22 +185,32 @@ const Blog = () => {
           <section className="  w-0 mx-2 mt-10 md:w-1/6 ">
             <div className="sticky top-20 flex  justify-end">
               <div className=" flex flex-col align-middle mr-10">
-                <span className="my-3 text-md">
+                <span className="my-3 text-md ">
                   <span>
-                    <Like />
-                    <span className="">43</span>
+                    {likeToggle ? (
+                      <button onClick={UnLikeBlog}>
+                        {" "}
+                        <UnLike />
+                      </button>
+                    ) : (
+                      <button onClick={likeBlog}>
+                        <Like />
+                      </button>
+                    )}
+                    <span className="mx-auto">{blog?.like.length}</span>
                   </span>
                 </span>
                 <span className="my-2">
                   <span>
                     <Comment />
-                    <span>43</span>
+                    <span>{blog?.comments.length}</span>
                   </span>
                 </span>
                 <span className="my-2">
                   <span>
                     <BookMark />
-                    <span>43</span>
+
+                    <span>{blog?.bookmarks.length}</span>
                   </span>
                 </span>
               </div>
@@ -196,7 +253,7 @@ const Blog = () => {
                     <div>
                       <p class="font-semibold text-gray-200 text-sm">
                         {" "}
-                        {blogData.updatedBy.name}
+                        {blogData.postedBy.name}
                       </p>
                       <p class="font-semibold text-gray-400 text-xs">
                         {" "}
@@ -250,7 +307,7 @@ const Blog = () => {
                       <div class="flex-shrink-0 mr-3">
                         <img
                           class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                          src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                          src={comment?.postedBy?.profilePic}
                           alt=""
                         />
                       </div>
@@ -258,14 +315,10 @@ const Blog = () => {
                         <div className="flex justify-between">
                           <div>
                             {" "}
-                            <strong>{comment?.user?.name}</strong>{" "}
-                            <span class="text-xs text-gray-400">
-                              &nbsp;{" "}
-                              {new Date(comment?.createdAt).toDateString()}
-                            </span>
+                            <strong>{comment?.postedBy?.name}</strong>{" "}
                             <p class="text-sm">{comment?.content}</p>
                           </div>
-                          {state?._id == blogData?.updatedBy?._id && (
+                          {state?._id == blogData?.postedBy?._id && (
                             <div>
                               <button
                                 onClick={(e) => deleteComment(e, comment?._id)}
@@ -275,13 +328,13 @@ const Blog = () => {
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
                                   viewBox="0 0 24 24"
-                                  strokeWidth={1.5}
+                                  stroke-width="1.5"
                                   stroke="currentColor"
-                                  className="w-6 h-6"
+                                  class="w-4 h-4"
                                 >
                                   <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
                                     d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                                   />
                                 </svg>
@@ -346,9 +399,7 @@ const Blog = () => {
                       @immohitdhiman
                     </a>
                     <br />
-                    <Button class="bg-blue-800 text-white my-1">
-                       Follow
-                    </Button>
+                    <Button class="bg-blue-800 text-white my-1">Follow</Button>
                     <p class="mt-2 text-gray-500 text-sm">
                       Lorem Ipsum is simply
                     </p>

@@ -22,17 +22,17 @@ const Blogs = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [newSearch, setNewSearch] = useState("");
 
-  // useEffect(() => {
-  //   (async () => {
-  //     setLoading(true);
-  //     const response = await fetch(`${endPoint}/api/blog/`);
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setState(data.Blogs);
-  //     dispatch(getBlog(data.Blogs));
-  //     setLoading(false);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const response = await fetch(`${endPoint}/api/blog/`);
+      const data = await response.json();
+      console.log(data);
+      setState(data.Blogs);
+      dispatch(getBlog(data.Blogs));
+      setLoading(false);
+    })();
+  }, []);
 
   const blogs = useSelector((state) => state.blog.blogs);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -70,7 +70,7 @@ const Blogs = () => {
                       <dd class="text-sm text-gray-500 ml-1 flex flex-col">
                         {" "}
                         <span className="font-bold text-black">
-                          {blog.updatedBy.name}
+                          {blog.postedBy.name}
                         </span>{" "}
                         <span>
                           {new Date(blog.createdAt).toDateString()}{" "}
@@ -94,11 +94,11 @@ const Blogs = () => {
                           {" "}
                           <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             {" "}
-                            <Like /> <span className="mx-1">169 Reactions</span>
+                            <Like /> <span className="mx-1">{blog.like.length} Reactions</span>
                           </span>{" "}
                           <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
                             <Comment />
-                            <span className="mx-1">169 Reactions</span>
+                            <span className="mx-1">{blog?.comments?.length} Comments</span>
                           </span>
                         </span>
                         <span className="text-sm flex">
