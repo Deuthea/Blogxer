@@ -9,6 +9,7 @@ import Profile from "../Profile/Profile";
 import { Error404 } from "../Error404/Error404";
 import About from "../About/About";
 import EditProfile from "../Profile/EditProfile";
+import Bookmarks from "../Bookmarks/Bookmarks";
 
 const PrimaryRoutes = () => {
   return (
@@ -21,7 +22,7 @@ const PrimaryRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
-        {/* <Route path="/about" element={<About />} /> */}
+        <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>

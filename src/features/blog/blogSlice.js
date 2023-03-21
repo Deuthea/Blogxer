@@ -20,6 +20,10 @@ export const blogSlice = createSlice({
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
       state.currentBlog = action.payload;
     },
+    addBookmark: (state, action) => {
+      localStorage.setItem("currentBlog", JSON.stringify(action.payload));
+      state.currentBlog = action.payload;
+    },
     addLike: (state, action) => {
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
       state.currentBlog = action.payload;
@@ -44,6 +48,7 @@ export const {
   getBlog,
   updateBlog,
   addComment,
+  addBookmark,
   addBlog,
   currentBlog,
   deleteCommentRed,

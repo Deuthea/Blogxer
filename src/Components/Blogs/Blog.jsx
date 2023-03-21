@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
-import { addComment, addLike, addUnlike } from "../../features/blog/blogSlice";
+import {
+  addBookmark,
+  addComment,
+  addLike,
+  addUnlike,
+} from "../../features/blog/blogSlice";
 import { api } from "../../config.js";
 import ReactHtmlParser from "html-react-parser";
 import { useEffect } from "react";
@@ -114,6 +119,28 @@ const Blog = () => {
     }
   };
 
+  const bookmarkBlog = async (e) => {
+    const data1 = { blogId: blogData?._id };
+    const response = await fetch(`${endPoint}/api/blog/bookmarkBlog`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
+    const data = await response.json();
+
+    if (data.success == true) {
+      setBlogData(data.blog);
+      dispatch(addBookmark(data.blog));
+
+      toast.success("Bookmark Added 🚀🚀", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+
   const UnLikeBlog = async (e) => {
     const data1 = { blogId: blogData?._id };
     const response = await fetch(`${endPoint}/api/blog/unlikeBlog`, {
@@ -208,7 +235,9 @@ const Blog = () => {
                 </span>
                 <span className="my-2">
                   <span>
-                    <BookMark />
+                    <button onClick={bookmarkBlog}>
+                      <BookMark />
+                    </button>
 
                     <span>{blog?.bookmarks.length}</span>
                   </span>
