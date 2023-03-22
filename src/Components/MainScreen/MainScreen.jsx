@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
- 
+
 import Blogs from "../Blogs/Blogs";
 import Navbar from "../Navbar/Navbar";
 import { Sidebar } from "../Sidebar/Sidebar";
@@ -16,13 +16,13 @@ const MainScreen = () => {
       <>
         <Navbar page="main" />
         <div className="main ">
-          <section className="  w-0 mx-2  md:w-1/5">
+          <section className="hidden md:block  w-0 mx-2  md:w-1/5">
             <Sidebar />
           </section>
-          <section className=" w-5/5 md:w-3/5">
+          <section className="w-full md:w-3/5">
             <Blogs />
           </section>
-          <section className="w-0 ml-5 md:w-1/5">
+          <section className=" hidden md:block w-0 ml-5 md:w-1/5">
             <RightSidebar />
           </section>
         </div>

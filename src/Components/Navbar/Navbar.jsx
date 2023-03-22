@@ -85,17 +85,10 @@ const Navbar = ({ page }) => {
             </div>
             <div class="flex align-middle flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div class="flex flex-shrink-0 items-center">
-                <Link to="/">
-                  <img
-                    class="block h-8 w-auto lg:hidden"
-                    src={logo}
-                    alt="Your Company"
-                  />
-                </Link>
                 <Link className="flex" to="/">
-                  <Button class="bg-black text-white">Blogxer</Button>
+                  <a class=" logo-design">Blogxer</a>
                 </Link>
-                <div class="flex justify-center">
+                <div class="hidden md:flex  justify-center">
                   <div class="mx-4 xl:w-90">
                     <div class="relative flex w-full flex-wrap items-stretch">
                       <input
@@ -120,7 +113,7 @@ const Navbar = ({ page }) => {
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {
-                <Link to="/new-blog" className="px-2">
+                <Link to="/new-blog" className="hidden md:block px-2">
                   <Button class="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
                     Create Blog
                   </Button>

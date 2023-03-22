@@ -20,7 +20,10 @@ export const Sidebar = () => {
     <div className="sticky top-20">
       <div className=" flex flex-col my-2 w-4/5">
         {state?.map((item) => (
-          <Link className="my-2 hover:bg-gray-100 hover:rounded-md   p-2 border border-gray-100 hover:border hover:bg-white hover:text-blue-700">
+          <Link
+            to={item.path}
+            className="my-2 hover:bg-gray-100 hover:rounded-md   p-2 border border-gray-100 hover:border hover:bg-white hover:text-blue-700"
+          >
             {item.content}
           </Link>
         ))}
@@ -30,7 +33,7 @@ export const Sidebar = () => {
           <div class="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
             <a
               class="link"
-              href={`${state?.facebook}`}
+              href="#"
               target="_blank"
               data-tippy-content="@facebook_handle"
             >
@@ -38,7 +41,7 @@ export const Sidebar = () => {
             </a>
             <a
               class="link"
-              href={`${state?.twitter}`}
+              href="#"
               target="_blank"
               data-tippy-content="@twitter_handle"
             >
@@ -46,7 +49,7 @@ export const Sidebar = () => {
             </a>
             <a
               class="link"
-              href={`${state?.github}`}
+              href="#"
               target="_blank"
               data-tippy-content="@github_handle"
             >
@@ -55,7 +58,7 @@ export const Sidebar = () => {
 
             <a
               class="link"
-              href={`${state?.instagram}`}
+              href="#"
               target="_blank"
               data-tippy-content="@instagram_handle"
             >
@@ -63,7 +66,7 @@ export const Sidebar = () => {
             </a>
             <a
               class="link"
-              href={`${state?.youtube}`}
+              href="#"
               target="_blank"
               data-tippy-content="@youtube_handle"
             >
@@ -71,8 +74,6 @@ export const Sidebar = () => {
             </a>
           </div>
         </div>
-
-        
       </div>
     </div>
   );

@@ -35,6 +35,7 @@ const Blogs = () => {
   }, []);
 
   const blogs = useSelector((state) => state.blog.blogs);
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -44,7 +45,10 @@ const Blogs = () => {
         )}
         {!loading ? (
           state?.map((blog) => (
-            <div key={blog._id} className="shadow mb-3 mt-2 bg-white border-bottom">
+            <div
+              key={blog._id}
+              className="shadow mb-3 mt-2 bg-white border-bottom"
+            >
               <Link
                 to={`/blog`}
                 onClick={() => dispatch(currentBlog(blog))}
@@ -61,7 +65,6 @@ const Blogs = () => {
                     <div className="flex align-m  mb-2">
                       <dd className="mr-1">
                         <img
-                          // onClick={() => setMode(!mode)}
                           class="h-8 w-8 rounded-full  object-contain"
                           src="https://source.unsplash.com/random"
                           alt=""
@@ -94,11 +97,16 @@ const Blogs = () => {
                           {" "}
                           <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             {" "}
-                            <Like /> <span className="mx-1">{blog.like.length} Reactions</span>
+                            <Like />{" "}
+                            <span className="mx-1">
+                              {blog.like.length} Reactions
+                            </span>
                           </span>{" "}
                           <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
                             <Comment />
-                            <span className="mx-1">{blog?.comments?.length} Comments</span>
+                            <span className="mx-1">
+                              {blog?.comments?.length} Comments
+                            </span>
                           </span>
                         </span>
                         <span className="text-sm flex">

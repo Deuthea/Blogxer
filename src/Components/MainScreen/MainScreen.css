@@ -8,3 +8,9 @@
   padding: 0 3%;
 }
 }
+@media (max-width: 986px) {
+  .main{
+    padding: 0 5%;
+  }
+  }
+  
