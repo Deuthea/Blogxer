@@ -9,6 +9,7 @@ import moment from "moment/moment";
 import Like from "../Icons/Like";
 import Comment from "../Icons/Comment";
 import BookMark from "../Icons/BookMark";
+import Button from "../Button/Button";
 
 const endPoint = api.endPoint;
 
@@ -43,6 +44,9 @@ const Blogs = () => {
         {!loading && state?.length == 0 && (
           <p className="text-center"> OOPs! No blogs Found</p>
         )}
+        <span>
+          <Button>Relavant</Button> <Button>Latest</Button> <Button>Top</Button>{" "}
+        </span>
         {!loading ? (
           state?.map((blog) => (
             <div

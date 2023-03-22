@@ -13,6 +13,8 @@ const Bookmarks = () => {
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState();
+  const avgWordsPM = 250;
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -48,14 +50,33 @@ const Bookmarks = () => {
           <Loader />
         </div>
       ) : (
-        <div class="flex justify-center my-5">
+        <div class="flex justify-center my-5 px-10">
           <div class="block max-w-2xl  rounded-lg bg-white shadow-lg">
             {userData?.readingList?.map((savedBlog) => (
-              <div class="px-6 pt-5">
-                <h5 class="mb-2 text-xl font-medium leading-tight text-black ">
-                  {savedBlog.title}
-                </h5>
-                <p>{savedBlog.postedBy.name}</p>
+              <div class="px-6 flex align-middle pt-5">
+                <div>
+                  <dd className="mr-1">
+                    <img
+                      class="h-8 w-8 rounded-full  object-contain"
+                      src="https://source.unsplash.com/random"
+                      alt=""
+                    />
+                  </dd>
+                </div>
+                <div>
+                  {" "}
+                  <h4 class="mb-2 font-bold text-xl leading-tight text-black ">
+                    {savedBlog.title}
+                  </h4>
+                  <p>
+                    {savedBlog.postedBy.name} *{" "}
+                    {new Date(savedBlog.createdAt).toDateString()} *{" "}
+                    {Math.ceil(
+                      savedBlog?.content.split(" ").length / avgWordsPM
+                    )}
+                    min read
+                  </p>
+                </div>
               </div>
             ))}
           </div>
