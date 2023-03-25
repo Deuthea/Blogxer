@@ -58,11 +58,13 @@ const Blogs = () => {
                 onClick={() => dispatch(currentBlog(blog))}
                 class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
               >
-                <img
-                  alt="Home"
-                  src="https://source.unsplash.com/random"
-                  class="h-56 md:h-80 w-full    mr-5 rounded-md object-cover"
-                />
+                {blog?.imageUrl && (
+                  <img
+                    alt="Home"
+                    src={blog?.imageUrl}
+                    class="h-56 md:h-80 w-full    mr-5 rounded-md object-cover"
+                  />
+                )}
 
                 <div class="mt-2">
                   <dl>
@@ -70,7 +72,7 @@ const Blogs = () => {
                       <dd className="mr-1">
                         <img
                           class="h-8 w-8 rounded-full  object-contain"
-                          src="https://source.unsplash.com/random"
+                          src={blog?.postedBy.profilePic}
                           alt=""
                         />
                       </dd>
@@ -88,13 +90,16 @@ const Blogs = () => {
                     <div>
                       <dt class="sr-only">Title</dt>
 
-                      <dd class=" text-xl font-bold  mb-2"> {blog.title}</dd>
-                      <dd class=" text-sm  mb-2 ">
+                      <dd class=" text-xl font-bold  mb-2 ml-2">
                         {" "}
-                        <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
-                          #google
-                        </span>{" "}
-                        {/* {blog.tags.map((tag) => tag)} */}
+                        {blog.title}
+                      </dd>
+                      <dd class=" text-sm  mb-2 ">
+                        {blog.tags.map((tag) => (
+                          <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
+                            #{tag}
+                          </span>
+                        ))}
                       </dd>
                       <dd class=" text-sm flex  justify-between mb-2">
                         <span className="flex flex-col md:flex-row align-middle">
@@ -103,7 +108,7 @@ const Blogs = () => {
                             {" "}
                             <Like />{" "}
                             <span className="mx-1">
-                              {blog.like.length} Reactions
+                              {blog?.like?.length} Reactions
                             </span>
                           </span>{" "}
                           <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
@@ -121,7 +126,12 @@ const Blogs = () => {
                             )}{" "}
                             min read
                           </span>
-                          <span className=" hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200">
+                          <span
+                            className={`${
+                              blog.postedBy.readingList.includes(blog._id) &&
+                              "bg-gray-200 border  rounded-md border-gray-200"
+                            } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
+                          >
                             <BookMark />
                           </span>
                         </span>
@@ -133,18 +143,6 @@ const Blogs = () => {
                       <dd class="text-sm text-gray-500"> </dd>
                     </div>
                   </dl>
-
-                  <div class="mt-6 flex items-center gap-5 text-xs">
-                    {blog.tags?.map((tag) => (
-                      <div class="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-                        <div class="mt-1.5 sm:mt-0">
-                          <p class="font-medium border px-2 py-2 rounded-full hover:shadow-md">
-                            {tag}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </Link>
             </div>

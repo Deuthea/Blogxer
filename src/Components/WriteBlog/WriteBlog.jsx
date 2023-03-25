@@ -10,6 +10,7 @@ import Loader from "../Loader/Loader";
 import { addBlog } from "../../features/blog/blogSlice";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
+import Trash from "../Icons/Trash";
 
 const endPoint = api.endPoint;
 
@@ -26,6 +27,7 @@ const WriteBlog = () => {
     imageUrl: "",
     tags: [],
   });
+  const [tagCount, setTagCount] = useState(0);
 
   const addTags = (e) => {
     if (e.keyCode === 13 && tagValue) {
@@ -33,8 +35,26 @@ const WriteBlog = () => {
       blog.tags.push(tagValue);
       setBlog(data);
       setTagValue("");
+      setTagCount(tagCount + 1);
     }
     console.log(blog);
+  };
+
+  const handleImageUpload = async (e, files) => {
+    setLoading(true);
+    console.log(e.target.name);
+    // console.log(files[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "blogxer");
+    const resp = await fetch(
+      "https://api.Cloudinary.com/v1_1/dt8ivto0k/image/upload",
+      { method: "POST", body: formData }
+    );
+    const response = await resp.json();
+    setBlog({ ...blog, imageUrl: response.url });
+     
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -49,9 +69,9 @@ const WriteBlog = () => {
     setLoading(true);
     if (
       blog.title == "" ||
-      blog.content == ""
-      // blog.imageUrl == "" ||
-      // blog.tags == ""
+      blog.content == "" ||
+      blog.imageUrl == "" ||
+      blog.tags == ""
     ) {
       toast.error("All fields are required", {
         position: toast.POSITION.TOP_CENTER,
@@ -68,7 +88,7 @@ const WriteBlog = () => {
       const resP = await res.json();
 
       // console.log(resP);
-      if (resP.status == "ok") {
+      if (resP.success == true) {
         toast.success(`${resP.message}`, {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -84,22 +104,41 @@ const WriteBlog = () => {
     setLoading(false);
   };
 
+  const removeTag = (e, item) => {
+    console.log(item);
+    const blog1 = { ...blog };
+    blog1.tags = blog1.tags.filter((tag) => tag != item);
+    setBlog(blog1);
+    setTagCount(tagCount - 1);
+  };
+
   return (
     <div>
       {" "}
       <Navbar page="write" />
       <div class="lg:w-3/4 lg:mx-auto px-10 ">
         <main class="mt-10">
-          <form>
+          <form className="bg-white px-5 py-5 shadow-md rounded-md">
+            <div class="mb-5 text-center">
+              <div class="mx-auto w-full h-full mb-2 border  bg-gray-100 mb-4">
+                <img
+                  src={blog?.imageUrl}
+                  id="image"
+                  class="object-contain w-full h-40 rounded-full"
+                />
+              </div>
+
+               
+              <input
+                type="file"
+                name="profilePic"
+                onChange={(e) => handleImageUpload(e, e.target.files)}
+              />
+            </div>
             <input
               type="text"
               placeholder="Enter Title"
-              className="w-full mb-4 text-2xl border-0"
-              style={{
-                outline: "none",
-                border: "none",
-                padding: "10px",
-              }}
+              className=" appearance-none  w-full py-2 px-3 text-gray-700 leading-tight  focus:shadow-outline     mb-2 text-2xl  border-b border-black  "
               autoFocus
               name="title"
               value={blog.title}
@@ -107,27 +146,33 @@ const WriteBlog = () => {
               id="yourName"
               // required
             />
-            <p>
+            <p className="my-2">
               {blog?.tags.map((item) => (
-                <Button className="text-black font-bold bg-green-400">
-                  #{item} &nbsp;
-                </Button>
+                <button
+                  type="button"
+                  onClick={(e) => removeTag(e, item)}
+                  class="text-black text-sm font-bold  m-1 rounded-md px-2 py-1 hover:bg-gray-200"
+                >
+                  <span className="flex justify-between">
+                    {" "}
+                    <span className="mr-1">#{item}</span>
+                    <span>
+                      {" "}
+                      <Trash />
+                    </span>
+                  </span>
+                </button>
               ))}
             </p>
             <input
               type="text"
-              placeholder="Enter Title"
-              className="w-full mb-4 text-2xl border-0"
-              style={{
-                outline: "none",
-                border: "none",
-                padding: "10px",
-              }}
-              autoFocus
+              placeholder="Add upto 3 Tags only"
+              className="w-full border-b disabled:bg-gray-200 border-black mb-4 text-md px-3 py-2"
               name="tags"
               value={tagValue}
               onChange={(e) => setTagValue(e.target.value)}
               onKeyDown={addTags}
+              disabled={tagCount == 3 ? true : false}
               id="yourName"
               // required
             />
@@ -146,8 +191,8 @@ const WriteBlog = () => {
             <div className="col-12 text-center">
               <button
                 type="button"
-                className="my-3 btn recommended rounded-pill"
-                style={{ padding: "8px 70px" }}
+                className="my-3  border border-black  text-black  hover:bg-gray-200 shadow-md rounded-full"
+                style={{ padding: "8px 50px" }}
                 onClick={submit}
               >
                 {loading ? <Loader /> : "Submit Blog"}

@@ -34,7 +34,7 @@ const Login = () => {
     });
     // console.log(res);
     const resP = await res.json();
-    if (resP.status === "ok") {
+    if (resP.success == true) {
       toast.success("Login Successfully 🔥", {
         position: toast.POSITION.TOP_CENTER,
       });

@@ -43,7 +43,7 @@ const Register = () => {
       // console.log(res);
       const resP = await res.json();
       // console.log(resP);
-      if (resP.status === "ok") {
+      if (resP.success == true) {
         toast.success("Register Successfully 🔥", {
           position: toast.POSITION.TOP_CENTER,
         });

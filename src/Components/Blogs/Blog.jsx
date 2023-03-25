@@ -41,8 +41,6 @@ const Blog = () => {
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
   const user = useSelector((state) => state.auth.user);
-  let likeValue = false;
-  const [likeToggle, setLikeToggle] = useState(likeValue);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -51,15 +49,6 @@ const Blog = () => {
     const res = Math.ceil(data.length / avgWordsPM);
     setTime(res);
     setBlogData(blog);
-
-    for (let index = 0; index < blogData?.like.length; index++) {
-      if (blogData?.like[index]._id == user._id) {
-        likeValue = true;
-        break;
-      }
-    }
-    console.log("like value" + likeValue);
-    setLikeToggle(likeValue);
   }, [blogData, blog]);
 
   useEffect(() => {
@@ -112,7 +101,7 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addLike(data.blog));
-      setLikeToggle(!likeToggle);
+
       toast.success("Like Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -156,7 +145,7 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addUnlike(data.blog));
-      setLikeToggle(!likeToggle);
+
       toast.success("Like Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -202,6 +191,7 @@ const Blog = () => {
   };
 
   console.log(state?._id);
+  console.log(user);
   console.log(blogData?.postedBy?._id);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
@@ -214,7 +204,8 @@ const Blog = () => {
               <div className=" flex flex-col align-middle mr-10">
                 <span className="my-3 text-md ">
                   <span>
-                    {likeToggle ? (
+                    {console.log(blog?.like?.includes(user._id))}
+                    {true ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
                         <UnLike />
@@ -224,7 +215,7 @@ const Blog = () => {
                         <Like />
                       </button>
                     )}
-                    <span className="mx-auto">{blog?.like.length}</span>
+                    <span className="mx-auto">{blog?.like?.length}</span>
                   </span>
                 </span>
                 <span className="my-2">
@@ -245,29 +236,33 @@ const Blog = () => {
               </div>
             </div>
           </section>
-          <main class="mt-10 w-3/6 bg-white shadow  ">
+          <main class="mt-10 w-5/6 md:w-3/6 bg-white shadow  ">
             <div
               class="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
               style={{ height: "24em" }}
             >
-              <div
-                class="absolute  left-0 bottom-0 w-full h-full z-10"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
-                }}
-              ></div>
-              <img
-                src="https://source.unsplash.com/random"
-                class="absolute left-0 top-0 w-full h-full z-0 object-cover"
-              />
+              {blog?.imageUrl && (
+                <div
+                  class="absolute  left-0 bottom-0 w-full h-full z-10"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
+                  }}
+                ></div>
+              )}
+              {blog?.imageUrl && (
+                <img
+                  src={blog?.imageUrl}
+                  class="absolute left-0 top-0 w-full h-full z-0 object-contain"
+                />
+              )}
               <div class="p-4 absolute bottom-0 left-0 z-20">
                 {blog.tags.map((item) => (
                   <a
                     href="#"
                     class="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
                   >
-                    {item}
+                    #{item}
                   </a>
                 ))}
                 <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
@@ -398,7 +393,7 @@ const Blog = () => {
               </div>
             </div>
           </main>
-          <section className="mt-10  w-0 ml-10   md:w-2/6">
+          <section className="mt-10 hidden md:block  w-0 ml-10   md:w-2/6">
             <div class=" bg-gray-200   w-4/6 sticky top-20 flex flex-wrap items-center  justify-center  ">
               <div class="container  bg-white  shadow-lg    transform   duration-200 easy-in-out">
                 <div class=" h-20 overflow-hidden">
