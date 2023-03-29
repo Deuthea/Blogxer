@@ -119,7 +119,7 @@ const Blog = () => {
       body: JSON.stringify(data1),
     });
     const data = await response.json();
-
+    console.log(data);
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addBookmark(data.blog));
@@ -204,8 +204,7 @@ const Blog = () => {
               <div className=" flex flex-col align-middle mr-10">
                 <span className="my-3 text-md ">
                   <span>
-                    {console.log(blog?.like?.includes(user._id))}
-                    {true ? (
+                    {blog?.like?.includes(user._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
                         <UnLike />
@@ -226,9 +225,17 @@ const Blog = () => {
                 </span>
                 <span className="my-2">
                   <span>
-                    <button onClick={bookmarkBlog}>
-                      <BookMark />
-                    </button>
+                    {console.log(user.readingList)}
+                    {user?.readingList?.includes(blog._id) ? (
+                      <button onClick={UnLikeBlog}>
+                        {" "}
+                        <UnLike />
+                      </button>
+                    ) : (
+                      <button onClick={bookmarkBlog}>
+                        <BookMark />
+                      </button>
+                    )}
 
                     <span>{blog?.bookmarks.length}</span>
                   </span>
