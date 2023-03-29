@@ -23,11 +23,11 @@ export const RightSidebar = () => {
         <Link className="text-blue-700 hover:underline">See All</Link>
       </span>
       <div className=" flex p-2 bg-white flex-col my-2 ">
-        {state?.map((item) => (
+        {/* {state?.map((item) => (
           <Link className=" hover:underline hover:rounded-md p-2 hover:bg-gray-200  hover:text-blue-700">
             # tags
           </Link>
-        ))}
+        ))} */}
       </div>
     </div>
   );

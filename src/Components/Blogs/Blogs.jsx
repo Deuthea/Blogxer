@@ -94,13 +94,13 @@ const Blogs = () => {
                         {" "}
                         {blog.title}
                       </dd>
-                      <dd class=" text-sm  mb-2 ">
-                        {blog.tags.map((tag) => (
+                      {/* <dd class=" text-sm  mb-2 ">
+                        {blog?.tags?.map((tag) => (
                           <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             #{tag}
                           </span>
                         ))}
-                      </dd>
+                      </dd> */}
                       <dd class=" text-sm flex  justify-between mb-2">
                         <span className="flex flex-col md:flex-row align-middle">
                           {" "}

@@ -7,7 +7,7 @@ import { logout } from "./../../features/Auth/authSlice";
 import { toast } from "react-toastify";
 import Button from "../Button/Button";
 
-const Navbar = ({ page }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.auth.user);
   const profile = useSelector((state) => state.auth.userProfile);
@@ -34,9 +34,6 @@ const Navbar = ({ page }) => {
       content: "Settings",
     },
   ]);
-  // console.log(mode);
-  // console.log(state);
-  console.log(page);
 
   return (
     <>
