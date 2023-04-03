@@ -101,10 +101,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addLike(data.blog));
-
-      toast.success("Like Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -123,10 +119,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addBookmark(data.blog));
-
-      toast.success("Bookmark Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -145,10 +137,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addUnlike(data.blog));
-
-      toast.success("Like Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -190,9 +178,6 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
-  console.log(state?._id);
-  console.log(user);
-  console.log(blogData?.postedBy?._id);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -201,8 +186,8 @@ const Blog = () => {
         <div class="max-w-screen-xl flex mx-auto">
           <section className="  w-0 mx-2 mt-10 md:w-1/6 ">
             <div className="sticky top-20 flex  justify-end">
-              <div className=" flex flex-col align-middle mr-10">
-                <span className="my-3 text-md ">
+              <div className="flex flex-col mr-10">
+                <span className="my-3 flex flex-col   text-md ">
                   <span>
                     {blog?.like?.includes(user._id) ? (
                       <button onClick={UnLikeBlog}>
@@ -214,18 +199,17 @@ const Blog = () => {
                         <Like />
                       </button>
                     )}
-                    <span className="mx-auto">{blog?.like?.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.like?.length}</span>
                 </span>
-                <span className="my-2">
+                <span className="my-3 flex flex-col    text-md">
                   <span>
                     <Comment />
-                    <span>{blog?.comments.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.comments.length}</span>
                 </span>
-                <span className="my-2">
+                <span className="my-3 flex flex-col text-md">
                   <span>
-                    {console.log(user.readingList)}
                     {user?.readingList?.includes(blog._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
@@ -236,14 +220,13 @@ const Blog = () => {
                         <BookMark />
                       </button>
                     )}
-
-                    <span>{blog?.bookmarks.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.bookmarks.length}</span>
                 </span>
               </div>
             </div>
           </section>
-          <main class="mt-10 w-5/6 md:w-3/6 bg-white shadow  ">
+          <main class="mt-10 w-full mx-10 md:mx-5 md:w-3/6 bg-white shadow  ">
             <div
               class="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
               style={{ height: "24em" }}
@@ -292,31 +275,6 @@ const Blog = () => {
                         min read
                       </p>
                     </div>
-                  </div>
-
-                  <div className="flex mt-3">
-                    <>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        onClick={textToSpeech}
-                        class="text-gray-200  border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                      >
-                        text_to_speech
-                      </span>
-                      <span
-                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                        style={{ cursor: "pointer" }}
-                        onClick={shareFunction}
-                      >
-                        share
-                      </span>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                      >
-                        bookmark_add
-                      </span>
-                    </>
                   </div>
                 </div>
               </div>

@@ -19,6 +19,7 @@ const WriteBlog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const token = localStorage.getItem("token");
   const [tagValue, setTagValue] = useState("");
   const [blog, setBlog] = useState({
@@ -41,7 +42,7 @@ const WriteBlog = () => {
   };
 
   const handleImageUpload = async (e, files) => {
-    setLoading(true);
+    setLoading1(true);
     console.log(e.target.name);
     // console.log(files[0]);
     const formData = new FormData();
@@ -54,7 +55,7 @@ const WriteBlog = () => {
     const response = await resp.json();
     setBlog({ ...blog, imageUrl: response.url });
 
-    setLoading(false);
+    setLoading1(false);
   };
 
   const handleChange = (e) => {
@@ -130,11 +131,16 @@ const WriteBlog = () => {
                 </div>
               )}
 
-              <input
-                type="file"
-                name="profilePic"
-                onChange={(e) => handleImageUpload(e, e.target.files)}
-              />
+              <div class="upload-btn-wrapper">
+                <button class="btn">Upload a file</button>
+                <input
+                  type="file"
+                  name="profilePic"
+                  onChange={(e) => handleImageUpload(e, e.target.files)}
+                />
+
+                {loading1 ? <Loader /> : ""}
+              </div>
             </div>
             <input
               type="text"

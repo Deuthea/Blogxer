@@ -7,27 +7,19 @@ import Instagram from "../Icons/Instagram";
 import Youtube from "../Icons/Youtube";
 
 export const RightSidebar = () => {
-  const [state, setState] = useState([
-    { path: "/", content: "🏠 Home" },
-    { path: "/bookmarks", content: "📃 Reading List" },
-    { path: "/tags", content: "🏷️ Tags" },
-    { path: "/faq", content: "💡 FAQ" },
-    { path: "/about", content: "📍 About" },
-    { path: "/contact", content: "📞 Contact" },
-    { path: "/guides", content: "📑 Guides" },
-  ]);
+  const [state, setState] = useState([{}, {}, {}, {}, {}]);
   return (
     <div className="sticky  top-20">
       <span className="flex justify-between">
-        <span>My Tags</span>
+        <span>Trending Blogs</span>
         <Link className="text-blue-700 hover:underline">See All</Link>
       </span>
       <div className=" flex p-2 bg-white flex-col my-2 ">
-        {/* {state?.map((item) => (
+        {state?.map((item, i) => (
           <Link className=" hover:underline hover:rounded-md p-2 hover:bg-gray-200  hover:text-blue-700">
-            # tags
+            Blog title {i + 1}
           </Link>
-        ))} */}
+        ))}
       </div>
     </div>
   );

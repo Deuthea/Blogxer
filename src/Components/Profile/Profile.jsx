@@ -1,21 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Navigate, Link } from "react-router-dom";
 import { api } from "../../config.js";
+import { currentBlog, getBlog } from "../../features/blog/blogSlice";
 import { getUser } from "../../features/Auth/authSlice.js";
 import Navbar from "../Navbar/Navbar";
+import Loader from "../Loader/Loader";
+import moment from "moment/moment";
+import Like from "../Icons/Like";
+import Comment from "../Icons/Comment";
+import BookMark from "../Icons/BookMark";
+import Button from "../Button/Button";
 
 const endPoint = api.endPoint;
 
 const Profile = () => {
-  const state = useSelector((state) => state.auth.userProfile);
+  const dispatch = useDispatch();
+  const avgWordsPM = 250;
+  const blogs1 = useSelector((state) => state.blog.blogs);
+  const [state, setState] = useState(blogs1);
+  const [loading, setLoading] = useState(false);
+  const state1 = useSelector((state1) => state1.auth.userProfile);
+
   const token = localStorage.getItem("token");
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state1) => state1.auth.isAuthenticated);
   const [data, setData] = useState();
-  console.log(state);
+  console.log(state1);
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log(state);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const response = await fetch(`${endPoint}/api/blog/`);
+      const data = await response.json();
+      console.log(data);
+      setState(data.Blogs);
+      dispatch(getBlog(data.Blogs));
+      setLoading(false);
+    })();
+  }, []);
+
+  const blogs = useSelector((state) => state.blog.blogs);
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
@@ -25,20 +54,20 @@ const Profile = () => {
         <div className="mx-2">
           <button></button>
         </div>
-        <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
+        <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto mt-32 lg:my-0">
           <div
             id="profile"
-            class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl dark:bg-gray-900 opacity-1 text-white mx-6 lg:mx-0"
+            class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl dark:bg-white opacity-1 text-black mx-6 lg:mx-0"
           >
             <div class="p-4 md:p-12 text-center lg:text-left">
               <div
                 class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-contain bg-white bg-no-repeat bg-center"
                 style={{
-                  backgroundImage: `url(${state?.profilePic})`,
+                  backgroundImage: `url(${state1?.profilePic})`,
                 }}
               ></div>
 
-              <h1 class="text-3xl font-bold pt-8 lg:pt-0">{state?.name}</h1>
+              <h1 class="text-3xl font-bold pt-8 lg:pt-0">{state1?.name}</h1>
               <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
               <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
                 <svg
@@ -48,14 +77,14 @@ const Profile = () => {
                 >
                   <path d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z" />
                 </svg>{" "}
-                {state?.role}
+                {state1?.role}
               </p>
 
-              <p class="pt-8 text-sm">{state?.about}</p>
+              <p class="pt-8 text-sm">{state1?.about}</p>
 
               <div class="pt-12 pb-8">
                 <a
-                  href={`mailto:${state?.email}`}
+                  href={`mailto:${state1?.email}`}
                   class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full"
                 >
                   Get In Touch
@@ -65,7 +94,7 @@ const Profile = () => {
               <div class="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
                 <a
                   class="link"
-                  href={`${state?.facebook}`}
+                  href={`${state1?.facebook}`}
                   target="_blank"
                   data-tippy-content="@facebook_handle"
                 >
@@ -81,7 +110,7 @@ const Profile = () => {
                 </a>
                 <a
                   class="link"
-                  href={`${state?.twitter}`}
+                  href={`${state1?.twitter}`}
                   target="_blank"
                   data-tippy-content="@twitter_handle"
                 >
@@ -97,7 +126,7 @@ const Profile = () => {
                 </a>
                 <a
                   class="link"
-                  href={`${state?.github}`}
+                  href={`${state1?.github}`}
                   target="_blank"
                   data-tippy-content="@github_handle"
                 >
@@ -114,7 +143,7 @@ const Profile = () => {
 
                 <a
                   class="link"
-                  href={`${state?.dribble}`}
+                  href={`${state1?.dribble}`}
                   target="_blank"
                   data-tippy-content="@dribble_handle"
                 >
@@ -130,7 +159,7 @@ const Profile = () => {
                 </a>
                 <a
                   class="link"
-                  href={`${state?.instagram}`}
+                  href={`${state1?.instagram}`}
                   target="_blank"
                   data-tippy-content="@instagram_handle"
                 >
@@ -146,7 +175,7 @@ const Profile = () => {
                 </a>
                 <a
                   class="link"
-                  href={`${state?.youtube}`}
+                  href={`${state1?.youtube}`}
                   target="_blank"
                   data-tippy-content="@youtube_handle"
                 >
@@ -166,10 +195,131 @@ const Profile = () => {
 
           <div class="w-full h-3/5  lg:w-2/5">
             <img
-              src={state?.profilePic}
+              src={state1?.profilePic}
               class="rounded-none h-full  lg:rounded-lg bg-contain shadow-2xl hidden lg:block"
             />
           </div>
+        </div>
+        <div className="w-5/6 my-10 md:my-0 md:w-4/6 mx-auto">
+          <h3 className="font-bold text-2xl text-center">User Blogs</h3>{" "}
+          {!loading ? (
+            state?.map((blog) => (
+              <div
+                key={blog._id}
+                className="shadow mb-3 mt-2 bg-white border-bottom"
+              >
+                <Link
+                  to={`/blog`}
+                  onClick={() => dispatch(currentBlog(blog))}
+                  class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
+                >
+                  <div class="mt-2">
+                    <dl>
+                      <div className="flex align-m  mb-2">
+                        <dd className="mr-1">
+                          <img
+                            class="h-8 w-8 rounded-full  object-contain"
+                            src={blog?.postedBy.profilePic}
+                            alt=""
+                          />
+                        </dd>
+                        <dd class="text-sm text-gray-500 ml-1 flex flex-col">
+                          {" "}
+                          <span className="font-bold text-black">
+                            {blog.postedBy.name}
+                          </span>{" "}
+                          <span>
+                            {new Date(blog.createdAt).toDateString()}{" "}
+                            {`(${moment(blog.createdAt).fromNow()})`}
+                          </span>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt class="sr-only">Title</dt>
+
+                        <dd class=" text-xl font-bold  mb-2 ml-2">
+                          {" "}
+                          {blog.title}
+                        </dd>
+                        {/* <dd class=" text-sm  mb-2 ">
+                        {blog?.tags?.map((tag) => (
+                          <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
+                            #{tag}
+                          </span>
+                        ))}
+                      </dd> */}
+                        <dd class=" text-sm flex  justify-between mb-2">
+                          <span className="flex flex-col md:flex-row align-middle">
+                            {" "}
+                            <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
+                              {" "}
+                              <Like />{" "}
+                              <span className="mx-1">
+                                {blog?.like?.length} Reactions
+                              </span>
+                            </span>{" "}
+                            <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
+                              <Comment />
+                              <span className="mx-1">
+                                {blog?.comments?.length} Comments
+                              </span>
+                            </span>
+                          </span>
+                          <span className="text-sm flex">
+                            {" "}
+                            <span className="mr-3 pt-1">
+                              {Math.ceil(
+                                blog?.content.split(" ").length / avgWordsPM
+                              )}{" "}
+                              min read
+                            </span>
+                            <span
+                              className={`${
+                                blog.postedBy.readingList.includes(blog._id) &&
+                                "bg-gray-200 border  rounded-md border-gray-200"
+                              } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
+                            >
+                              <BookMark />
+                            </span>
+                            <span>
+                              <div className="justify-end mx-2">
+                                <button
+                                  type="button"
+                                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-4 h-4"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </span>
+                          </span>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt class="sr-only">Date</dt>
+
+                        <dd class="text-sm text-gray-500"> </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     );

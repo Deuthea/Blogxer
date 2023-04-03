@@ -13,10 +13,10 @@ const Navbar = () => {
   const profile = useSelector((state) => state.auth.userProfile);
   const [mode, setMode] = useState(false);
   const [links, setLinks] = useState([
-    {
-      path: "/dashboard",
-      content: "DashBoard",
-    },
+    // {
+    //   path: "/dashboard",
+    //   content: "DashBoard",
+    // },
     {
       path: "/new-blog",
       content: "Create Blog",
@@ -147,7 +147,7 @@ const Navbar = () => {
                 >
                   <Link
                     to="/profile"
-                    class=" flex flex-col align-middle justify-start pb-2 px-4    text-gray-700"
+                    class=" flex flex-col align-middle  hover:text-blue-500  justify-start pb-2 px-4    text-gray-700"
                   >
                     <span className="text-lg font-bold">{state.name}</span>
                     <span className="text-md"> @tarun_choudhary</span>

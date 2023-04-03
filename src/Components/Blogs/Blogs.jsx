@@ -42,11 +42,14 @@ const Blogs = () => {
     return (
       <div>
         {!loading && state?.length == 0 && (
-          <p className="text-center"> OOPs! No blogs Found</p>
+          <p className="text-center my-2 font-bold"> OOPs! No blogs Found</p>
         )}
-        <span>
-          <Button>Relavant</Button> <Button>Latest</Button> <Button>Top</Button>{" "}
-        </span>
+        {state?.length > 1 && (
+          <span>
+            <Button>Relavant</Button> <Button>Latest</Button>{" "}
+            <Button>Top</Button>{" "}
+          </span>
+        )}
         {!loading ? (
           state?.map((blog) => (
             <div
