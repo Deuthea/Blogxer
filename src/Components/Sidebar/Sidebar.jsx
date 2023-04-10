@@ -10,7 +10,7 @@ export const Sidebar = () => {
   const [state, setState] = useState([
     { path: "/", content: "🏠 Home" },
     { path: "/bookmarks", content: "📃 Reading List" },
-    { path: "/tags", content: "🏷️ Tags" },
+    // { path: "/tags", content: "🏷️ Tags" },
     { path: "/faq", content: "💡 FAQ" },
     { path: "/about", content: "📍 About" },
     { path: "/contact", content: "📞 Contact" },

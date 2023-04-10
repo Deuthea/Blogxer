@@ -19,6 +19,7 @@ const WriteBlog = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const token = localStorage.getItem("token");
   const [tagValue, setTagValue] = useState("");
   const [blog, setBlog] = useState({
@@ -41,7 +42,7 @@ const WriteBlog = () => {
   };
 
   const handleImageUpload = async (e, files) => {
-    setLoading(true);
+    setLoading1(true);
     console.log(e.target.name);
     // console.log(files[0]);
     const formData = new FormData();
@@ -53,8 +54,8 @@ const WriteBlog = () => {
     );
     const response = await resp.json();
     setBlog({ ...blog, imageUrl: response.url });
-     
-    setLoading(false);
+
+    setLoading1(false);
   };
 
   const handleChange = (e) => {
@@ -70,14 +71,14 @@ const WriteBlog = () => {
     if (
       blog.title == "" ||
       blog.content == "" ||
-      blog.imageUrl == "" ||
-      blog.tags == ""
+      blog.imageUrl == ""
+      // blog.tags == ""
     ) {
       toast.error("All fields are required", {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const res = await fetch(`${endPoint}/api/blog/add`, {
+      const res = await fetch(`${endPoint}/api/blog/addBlog`, {
         method: "POST",
         headers: {
           authorization: "Bearer " + token,
@@ -120,20 +121,32 @@ const WriteBlog = () => {
         <main class="mt-10">
           <form className="bg-white px-5 py-5 shadow-md rounded-md">
             <div class="mb-5 text-center">
-              <div class="mx-auto w-full h-full mb-2 border  bg-gray-100 mb-4">
-                <img
-                  src={blog?.imageUrl}
-                  id="image"
-                  class="object-contain w-full h-40 rounded-full"
-                />
-              </div>
+              {blog?.imageUrl && (
+                <div class="mx-auto w-full h-full mb-2 border  bg-gray-100 mb-4">
+                  <img
+                    src={blog?.imageUrl}
+                    id="image"
+                    class="object-contain w-full h-40 rounded-full"
+                  />
+                </div>
+              )}
 
-               
-              <input
-                type="file"
-                name="profilePic"
-                onChange={(e) => handleImageUpload(e, e.target.files)}
-              />
+              <div class="upload-btn-wrapper">
+                <button class="btn">Upload a file</button>
+                <input
+                  type="file"
+                  name="profilePic"
+                  onChange={(e) => handleImageUpload(e, e.target.files)}
+                />
+
+                {loading1 ? (
+                  <>
+                    <Loader />  
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
             <input
               type="text"
@@ -146,7 +159,7 @@ const WriteBlog = () => {
               id="yourName"
               // required
             />
-            <p className="my-2">
+            {/* <p className="my-2">
               {blog?.tags.map((item) => (
                 <button
                   type="button"
@@ -175,7 +188,7 @@ const WriteBlog = () => {
               disabled={tagCount == 3 ? true : false}
               id="yourName"
               // required
-            />
+            /> */}
 
             <div className="form-group">
               <CKEditor
@@ -189,14 +202,18 @@ const WriteBlog = () => {
               />
             </div>
             <div className="col-12 text-center">
-              <button
-                type="button"
-                className="my-3  border border-black  text-black  hover:bg-gray-200 shadow-md rounded-full"
-                style={{ padding: "8px 50px" }}
-                onClick={submit}
-              >
-                {loading ? <Loader /> : "Submit Blog"}
-              </button>
+              {loading ? (
+                <Loader />
+              ) : (
+                <button
+                  type="button"
+                  className="my-3  border border-black  text-black  hover:bg-gray-200 shadow-md rounded-full"
+                  style={{ padding: "6px 40px" }}
+                  onClick={submit}
+                >
+                  Submit Blog
+                </button>
+              )}
             </div>
           </form>
         </main>

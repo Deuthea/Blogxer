@@ -5,6 +5,7 @@ export const blogSlice = createSlice({
   initialState: {
     blogs: JSON.parse(localStorage.getItem("blogs")) || [],
     currentBlog: JSON.parse(localStorage.getItem("currentBlog")) || {},
+    userBlog: JSON.parse(localStorage.getItem("userBlogs")) || {},
   },
 
   reducers: {
@@ -12,6 +13,7 @@ export const blogSlice = createSlice({
       localStorage.setItem("blogs", JSON.stringify(action.payload));
       state.blogs = action.payload;
     },
+
     addBlog: (state, action) => {
       state.blogs.push(action.payload);
     },

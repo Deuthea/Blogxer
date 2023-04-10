@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
 import {
@@ -41,6 +41,8 @@ const Blog = () => {
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
   const user = useSelector((state) => state.auth.user);
+
+  console.log(blogData);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -101,10 +103,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addLike(data.blog));
-
-      toast.success("Like Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -123,10 +121,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addBookmark(data.blog));
-
-      toast.success("Bookmark Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -145,10 +139,6 @@ const Blog = () => {
     if (data.success == true) {
       setBlogData(data.blog);
       dispatch(addUnlike(data.blog));
-
-      toast.success("Like Added 🚀🚀", {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -190,9 +180,10 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
-  console.log(state?._id);
-  console.log(user);
-  console.log(blogData?.postedBy?._id);
+  const setUserForProfile = (id) => {
+    localStorage.setItem("userForProfile", id);
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -201,8 +192,8 @@ const Blog = () => {
         <div class="max-w-screen-xl flex mx-auto">
           <section className="  w-0 mx-2 mt-10 md:w-1/6 ">
             <div className="sticky top-20 flex  justify-end">
-              <div className=" flex flex-col align-middle mr-10">
-                <span className="my-3 text-md ">
+              <div className="flex flex-col mr-10">
+                <span className="my-3 flex flex-col   text-md ">
                   <span>
                     {blog?.like?.includes(user._id) ? (
                       <button onClick={UnLikeBlog}>
@@ -214,18 +205,17 @@ const Blog = () => {
                         <Like />
                       </button>
                     )}
-                    <span className="mx-auto">{blog?.like?.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.like?.length}</span>
                 </span>
-                <span className="my-2">
+                <span className="my-3 flex flex-col    text-md">
                   <span>
                     <Comment />
-                    <span>{blog?.comments.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.comments.length}</span>
                 </span>
-                <span className="my-2">
+                <span className="my-3 flex flex-col text-md">
                   <span>
-                    {console.log(user.readingList)}
                     {user?.readingList?.includes(blog._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
@@ -236,14 +226,13 @@ const Blog = () => {
                         <BookMark />
                       </button>
                     )}
-
-                    <span>{blog?.bookmarks.length}</span>
                   </span>
+                  <span className="mx-auto">{blog?.bookmarks.length}</span>
                 </span>
               </div>
             </div>
           </section>
-          <main class="mt-10 w-5/6 md:w-3/6 bg-white shadow  ">
+          <main class="mt-10 w-full mx-10 md:mx-5 md:w-3/6 bg-white shadow  ">
             <div
               class="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
               style={{ height: "24em" }}
@@ -264,14 +253,14 @@ const Blog = () => {
                 />
               )}
               <div class="p-4 absolute bottom-0 left-0 z-20">
-                {blog.tags.map((item) => (
+                {/* {blog.tags.map((item) => (
                   <a
                     href="#"
                     class="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
                   >
                     #{item}
                   </a>
-                ))}
+                ))} */}
                 <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
                   {blogData.title}
                 </h2>
@@ -284,7 +273,13 @@ const Blog = () => {
                     <div>
                       <p class="font-semibold text-gray-200 text-sm">
                         {" "}
-                        {blogData.postedBy.name}
+                        <Link
+                          className="hover:text-blue-600 hover:underline"
+                          to="/profile"
+                          onClick={() => setUserForProfile(blog?.postedBy?._id)}
+                        >
+                          {blogData.postedBy.name}
+                        </Link>
                       </p>
                       <p class="font-semibold text-gray-400 text-xs">
                         {" "}
@@ -292,31 +287,6 @@ const Blog = () => {
                         min read
                       </p>
                     </div>
-                  </div>
-
-                  <div className="flex mt-3">
-                    <>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        onClick={textToSpeech}
-                        class="text-gray-200  border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                      >
-                        text_to_speech
-                      </span>
-                      <span
-                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                        style={{ cursor: "pointer" }}
-                        onClick={shareFunction}
-                      >
-                        share
-                      </span>
-                      <span
-                        style={{ cursor: "pointer" }}
-                        className="text-gray-200 border rounded-full px-2 py-2 material-symbols-outlined mx-2"
-                      >
-                        bookmark_add
-                      </span>
-                    </>
                   </div>
                 </div>
               </div>
@@ -413,24 +383,27 @@ const Blog = () => {
                 <div class="flex justify-center px-5  -mt-6">
                   <img
                     class="h-12 w-12 bg-white p-2 rounded-full   "
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    src={blogData?.postedBy?.profilePic}
                     alt=""
                   />
                 </div>
                 <div class=" ">
                   <div class="text-center px-10">
                     <h2 class="text-gray-800 text-xl font-bold">
-                      Mohit Dhiman
+                      <Link
+                        to="/profile"
+                        onClick={() =>
+                          setUserForProfile(blogData?.postedBy?._id)
+                        }
+                        class="  hover:text-blue-500 hover:underline text-gray-700"
+                      >
+                        {" "}
+                        {blogData?.postedBy?.name}
+                      </Link>
                     </h2>
-                    <a
-                      class="text-gray-400 mt-2 text-sm hover:text-blue-500"
-                      href="https://www.instagram.com/immohitdhiman/"
-                      target="BLANK()"
-                    >
-                      @immohitdhiman
-                    </a>
+
                     <br />
-                    <Button class="bg-blue-800 text-white my-1">Follow</Button>
+                    <Button class="bg-blue-800 text-white my-0">Follow</Button>
                     <p class="mt-2 text-gray-500 text-sm">
                       Lorem Ipsum is simply
                     </p>
