@@ -78,7 +78,7 @@ const WriteBlog = () => {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const res = await fetch(`${endPoint}/api/blog/add`, {
+      const res = await fetch(`${endPoint}/api/blog/addBlog`, {
         method: "POST",
         headers: {
           authorization: "Bearer " + token,
@@ -139,7 +139,13 @@ const WriteBlog = () => {
                   onChange={(e) => handleImageUpload(e, e.target.files)}
                 />
 
-                {loading1 ? <Loader /> : ""}
+                {loading1 ? (
+                  <>
+                    <Loader />  
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <input

@@ -60,7 +60,7 @@ const Login = () => {
         <div class="mt-10 flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div class="border card-auth p-10 w-full max-w-md space-y-8">
             <div>
-              <img class="mx-auto h-12 w-auto" src={logo} alt="Your Company" />
+              <img class="mx-auto h-12 w-auto" src={logo} alt="Your Company" /> 
               <h5 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
                 Log in to your account
               </h5>

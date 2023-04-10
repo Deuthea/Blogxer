@@ -9,26 +9,22 @@ import { RightSidebar } from "../Sidebar/RightSideBar";
 import "./MainScreen.css";
 
 const MainScreen = () => {
-  const state = useSelector((state) => state.auth.isAuthenticated);
-  if (!state) return <Navigate to="/register" replace />;
-  else {
-    return (
-      <>
-        <Navbar page="main" />
-        <div className="main ">
-          <section className="hidden md:block  w-0 mx-2  md:w-1/5">
-            <Sidebar />
-          </section>
-          <section className="w-full md:w-3/5">
-            <Blogs />
-          </section>
-          <section className=" hidden md:block w-0 ml-5 md:w-1/5">
-            <RightSidebar />
-          </section>
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <Navbar page="main" />
+      <div className="main ">
+        <section className="hidden md:block  w-0 mx-2  md:w-1/5">
+          <Sidebar />
+        </section>
+        <section className="w-full md:w-4/5">
+          <Blogs />
+        </section>
+        {/* <section className=" hidden md:block w-0 ml-5 md:w-1/5">
+          <RightSidebar />
+        </section> */}
+      </div>
+    </>
+  );
 };
 
 export default MainScreen;

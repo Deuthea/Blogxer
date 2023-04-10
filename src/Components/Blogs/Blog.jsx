@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Blog.css";
 import {
@@ -41,6 +41,8 @@ const Blog = () => {
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
   const user = useSelector((state) => state.auth.user);
+
+  console.log(blogData);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -178,6 +180,10 @@ const Blog = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  const setUserForProfile = (id) => {
+    localStorage.setItem("userForProfile", id);
+  };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -267,7 +273,13 @@ const Blog = () => {
                     <div>
                       <p class="font-semibold text-gray-200 text-sm">
                         {" "}
-                        {blogData.postedBy.name}
+                        <Link
+                          className="hover:text-blue-600 hover:underline"
+                          to="/profile"
+                          onClick={() => setUserForProfile(blog?.postedBy?._id)}
+                        >
+                          {blogData.postedBy.name}
+                        </Link>
                       </p>
                       <p class="font-semibold text-gray-400 text-xs">
                         {" "}
@@ -371,24 +383,27 @@ const Blog = () => {
                 <div class="flex justify-center px-5  -mt-6">
                   <img
                     class="h-12 w-12 bg-white p-2 rounded-full   "
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    src={blogData?.postedBy?.profilePic}
                     alt=""
                   />
                 </div>
                 <div class=" ">
                   <div class="text-center px-10">
                     <h2 class="text-gray-800 text-xl font-bold">
-                      Mohit Dhiman
+                      <Link
+                        to="/profile"
+                        onClick={() =>
+                          setUserForProfile(blogData?.postedBy?._id)
+                        }
+                        class="  hover:text-blue-500 hover:underline text-gray-700"
+                      >
+                        {" "}
+                        {blogData?.postedBy?.name}
+                      </Link>
                     </h2>
-                    <a
-                      class="text-gray-400 mt-2 text-sm hover:text-blue-500"
-                      href="https://www.instagram.com/immohitdhiman/"
-                      target="BLANK()"
-                    >
-                      @immohitdhiman
-                    </a>
+
                     <br />
-                    <Button class="bg-blue-800 text-white my-1">Follow</Button>
+                    <Button class="bg-blue-800 text-white my-0">Follow</Button>
                     <p class="mt-2 text-gray-500 text-sm">
                       Lorem Ipsum is simply
                     </p>

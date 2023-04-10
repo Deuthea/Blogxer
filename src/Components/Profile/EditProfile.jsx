@@ -17,23 +17,21 @@ const EditProfile = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const state = useSelector((state) => state.auth.userProfile);
+  const state = useSelector((state) => state.auth.user);
   console.log(state);
   const token = localStorage.getItem("token");
   const [data, setData] = useState({
     name: state?.name,
-    // username: "",
     email: state?.email,
     profilePic: state?.profilePic || "",
     role: state?.role || "",
     about: state?.about || "",
-    github: state?.github || "",
-    instagram: state?.instagram || "",
-    facebook: state?.facebook || "",
-    twitter: state?.twitter || "",
-    linkedin: state?.linkedin || "",
-    youtube: state?.youtube || "",
-    dribble: state?.dribble || "",
+    github: state?.social?.github || "",
+
+    instagram: state?.social?.instagram || "",
+    facebook: state?.social?.facebook || "",
+    twitter: state?.social?.twitter || "",
+    linkedin: state?.social?.linkedin || "",
   });
 
   // console.log(data);
@@ -44,7 +42,6 @@ const EditProfile = () => {
   const prevButton = () => {
     setPageNumber(pageNumber - 1);
   };
-  console.log(loading);
 
   const handleImageUpload = async (e, files) => {
     setLoading(true);
@@ -65,6 +62,7 @@ const EditProfile = () => {
     console.log(data);
     setLoading(false);
   };
+
   const submit = async () => {
     console.log(data);
 
@@ -78,7 +76,7 @@ const EditProfile = () => {
     });
     const resP = await res.json();
     console.log(resP);
-    if (resP.status == "ok") {
+    if (resP.success == true) {
       toast.success(`${resP.message}`, {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -91,12 +89,11 @@ const EditProfile = () => {
         about: "",
         github: "",
         instagram: "",
-        facebook: "",
+
         twitter: "",
         linkedin: "",
-        youtube: "",
-        dribble: "",
       });
+      localStorage.setItem("userForProfile", resP?.user?._id);
       navigate("/profile");
     } else {
       toast.error(`${resP.error}`, {
@@ -109,6 +106,7 @@ const EditProfile = () => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
@@ -118,7 +116,7 @@ const EditProfile = () => {
           <div class="border card-auth p-10 w-full max-w-md space-y-8">
             <div>
               <p class="mt-2 mb-2 text-xl text-gray-600">
-                Step {pageNumber} of 3
+                Step {pageNumber} of 4
               </p>
               <hr />
             </div>
@@ -216,11 +214,15 @@ const EditProfile = () => {
 
               {pageNumber == 3 && (
                 <div class="-space-y-px rounded-md shadow-sm">
+                  <h2 className="text-center font-bold underline">
+                    Social Links
+                  </h2>
                   <div>
                     <div>
                       <label for="password" class="sr-only">
                         Github
                       </label>
+
                       <input
                         id="password"
                         value={data.github}
@@ -290,36 +292,6 @@ const EditProfile = () => {
                         required
                         class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder="Facebook Url"
-                      />
-                    </div>
-                    <div>
-                      <label for="password" class="sr-only">
-                        Instagram
-                      </label>
-                      <input
-                        id="password"
-                        value={data.dribble}
-                        onChange={handleChange}
-                        name="dribble"
-                        type="text"
-                        required
-                        class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Dribble Url"
-                      />
-                    </div>
-                    <div>
-                      <label for="password" class="sr-only">
-                        Instagram
-                      </label>
-                      <input
-                        id="password"
-                        value={data.youtube}
-                        onChange={handleChange}
-                        name="youtube"
-                        type="text"
-                        required
-                        class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="Youtube Url"
                       />
                     </div>
                   </div>
