@@ -33,14 +33,15 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
     },
     updateUser: (state, action) => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify(action.payload.user)
-      );
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
 
       state.user = action.payload.user;
     },
-    
+    addBlogToUser: (state, action) => {
+      state.user.readingList.push(action.payload);
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+
     logout: (state, action) => {
       localStorage.clear();
       state.user = {};
@@ -53,10 +54,11 @@ export const authSlice = createSlice({
 export const {
   getUser,
   loginUser,
-  
+
   registerUser,
   logout,
   updateUser,
+  addBlogToUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

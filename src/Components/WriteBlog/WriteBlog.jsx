@@ -68,12 +68,7 @@ const WriteBlog = () => {
     }
     // console.log(blog);
     setLoading(true);
-    if (
-      blog.title == "" ||
-      blog.content == "" ||
-      blog.imageUrl == ""
-      // blog.tags == ""
-    ) {
+    if (blog.title == "" || blog.content == "") {
       toast.error("All fields are required", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -141,7 +136,7 @@ const WriteBlog = () => {
 
                 {loading1 ? (
                   <>
-                    <Loader />  
+                    <Loader />
                   </>
                 ) : (
                   ""

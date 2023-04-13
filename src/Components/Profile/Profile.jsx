@@ -42,10 +42,36 @@ const Profile = () => {
       console.log(resp);
       setUser(resp.user);
       setBlogs(resp.blogs);
-      // setData(JSON.stringify(user?.user));
+
       setLoading(false);
     })();
   }, []);
+
+  const deleteBlog = async (id) => {
+    setLoading(true);
+
+    const deletedBlog = await fetch(`${endPoint}/api/blog/deleteBlog/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+    });
+    const resp = await deletedBlog.json();
+    if (resp.success == true) {
+      console.log(resp);
+      const blogs1 = blogs;
+      console.log(blogs1);
+      // console.log(blogs1[0]._id == id);
+      const res = blogs1.filter((blog) => blog._id != id);
+      setBlogs(res);
+      setLoading(false);
+    }
+
+    setLoading(false);
+  };
+
+  console.log(blogs);
 
   if (!Auth.isAuthenticated) return <Navigate to="/login" replace />;
   else {
@@ -197,72 +223,103 @@ const Profile = () => {
                 key={blog._id}
                 className="shadow mb-3 mt-2 bg-white border-bottom"
               >
-                <Link
-                  to={`/blog`}
-                  onClick={() => dispatch(currentBlog(blog))}
-                  class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
-                >
+                <div class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100">
                   <div class="mt-2">
-                    <dl>
-                      <div className="flex align-m  mb-2">
-                        <dd className="mr-1">
-                          <img
-                            class="h-8 w-8 rounded-full  object-contain"
-                            src={blog?.postedBy.profilePic}
-                            alt=""
-                          />
-                        </dd>
-                        <dd class="text-sm text-gray-500 ml-1 flex flex-col">
+                    <dl className="">
+                      <div className="flex justify-between">
+                        <div className="flex align-m  mb-2">
+                          <dd className="mr-1">
+                            <img
+                              class="h-8 w-8 rounded-full  object-contain"
+                              src={blog?.postedBy.profilePic}
+                              alt=""
+                            />
+                          </dd>
+                          <dd class="text-sm text-gray-500 ml-1 flex flex-col">
+                            {" "}
+                            <span className="font-bold text-black">
+                              {blog.postedBy.name}
+                            </span>{" "}
+                            <span>
+                              {new Date(blog.createdAt).toDateString()}{" "}
+                              {`(${moment(blog.createdAt).fromNow()})`}
+                            </span>
+                          </dd>
+                        </div>
+                        <div>
                           {" "}
-                          <span className="font-bold text-black">
-                            {blog.postedBy.name}
-                          </span>{" "}
-                          <span>
-                            {new Date(blog.createdAt).toDateString()}{" "}
-                            {`(${moment(blog.createdAt).fromNow()})`}
-                          </span>
-                        </dd>
+                          {Auth?.user?._id == user?._id && (
+                            <span>
+                              <div className="justify-end mx-2">
+                                <button
+                                  type="button"
+                                  onClick={() => deleteBlog(blog._id)}
+                                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-4 h-4"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <div>
-                        <dt class="sr-only">Title</dt>
+                        <Link
+                          to={`/blog`}
+                          onClick={() => dispatch(currentBlog(blog))}
+                        >
+                          <dt class="sr-only">Title</dt>
 
-                        <dd class=" text-xl font-bold  mb-2 ml-2">
-                          {" "}
-                          {blog.title}
-                        </dd>
-                        {/* <dd class=" text-sm  mb-2 ">
+                          <dd class=" text-xl font-bold  mb-2 ml-2">
+                            {" "}
+                            {blog.title}
+                          </dd>
+                          {/* <dd class=" text-sm  mb-2 ">
                         {blog?.tags?.map((tag) => (
                           <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             #{tag}
                           </span>
                         ))}
                       </dd> */}
-                        <dd class=" text-sm flex  justify-between mb-2">
-                          <span className="flex flex-col md:flex-row align-middle">
-                            {" "}
-                            <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
+                          <dd class=" text-sm flex  justify-between mb-2">
+                            <span className="flex flex-col md:flex-row align-middle">
                               {" "}
-                              <Like />{" "}
-                              <span className="mx-1">
-                                {blog?.like?.length} Reactions
-                              </span>
-                            </span>{" "}
-                            <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
-                              <Comment />
-                              <span className="mx-1">
-                                {blog?.comments?.length} Comments
+                              <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
+                                {" "}
+                                <Like />{" "}
+                                <span className="mx-1">
+                                  {blog?.like?.length} Reactions
+                                </span>
+                              </span>{" "}
+                              <span className="flex hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200 ">
+                                <Comment />
+                                <span className="mx-1">
+                                  {blog?.comments?.length} Comments
+                                </span>
                               </span>
                             </span>
-                          </span>
-                          <span className="text-sm flex">
-                            {" "}
-                            <span className="mr-3 pt-1">
-                              {Math.ceil(
-                                blog?.content.split(" ").length / avgWordsPM
-                              )}{" "}
-                              min read
-                            </span>
-                            {/* <span
+                            <span className="text-sm flex">
+                              {" "}
+                              <span className="mr-3 pt-1">
+                                {Math.ceil(
+                                  blog?.content.split(" ").length / avgWordsPM
+                                )}{" "}
+                                min read
+                              </span>
+                              {/* <span
                               className={`${
                                 blog?.postedBy?.readingList?.includes(blog._id) &&
                                 "bg-gray-200 border  rounded-md border-gray-200"
@@ -270,33 +327,9 @@ const Profile = () => {
                             >
                               <BookMark />
                             </span> */}
-                            {Auth?.user?._id == user?._id && (
-                              <span>
-                                <div className="justify-end mx-2">
-                                  <button
-                                    type="button"
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded-full"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke-width="1.5"
-                                      stroke="currentColor"
-                                      class="w-4 h-4"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                      />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </span>
-                            )}
-                          </span>
-                        </dd>
+                            </span>
+                          </dd>
+                        </Link>
                       </div>
                       <div>
                         <dt class="sr-only">Date</dt>
@@ -305,7 +338,7 @@ const Profile = () => {
                       </div>
                     </dl>
                   </div>
-                </Link>
+                </div>
               </div>
             ))
           ) : (

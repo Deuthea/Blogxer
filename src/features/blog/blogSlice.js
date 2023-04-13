@@ -38,6 +38,7 @@ export const blogSlice = createSlice({
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
       state.currentBlog = action.payload;
     },
+
     currentBlog: (state, action) => {
       localStorage.setItem("currentBlog", JSON.stringify(action.payload));
       state.currentBlog = action.payload;

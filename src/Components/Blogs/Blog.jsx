@@ -24,6 +24,7 @@ import User from "../Icons/User";
 import ToolTip from "../ToolTip/ToolTip";
 import moment from "moment";
 import UnLike from "../Icons/UnLike";
+import { addBlogToUser } from "../../features/Auth/authSlice";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -78,8 +79,9 @@ const Blog = () => {
     const data = await response.json();
     console.log(data);
     if (data.success == true) {
-      setBlogData(data.blog);
-      dispatch(addComment(data.blog));
+      console.log("data.blog    " + data.blog1);
+      setBlogData(data.blog1);
+      dispatch(addComment(data.blog1));
       toast.success("Comment Added 🚀🚀", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -120,6 +122,8 @@ const Blog = () => {
     console.log(data);
     if (data.success == true) {
       setBlogData(data.blog);
+      console.log(data);
+      dispatch(addBlogToUser(data.blog));
       dispatch(addBookmark(data.blog));
     }
   };
@@ -216,7 +220,7 @@ const Blog = () => {
                 </span>
                 <span className="my-3 flex flex-col text-md">
                   <span>
-                    {user?.readingList?.includes(blog._id) ? (
+                    {user?.readingList?.includes(blog?._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
                         <UnLike />
