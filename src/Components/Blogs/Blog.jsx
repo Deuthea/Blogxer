@@ -24,7 +24,7 @@ import User from "../Icons/User";
 import ToolTip from "../ToolTip/ToolTip";
 import moment from "moment";
 import UnLike from "../Icons/UnLike";
-import { addBlogToUser } from "../../features/Auth/authSlice";
+import { addBlogToUser, updateUser } from "../../features/Auth/authSlice";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -120,10 +120,11 @@ const Blog = () => {
     });
     const data = await response.json();
     console.log(data);
+
     if (data.success == true) {
       setBlogData(data.blog);
       console.log(data);
-      dispatch(addBlogToUser(data.blog));
+      dispatch(updateUser(data.user));
       dispatch(addBookmark(data.blog));
     }
   };
@@ -199,7 +200,7 @@ const Blog = () => {
               <div className="flex flex-col mr-10">
                 <span className="my-3 flex flex-col   text-md ">
                   <span>
-                    {blog?.like?.includes(user._id) ? (
+                    {blog?.like?.includes(user?._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}
                         <UnLike />
@@ -216,10 +217,14 @@ const Blog = () => {
                   <span>
                     <Comment />
                   </span>
-                  <span className="mx-auto">{blog?.comments.length}</span>
+                  <span className="mx-auto">{blog?.comments?.length}</span>
                 </span>
                 <span className="my-3 flex flex-col text-md">
                   <span>
+                    {console.log(
+                      "user ki reading list" +
+                        user?.readingList?.includes(blog?._id)
+                    )}
                     {user?.readingList?.includes(blog?._id) ? (
                       <button onClick={UnLikeBlog}>
                         {" "}

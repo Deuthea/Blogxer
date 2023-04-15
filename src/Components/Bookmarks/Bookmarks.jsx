@@ -24,6 +24,8 @@ const Bookmarks = () => {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(Auth?.user);
 
+  // console.log(userData);
+
   console.log(userData);
   const avgWordsPM = 250;
 
@@ -60,18 +62,18 @@ const Bookmarks = () => {
                         <dd className="mr-1">
                           <img
                             class="h-8 w-8 rounded-full  object-contain"
-                            src={blog?.postedBy.profilePic}
+                            src={blog?.postedBy?.profilePic}
                             alt=""
                           />
                         </dd>
                         <dd class="text-sm text-gray-500 ml-1 flex flex-col">
                           {" "}
                           <span className="font-bold text-black">
-                            {blog.postedBy.name}
+                            {blog?.postedBy?.name}
                           </span>{" "}
                           <span>
-                            {new Date(blog.createdAt).toDateString()}{" "}
-                            {`(${moment(blog.createdAt).fromNow()})`}
+                            {new Date(blog?.createdAt).toDateString()}{" "}
+                            {`(${moment(blog?.createdAt).fromNow()})`}
                           </span>
                         </dd>
                       </div>
@@ -80,7 +82,7 @@ const Bookmarks = () => {
 
                         <dd class=" text-xl font-bold  mb-2 ml-2">
                           {" "}
-                          {blog.title}
+                          {blog?.title}
                         </dd>
                         {/* <dd class=" text-sm  mb-2 ">
                         {blog?.tags?.map((tag) => (
@@ -110,13 +112,13 @@ const Bookmarks = () => {
                             {" "}
                             <span className="mr-3 pt-1">
                               {Math.ceil(
-                                blog?.content.split(" ").length / avgWordsPM
+                                blog?.content?.split(" ").length / avgWordsPM
                               )}{" "}
                               min read
                             </span>
                             <span
                               className={`${
-                                blog.postedBy.readingList.includes(blog._id) &&
+                                blog?.postedBy?.readingList?.includes(blog._id) &&
                                 "bg-gray-200 border  rounded-md border-gray-200"
                               } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
                             >
