@@ -26,7 +26,7 @@ const Bookmarks = () => {
 
   // console.log(userData);
 
-  console.log(userData);
+  // console.log(userData);
   const avgWordsPM = 250;
 
   if (!Auth.isAuthenticated) return <Navigate to="/login" replace />;
@@ -54,19 +54,19 @@ const Bookmarks = () => {
                 <Link
                   to={`/blog`}
                   onClick={() => dispatch(currentBlog(blog))}
-                  class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
+                  className="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
                 >
-                  <div class="mt-2">
+                  <div className="mt-2">
                     <dl>
                       <div className="flex align-m  mb-2">
                         <dd className="mr-1">
                           <img
-                            class="h-8 w-8 rounded-full  object-contain"
+                            className="h-8 w-8 rounded-full  object-contain"
                             src={blog?.postedBy?.profilePic}
                             alt=""
                           />
                         </dd>
-                        <dd class="text-sm text-gray-500 ml-1 flex flex-col">
+                        <dd className="text-sm text-gray-500 ml-1 flex flex-col">
                           {" "}
                           <span className="font-bold text-black">
                             {blog?.postedBy?.name}
@@ -78,20 +78,20 @@ const Bookmarks = () => {
                         </dd>
                       </div>
                       <div>
-                        <dt class="sr-only">Title</dt>
+                        <dt className="sr-only">Title</dt>
 
-                        <dd class=" text-xl font-bold  mb-2 ml-2">
+                        <dd className=" text-xl font-bold  mb-2 ml-2">
                           {" "}
                           {blog?.title}
                         </dd>
-                        {/* <dd class=" text-sm  mb-2 ">
+                        {/* <dd className=" text-sm  mb-2 ">
                         {blog?.tags?.map((tag) => (
                           <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             #{tag}
                           </span>
                         ))}
                       </dd> */}
-                        <dd class=" text-sm flex  justify-between mb-2">
+                        <dd className=" text-sm flex  justify-between mb-2">
                           <span className="flex flex-col md:flex-row align-middle">
                             {" "}
                             <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
@@ -128,9 +128,9 @@ const Bookmarks = () => {
                         </dd>
                       </div>
                       <div>
-                        <dt class="sr-only">Date</dt>
+                        <dt className="sr-only">Date</dt>
 
-                        <dd class="text-sm text-gray-500"> </dd>
+                        <dd className="text-sm text-gray-500"> </dd>
                       </div>
                     </dl>
                   </div>

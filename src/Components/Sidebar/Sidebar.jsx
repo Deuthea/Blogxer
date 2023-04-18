@@ -21,6 +21,7 @@ export const Sidebar = () => {
       <div className=" flex flex-col my-2 w-4/5">
         {state?.map((item) => (
           <Link
+            key={item}
             to={item.path}
             className="my-2 hover:bg-gray-100 hover:rounded-md   p-2 border border-gray-100 hover:border hover:bg-white hover:text-blue-700"
           >
@@ -30,9 +31,9 @@ export const Sidebar = () => {
 
         <div>
           {" "}
-          <div class="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
+          <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
             <a
-              class="link"
+              className="link"
               href="#"
               target="_blank"
               data-tippy-content="@facebook_handle"
@@ -40,7 +41,7 @@ export const Sidebar = () => {
               <Facebook />
             </a>
             <a
-              class="link"
+              className="link"
               href="#"
               target="_blank"
               data-tippy-content="@twitter_handle"
@@ -48,7 +49,7 @@ export const Sidebar = () => {
               <Twitter />
             </a>
             <a
-              class="link"
+              className="link"
               href="#"
               target="_blank"
               data-tippy-content="@github_handle"
@@ -57,7 +58,7 @@ export const Sidebar = () => {
             </a>
 
             <a
-              class="link"
+              className="link"
               href="#"
               target="_blank"
               data-tippy-content="@instagram_handle"
@@ -65,7 +66,7 @@ export const Sidebar = () => {
               <Instagram />
             </a>
             <a
-              class="link"
+              className="link"
               href="#"
               target="_blank"
               data-tippy-content="@youtube_handle"

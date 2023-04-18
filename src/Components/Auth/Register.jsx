@@ -24,13 +24,13 @@ const Register = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (data.name == "" || data.email == "" || data.password == "") {
+    if (data.name === "" || data.email === "" || data.password === "") {
       toast.error(`All fields are required !! 🙂`, {
         position: toast.POSITION.TOP_CENTER,
       });
       return;
     }
-    console.log(data);
+    // console.log(data);
     setLoading(true);
     try {
       const res = await fetch(`${endPoint}/api/auth/register`, {
@@ -70,38 +70,42 @@ const Register = () => {
   else {
     return (
       <>
-        <div class="mt-10 flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div class="border card-auth p-10 w-full max-w-md space-y-8">
+        <div className="mt-10 flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="border card-auth p-10 w-full max-w-md space-y-8">
             <div>
-              <img class="mx-auto h-12 w-auto" src={logo} alt="Your Company" />
-              <h5 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
+              <img
+                className="mx-auto h-12 w-auto"
+                src={logo}
+                alt="Your Company"
+              />
+              <h5 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
                 Sign up to your account
               </h5>
-              <p class="mt-2 text-center text-xl text-gray-600">
+              <p className="mt-2 text-center text-xl text-gray-600">
                 Enter Your Details
               </p>
             </div>
-            <form class="mt-8 space-y-6">
+            <form className="mt-8 space-y-6">
               <input type="hidden" name="remember" value="true" />
-              <div class="-space-y-px rounded-md shadow-sm">
+              <div className="-space-y-px rounded-md shadow-sm">
                 <div>
                   <div>
-                    <label for="password" class="sr-only">
+                    <label htmlFor="password" className="sr-only">
                       Full Name
                     </label>
                     <input
-                      id="password"
+                      id="name"
                       value={data.name}
                       onChange={handleChange}
                       name="name"
                       type="text"
-                      autocomplete="current-password"
+                      autoComplete="current-password"
                       required
-                      class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Full Name"
                     />
                   </div>
-                  <label for="email-address" class="sr-only">
+                  <label htmlFor="email-address" className="sr-only">
                     Email address
                   </label>
                   <input
@@ -110,14 +114,14 @@ const Register = () => {
                     onChange={handleChange}
                     value={data.email}
                     type="email"
-                    autocomplete="email"
+                    autoComplete="email"
                     required
-                    class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Email address"
                   />
                 </div>
                 <div>
-                  <label for="password" class="sr-only">
+                  <label htmlFor="password" className="sr-only">
                     Password
                   </label>
                   <input
@@ -126,9 +130,9 @@ const Register = () => {
                     onChange={handleChange}
                     name="password"
                     type="password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
                     required
-                    class="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="relative block w-full rounded-md border-0 py-2.5 px-4 my-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Password"
                   />
                 </div>
@@ -138,30 +142,30 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={submit}
-                  class="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg
-                      class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                      className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </span>
                   {loading ? <Loader /> : "Sign Up"}
                 </button>
               </div>
-              <div class="text-sm text-center">
+              <div className="text-sm text-center">
                 <Link
                   to="/login"
                   href="#"
-                  class="font-medium text-indigo-600 hover:text-indigo-500"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Already have an account? Log In
                 </Link>

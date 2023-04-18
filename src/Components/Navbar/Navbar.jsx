@@ -11,7 +11,7 @@ import SideMenu from "./SideMenu";
 const Navbar = () => {
   const dispatch = useDispatch();
   const Auth = useSelector((state) => state.auth);
-  console.log(Auth);
+  // console.log(Auth);
   const isAuthenticated = Auth.isAuthenticated;
   const [mode, setMode] = useState(false);
   const [toggleSideMenu, setToggleSideMenu] = useState(false);
@@ -39,7 +39,7 @@ const Navbar = () => {
   ]);
 
   const toggleFun = (eleme) => {
-    console.log(eleme);
+    // console.log(eleme);
     setToggleSideMenu(eleme);
   };
 
@@ -49,21 +49,21 @@ const Navbar = () => {
 
   return (
     <>
-      <nav class=" sticky z-30 top-0 bg-white border navbar">
-        <div class="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <nav className=" sticky z-30 top-0 bg-white border navbar">
+        <div className="mx-auto  max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="relative flex h-16 items-center justify-between">
+            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
                 type="button"
                 onClick={() => setToggleSideMenu(!toggleSideMenu)}
-                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
-                <span class="sr-only">Open main menu</span>
+                <span className="sr-only">Open main menu</span>
 
                 <svg
-                  class="block h-6 w-6"
+                  className="block h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
@@ -78,7 +78,7 @@ const Navbar = () => {
                 </svg>
 
                 <svg
-                  class="hidden h-6 w-6"
+                  className="hidden h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
@@ -97,23 +97,23 @@ const Navbar = () => {
               toggleSideMenu={toggleSideMenu}
               toggle={(eleme) => toggleFun(eleme)}
             />
-            <div class="flex align-middle flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div class="flex flex-shrink-0 items-center">
+            <div className="flex align-middle flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex flex-shrink-0 items-center">
                 <Link className="flex" to="/">
-                  <a class=" logo-design">Blogxer</a>
+                  <a className=" logo-design">Blogxer</a>
                 </Link>
-                <div class="hidden md:flex  justify-center">
-                  <div class="mx-4 xl:w-90">
-                    <div class="relative flex w-full flex-wrap items-stretch">
+                <div className="hidden md:flex  justify-center">
+                  <div className="mx-4 xl:w-90">
+                    <div className="relative flex w-full flex-wrap items-stretch">
                       <input
                         type="search"
-                        class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
+                        className="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
                         placeholder="Search"
                         aria-label="Search"
                         aria-describedby="button-addon3"
                       />
                       <button
-                        class="relative z-[2] rounded-r border-2 border-blue-800 px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+                        className="relative z-[2] rounded-r border-2 border-blue-800 px-6 py-2 text-xs font-medium uppercase text-primary transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
                         type="button"
                         id="button-addon3"
                         data-te-ripple-init
@@ -125,10 +125,10 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {isAuthenticated && (
                 <Link to="/new-blog" className="hidden md:block px-2">
-                  <Button class="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
+                  <Button className="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
                     Create Blog
                   </Button>
                 </Link>
@@ -136,26 +136,26 @@ const Navbar = () => {
 
               {!isAuthenticated && (
                 <Link to="/login" className=" block px-2">
-                  <Button class="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
+                  <Button className="border text-blue-700 hover:bg-blue-700 hover:text-white border-blue-700">
                     Login
                   </Button>
                 </Link>
               )}
 
               {isAuthenticated && (
-                <div class="relative ml-3">
+                <div className="relative ml-3">
                   <div>
                     <button
                       type="button"
-                      class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       id="user-menu-button"
                       aria-expanded="false"
                       aria-haspopup="true"
                     >
-                      <span class="sr-only">Open user menu</span>
+                      <span className="sr-only">Open user menu</span>
                       <img
                         onClick={() => setMode(!mode)}
-                        class="h-8 w-8 rounded-full  object-contain"
+                        className="h-8 w-8 rounded-full  object-contain"
                         src={Auth.user?.profilePic}
                         alt=""
                       />
@@ -174,7 +174,7 @@ const Navbar = () => {
                     <Link
                       to="/profile"
                       onClick={setUserForProfile}
-                      class=" flex flex-col align-middle  hover:text-blue-500  justify-start pb-2 px-4    text-gray-700"
+                      className=" flex flex-col align-middle  hover:text-blue-500  justify-start pb-2 px-4    text-gray-700"
                     >
                       <span className="text-lg font-bold">
                         {Auth.user.name}
@@ -185,7 +185,7 @@ const Navbar = () => {
                       <Link
                         key={link.path}
                         to={link.path}
-                        class="flex align-middle hover:text-blue-500 justify-start  px-3 py-2 text-md text-gray-700"
+                        className="flex align-middle hover:text-blue-500 justify-start  px-3 py-2 text-md text-gray-700"
                         role="menuitem"
                         tabindex="-1"
                         id="user-menu-item-0"
@@ -204,7 +204,7 @@ const Navbar = () => {
                         });
                       }}
                       // href="#"
-                      class="flex cursor-pointer justify-start px-3 py-2 text-md text-gray-700"
+                      className="flex cursor-pointer justify-start px-3 py-2 text-md text-gray-700"
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-2"

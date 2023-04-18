@@ -9,7 +9,7 @@ const BookMark = () => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-5 h-5"
+        className="w-5 h-5"
       >
         <path
           stroke-linecap="round"

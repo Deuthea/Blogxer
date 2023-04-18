@@ -5,7 +5,7 @@ const Instagram = () => {
     <>
       {" "}
       <svg
-        class="h-5 fill-current text-gray-600 hover:text-green-700"
+        className="h-5 fill-current text-gray-600 hover:text-green-700"
         role="img"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

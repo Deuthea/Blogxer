@@ -10,6 +10,7 @@ import Like from "../Icons/Like";
 import Comment from "../Icons/Comment";
 import BookMark from "../Icons/BookMark";
 import Button from "../Button/Button";
+import UnLike from "../Icons/UnLike";
 
 const endPoint = api.endPoint;
 
@@ -20,7 +21,8 @@ const Blogs = () => {
   const avgWordsPM = 250;
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(0);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Blogs = () => {
       setLoading(true);
       const response = await fetch(`${endPoint}/api/blog/getAllBlogs`);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setState(data.Blogs);
       dispatch(getBlog(data.Blogs));
       setLoading(false);
@@ -44,7 +46,13 @@ const Blogs = () => {
   return (
     <div>
       {!loading && state?.length == 0 && (
-        <p className="text-center my-2 font-bold"> OOPs! No blogs Found</p>
+        <p className="text-center my-2 font-bold">
+          {" "}
+          OOPs! No blogs Found <br />{" "}
+          <Link to="/new-blog" className="text-blue-600 underline">
+            Create New Blog
+          </Link>
+        </p>
       )}
       {state?.length > 1 && (
         <span>
@@ -61,21 +69,21 @@ const Blogs = () => {
               <img
                 alt="Home"
                 src={blog?.imageUrl}
-                class="h-56 md:h-80 w-full    mr-5 rounded-md object-cover"
+                className="h-56 md:h-80 w-full    mr-5 rounded-md object-contain bg-gray-200"
               />
             )}
-
-            <div class="mt-2">
+            {/* {console.log(blog)} */}
+            <div className="mt-2">
               <dl>
                 <div className="flex align-m px-4 pt-4  mb-2">
                   <dd className="mr-1">
                     <img
-                      class="h-8 w-8 rounded-full  object-contain"
+                      className="h-8 w-8 rounded-full  object-contain"
                       src={blog?.postedBy.profilePic}
                       alt=""
                     />
                   </dd>
-                  <dd class="text-sm text-gray-500 ml-1 flex flex-col">
+                  <dd className="text-sm text-gray-500 ml-1 flex flex-col">
                     {" "}
                     <span className="font-bold text-black">
                       <Link
@@ -95,25 +103,36 @@ const Blogs = () => {
                 <Link
                   to={`/blog`}
                   onClick={() => dispatch(currentBlog(blog))}
-                  class="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
+                  className="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
                 >
                   <div>
-                    <dt class="sr-only">Title</dt>
+                    <dt className="sr-only">Title</dt>
 
-                    <dd class=" text-xl font-bold  mb-2 ml-2"> {blog.title}</dd>
-                    {/* <dd class=" text-sm  mb-2 ">
+                    <dd className=" text-xl font-bold  mb-2 ml-2 hover:underline">
+                      {" "}
+                      {blog.title}
+                    </dd>
+                    {/* <dd className=" text-sm  mb-2 ">
                         {blog?.tags?.map((tag) => (
                           <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
                             #{tag}
                           </span>
                         ))}
                       </dd> */}
-                    <dd class=" text-sm flex  justify-between mb-2">
+                    <dd className=" text-sm flex  justify-between mb-2">
                       <span className="flex flex-col md:flex-row align-middle">
                         {" "}
                         <span className="flex justify-between mr-2 hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
-                          {" "}
-                          <Like />{" "}
+                          {blog?.like?.includes(user?._id) ? (
+                            <button>
+                              {" "}
+                              <UnLike />
+                            </button>
+                          ) : (
+                            <button>
+                              <Like />
+                            </button>
+                          )}
                           <span className="mx-1">
                             {blog?.like?.length} Reactions
                           </span>
@@ -135,7 +154,7 @@ const Blogs = () => {
                         </span>
                         <span
                           className={`${
-                            blog?.postedBy?.readingList?.includes(blog._id) &&
+                            blog?.bookmarks?.includes(user._id) &&
                             "bg-gray-200 border  rounded-md border-gray-200"
                           } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
                         >
@@ -146,9 +165,9 @@ const Blogs = () => {
                   </div>
                 </Link>
                 <div>
-                  <dt class="sr-only">Date</dt>
+                  <dt className="sr-only">Date</dt>
 
-                  <dd class="text-sm text-gray-500"> </dd>
+                  <dd className="text-sm text-gray-500"> </dd>
                 </div>
               </dl>
             </div>

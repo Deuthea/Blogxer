@@ -16,7 +16,7 @@ export const RightSidebar = () => {
       </span>
       <div className=" flex p-2 bg-white flex-col my-2 ">
         {state?.map((item, i) => (
-          <Link className=" hover:underline hover:rounded-md p-2 hover:bg-gray-200  hover:text-blue-700">
+          <Link key={i} className=" hover:underline hover:rounded-md p-2 hover:bg-gray-200  hover:text-blue-700">
             Blog title {i + 1}
           </Link>
         ))}

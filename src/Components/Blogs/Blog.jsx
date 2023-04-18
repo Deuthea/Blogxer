@@ -25,6 +25,7 @@ import ToolTip from "../ToolTip/ToolTip";
 import moment from "moment";
 import UnLike from "../Icons/UnLike";
 import { addBlogToUser, updateUser } from "../../features/Auth/authSlice";
+import RemoveBookmark from "../Icons/RemoveBookmark";
 const endPointF = api.frontend;
 const endPoint = api.endPoint;
 
@@ -43,7 +44,7 @@ const Blog = () => {
   const [blogData, setBlogData] = useState(blog);
   const user = useSelector((state) => state.auth.user);
 
-  console.log(blogData);
+  // console.log(blogData);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -77,9 +78,9 @@ const Blog = () => {
       body: JSON.stringify(data1),
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     if (data.success == true) {
-      console.log("data.blog    " + data.blog1);
+      // console.log("data.blog    " + data.blog1);
       setBlogData(data.blog1);
       dispatch(addComment(data.blog1));
       toast.success("Comment Added 🚀🚀", {
@@ -119,11 +120,35 @@ const Blog = () => {
       body: JSON.stringify(data1),
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
+    // console.log("data     ddd " + JSON.stringify(data));
     if (data.success == true) {
       setBlogData(data.blog);
       console.log(data);
+      console.log(data.user);
+      dispatch(updateUser(data.user));
+      dispatch(addBookmark(data.blog));
+    }
+  };
+  const RemoveBookMarkBlog = async (e) => {
+    const data1 = { blogId: blogData?._id };
+    const response = await fetch(`${endPoint}/api/blog/bookmarkBlog`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer " + token,
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
+    const data = await response.json();
+    // console.log(data);
+
+    // console.log("data     ddd " + JSON.stringify(data));
+    if (data.success == true) {
+      setBlogData(data.blog);
+      // console.log(data);
+      // console.log(data.user);
       dispatch(updateUser(data.user));
       dispatch(addBookmark(data.blog));
     }
@@ -194,7 +219,7 @@ const Blog = () => {
     return (
       <>
         <Navbar page="blog" />
-        <div class="max-w-screen-xl flex mx-auto">
+        <div className="max-w-screen-xl flex mx-auto">
           <section className="  w-0 mx-2 mt-10 md:w-1/6 ">
             <div className="sticky top-20 flex  justify-end">
               <div className="flex flex-col mr-10">
@@ -221,14 +246,14 @@ const Blog = () => {
                 </span>
                 <span className="my-3 flex flex-col text-md">
                   <span>
-                    {console.log(
+                    {/* {console.log(
                       "user ki reading list" +
                         user?.readingList?.includes(blog?._id)
-                    )}
+                    )} */}
                     {user?.readingList?.includes(blog?._id) ? (
-                      <button onClick={UnLikeBlog}>
+                      <button onClick={RemoveBookMarkBlog}>
                         {" "}
-                        <UnLike />
+                        <RemoveBookmark />
                       </button>
                     ) : (
                       <button onClick={bookmarkBlog}>
@@ -241,14 +266,14 @@ const Blog = () => {
               </div>
             </div>
           </section>
-          <main class="mt-10 w-full mx-10 md:mx-5 md:w-3/6 bg-white shadow  ">
+          <main className="mt-10 w-full mx-10 md:mx-5 md:w-3/6 bg-white shadow  ">
             <div
-              class="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
+              className="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
               style={{ height: "24em" }}
             >
               {blog?.imageUrl && (
                 <div
-                  class="absolute  left-0 bottom-0 w-full h-full z-10"
+                  className="absolute  left-0 bottom-0 w-full h-full z-10"
                   style={{
                     backgroundImage:
                       "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
@@ -258,29 +283,29 @@ const Blog = () => {
               {blog?.imageUrl && (
                 <img
                   src={blog?.imageUrl}
-                  class="absolute left-0 top-0 w-full h-full z-0 object-contain"
+                  className="absolute left-0 top-0 w-full h-full z-0 object-contain"
                 />
               )}
-              <div class="p-4 absolute bottom-0 left-0 z-20">
+              <div className="p-4 absolute bottom-0 left-0 z-20">
                 {/* {blog.tags.map((item) => (
                   <a
                     href="#"
-                    class="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
+                    className="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
                   >
                     #{item}
                   </a>
                 ))} */}
-                <h2 class="text-4xl font-semibold text-gray-100 leading-tight">
+                <h2 className="text-4xl font-semibold text-gray-100 leading-tight">
                   {blogData.title}
                 </h2>
                 <div className="flex align-middle justify-between ">
-                  <div class="flex mt-3">
+                  <div className="flex mt-3">
                     <img
                       src="https://randomuser.me/api/portraits/men/97.jpg"
-                      class="h-10 w-10 rounded-full mr-2 object-cover"
+                      className="h-10 w-10 rounded-full mr-2 object-cover"
                     />
                     <div>
-                      <p class="font-semibold text-gray-200 text-sm">
+                      <p className="font-semibold text-gray-200 text-sm">
                         {" "}
                         <Link
                           className="hover:text-blue-600 hover:underline"
@@ -290,7 +315,7 @@ const Blog = () => {
                           {blogData.postedBy.name}
                         </Link>
                       </p>
-                      <p class="font-semibold text-gray-400 text-xs">
+                      <p className="font-semibold text-gray-400 text-xs">
                         {" "}
                         {new Date(blogData.createdAt).toDateString()} · {time}{" "}
                         min read
@@ -301,32 +326,32 @@ const Blog = () => {
               </div>
             </div>
             <div className="px-10">
-              <div class=" px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
-                <p class="pb-6">{ReactHtmlParser(blogData.content)}</p>
+              <div className=" px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+                <p className="pb-6">{ReactHtmlParser(blogData.content)}</p>
               </div>
             </div>
             <div className="px-10 ">
-              <div class="antialiased mx-auto max-w-screen-md">
-                <h3 class="mb-4 text-lg font-semibold text-gray-900">
+              <div className="antialiased mx-auto max-w-screen-md">
+                <h3 className="mb-4 text-lg font-semibold text-gray-900">
                   Comments
                 </h3>
 
-                <div class="space-y-4">
+                <div className="space-y-4">
                   {blogData?.comments?.map((comment) => (
-                    <div key={comment?._id} class="flex">
-                      <div class="flex-shrink-0 mr-3">
+                    <div key={comment?._id} className="flex">
+                      <div className="flex-shrink-0 mr-3">
                         <img
-                          class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                          className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
                           src={comment?.postedBy?.profilePic}
                           alt=""
                         />
                       </div>
-                      <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                      <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
                         <div className="flex justify-between">
                           <div>
                             {" "}
                             <strong>{comment?.postedBy?.name}</strong>{" "}
-                            <p class="text-sm">{comment?.content}</p>
+                            <p className="text-sm">{comment?.content}</p>
                           </div>
                           {state?._id == blogData?.postedBy?._id && (
                             <div>
@@ -340,7 +365,7 @@ const Blog = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="1.5"
                                   stroke="currentColor"
-                                  class="w-4 h-4"
+                                  className="w-4 h-4"
                                 >
                                   <path
                                     stroke-linecap="round"
@@ -363,7 +388,7 @@ const Blog = () => {
                     onChange={(e) => setComment(e.target.value)}
                     name="comment"
                     value={comment}
-                    class="block  outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border "
+                    className="block  outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border "
                     placeholder="Your message..."
                   ></textarea>
                   <div className="col-12 text-center">
@@ -380,31 +405,31 @@ const Blog = () => {
             </div>
           </main>
           <section className="mt-10 hidden md:block  w-0 ml-10   md:w-2/6">
-            <div class=" bg-gray-200   w-4/6 sticky top-20 flex flex-wrap items-center  justify-center  ">
-              <div class="container  bg-white  shadow-lg    transform   duration-200 easy-in-out">
-                <div class=" h-20 overflow-hidden">
+            <div className=" bg-gray-200   w-4/6 sticky top-20 flex flex-wrap items-center  justify-center  ">
+              <div className="container  bg-white  shadow-lg    transform   duration-200 easy-in-out">
+                <div className=" h-20 overflow-hidden">
                   <img
-                    class="w-full"
+                    className="w-full"
                     src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
                     alt=""
                   />
                 </div>
-                <div class="flex justify-center px-5  -mt-6">
+                <div className="flex justify-center px-5  -mt-6">
                   <img
-                    class="h-12 w-12 bg-white p-2 rounded-full   "
+                    className="h-12 w-12 bg-white p-2 rounded-full   "
                     src={blogData?.postedBy?.profilePic}
                     alt=""
                   />
                 </div>
-                <div class=" ">
-                  <div class="text-center px-10">
-                    <h2 class="text-gray-800 text-xl font-bold">
+                <div className=" ">
+                  <div className="text-center px-10">
+                    <h2 className="text-gray-800 text-xl font-bold">
                       <Link
                         to="/profile"
                         onClick={() =>
                           setUserForProfile(blogData?.postedBy?._id)
                         }
-                        class="  hover:text-blue-500 hover:underline text-gray-700"
+                        className="  hover:text-blue-500 hover:underline text-gray-700"
                       >
                         {" "}
                         {blogData?.postedBy?.name}
@@ -412,23 +437,25 @@ const Blog = () => {
                     </h2>
 
                     <br />
-                    <Button class="bg-blue-800 text-white my-0">Follow</Button>
-                    <p class="mt-2 text-gray-500 text-sm">
+                    <Button className="bg-blue-800 text-white my-0">
+                      Follow
+                    </Button>
+                    <p className="mt-2 text-gray-500 text-sm">
                       Lorem Ipsum is simply
                     </p>
                   </div>
-                  <hr class="mt-6" />
-                  <div class="flex  bg-gray-50 ">
-                    <div class="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
+                  <hr className="mt-6" />
+                  <div className="flex  bg-gray-50 ">
+                    <div className="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
                       <p>
-                        <span class="font-semibold">2.5 k </span> Followers
+                        <span className="font-semibold">2.5 k </span> Followers
                       </p>
                     </div>
-                    <div class="border"></div>
-                    <div class="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
+                    <div className="border"></div>
+                    <div className="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
                       <p>
                         {" "}
-                        <span class="font-semibold">2.0 k </span> Following
+                        <span className="font-semibold">2.0 k </span> Following
                       </p>
                     </div>
                   </div>

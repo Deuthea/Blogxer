@@ -24,14 +24,14 @@ function App() {
         <a onClick={() => setMode(!mode)}>
           {mode ? (
             <span
-              class="material-symbols-outlined p-2 bg-dark rounded-circle text-white"
+              className="material-symbols-outlined p-2 bg-dark rounded-circle text-white"
               style={{ fontSize: "36px" }}
             >
               dark_mode
             </span>
           ) : (
             <span
-              class="material-symbols-outlined p-2 bg-white rounded-circle text-dark"
+              className="material-symbols-outlined p-2 bg-white rounded-circle text-dark"
               style={{ fontSize: "36px" }}
             >
               dark_mode
