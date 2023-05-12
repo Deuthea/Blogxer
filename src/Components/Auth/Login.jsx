@@ -14,6 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const state = useSelector((state) => state.auth.isAuthenticated);
   const [data, setData] = useState({ email: "", password: "" });
+
   const submit = async (e) => {
     e.preventDefault();
     if (data.email === "" || data.password === "") {
@@ -24,7 +25,6 @@ const Login = () => {
     }
     setLoading(true);
 
-    // console.log(data);
     const res = await fetch(`${endPoint}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -32,8 +32,8 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     });
-    // console.log(res);
     const resP = await res.json();
+    console.log(resP);
     if (resP.success === true) {
       toast.success("Login Successfully 🔥", {
         position: toast.POSITION.TOP_CENTER,
@@ -45,7 +45,7 @@ const Login = () => {
       });
     }
     setLoading(false);
-    // console.log(resP);
+    
   };
 
   const handleChange = (e) => {
@@ -60,7 +60,11 @@ const Login = () => {
         <div className="mt-10 flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="border card-auth p-10 w-full max-w-md space-y-8">
             <div>
-              <img className="mx-auto h-12 w-auto" src={logo} alt="Your Company" /> 
+              <img
+                className="mx-auto h-12 w-auto"
+                src={logo}
+                alt="Your Company"
+              />
               <h5 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
                 Log in to your account
               </h5>

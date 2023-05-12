@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addUserData } from "../../features/Auth/authSlice";
+import { addUserData, getUserReadingList } from "../../features/Auth/authSlice";
 import Navbar from "../Navbar/Navbar";
 import { Navigate, Link } from "react-router-dom";
 import { api } from "../../config.js";
@@ -19,23 +19,45 @@ const endPoint = api.endPoint;
 
 const Bookmarks = () => {
   const dispatch = useDispatch();
+  const [readingList, setReadingList] = useState([]);
   const token = localStorage.getItem("token");
-  const Auth = useSelector((state) => state.auth);
+
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState(Auth?.user);
+  const AuthState = useSelector((state) => state.auth);
+  // const [userData, setUserData] = useState(AuthState?.user);
 
-  // console.log(userData);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const res = await fetch(
+        `${endPoint}/api/auth/getUserReadingList/${AuthState?.user?._id}`,
+        {
+          headers: {
+            authorization: "Bearer " + token,
+            "content-Type": "application/json",
+          },
+        }
+      );
+      const response = await res.json();
+      console.log(response);
+      if (response.success == true) {
+        setReadingList(response.blogs);
+        dispatch(getUserReadingList(response.blogs));
+        setLoading(false);
+      }
+      setLoading(false);
+    })();
+  }, []);
 
-  // console.log(userData);
   const avgWordsPM = 250;
 
-  if (!Auth.isAuthenticated) return <Navigate to="/login" replace />;
+  if (!AuthState.isAuthenticated) return <Navigate to="/login" replace />;
   else {
     return (
       <div className="">
         <Navbar />
         <div className="w-3/6 mx-auto">
-          {!loading && userData?.readingList?.length == 0 && (
+          {!loading && readingList?.length == 0 && (
             <p className="text-center my-5 font-bold">
               {" "}
               OOPs! No Bookmarkeds blogs Found <br />{" "}
@@ -46,7 +68,7 @@ const Bookmarks = () => {
             </p>
           )}
           {!loading ? (
-            userData?.readingList?.map((blog) => (
+            readingList?.map((blog) => (
               <div
                 key={blog._id}
                 className="shadow mb-3 mt-2 bg-white border-bottom"
@@ -118,7 +140,9 @@ const Bookmarks = () => {
                             </span>
                             <span
                               className={`${
-                                blog?.postedBy?.readingList?.includes(blog._id) &&
+                                blog?.postedBy?.readingList?.includes(
+                                  blog._id
+                                ) &&
                                 "bg-gray-200 border  rounded-md border-gray-200"
                               } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
                             >

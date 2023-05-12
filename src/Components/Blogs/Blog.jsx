@@ -240,7 +240,9 @@ const Blog = () => {
                 </span>
                 <span className="my-3 flex flex-col    text-md">
                   <span>
-                    <Comment />
+                    <a href="#comments" className="scroll-smooth">
+                      <Comment />
+                    </a>
                   </span>
                   <span className="mx-auto">{blog?.comments?.length}</span>
                 </span>
@@ -267,72 +269,60 @@ const Blog = () => {
             </div>
           </section>
           <main className="mt-10 w-full mx-10 md:mx-5 md:w-3/6 bg-white shadow  ">
-            <div
-              className="mb-4 md:mb-0  w-full max-w-screen-md mx-auto relative"
-              style={{ height: "24em" }}
-            >
-              {blog?.imageUrl && (
-                <div
-                  className="absolute  left-0 bottom-0 w-full h-full z-10"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(180deg,transparent,rgba(0,0,0,.7))",
-                  }}
-                ></div>
-              )}
-              {blog?.imageUrl && (
-                <img
-                  src={blog?.imageUrl}
-                  className="absolute left-0 top-0 w-full h-full z-0 object-contain"
-                />
-              )}
-              <div className="p-4 absolute bottom-0 left-0 z-20">
-                {/* {blog.tags.map((item) => (
-                  <a
-                    href="#"
-                    className="px-4 py-1 mr-2 rounded-full bg-black text-gray-200 inline-flex items-center justify-center mb-2"
-                  >
-                    #{item}
-                  </a>
-                ))} */}
-                <h2 className="text-4xl font-semibold text-gray-100 leading-tight">
-                  {blogData.title}
-                </h2>
-                <div className="flex align-middle justify-between ">
-                  <div className="flex mt-3">
-                    <img
-                      src="https://randomuser.me/api/portraits/men/97.jpg"
-                      className="h-10 w-10 rounded-full mr-2 object-cover"
-                    />
-                    <div>
-                      <p className="font-semibold text-gray-200 text-sm">
-                        {" "}
-                        <Link
-                          className="hover:text-blue-600 hover:underline"
-                          to="/profile"
-                          onClick={() => setUserForProfile(blog?.postedBy?._id)}
-                        >
-                          {blogData.postedBy.name}
-                        </Link>
-                      </p>
-                      <p className="font-semibold text-gray-400 text-xs">
-                        {" "}
-                        {new Date(blogData.createdAt).toDateString()} · {time}{" "}
-                        min read
-                      </p>
+            <div>
+              <>
+                <div className="p-4  bottom-0 z-20">
+                  <div className="flex align-middle justify-between ">
+                    <div className="flex mt-3">
+                      <img
+                        src={blog?.postedBy?.profilePic}
+                        className="h-10 w-10 rounded-full mr-2 object-contain bg-gray-800"
+                      />
+                      <div>
+                        <p className="font-semibold text-black text-sm">
+                          {" "}
+                          <Link
+                            className="hover:text-blue-600 hover:underline"
+                            to="/profile"
+                            onClick={() =>
+                              setUserForProfile(blog?.postedBy?._id)
+                            }
+                          >
+                            {blogData.postedBy.name}
+                          </Link>
+                        </p>
+                        <p className="font-semibold text-gray-400 text-xs">
+                          {" "}
+                          {new Date(blogData.createdAt).toDateString()} · {time}{" "}
+                          min read
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <p className="text-2xl mt-3  text-black leding-tight">
+                    {blogData.title}
+                  </p>
                 </div>
-              </div>
+
+                {blog?.imageUrl && (
+                  <img
+                    src={blog?.imageUrl}
+                    className=" w-full h-full z-0 object-contain"
+                  />
+                )}
+              </>
             </div>
             <div className="px-10">
-              <div className=" px-4 lg:px-0 mt-12 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
+              <div className=" px-4 lg:px-0 mt-3 text-justify text-gray-700 max-w-screen-md mx-auto text-lg leading-relaxed">
                 <p className="pb-6">{ReactHtmlParser(blogData.content)}</p>
               </div>
             </div>
             <div className="px-10 ">
               <div className="antialiased mx-auto max-w-screen-md">
-                <h3 className="mb-4 text-lg font-semibold text-gray-900">
+                <h3
+                  id="comments"
+                  className="mb-4 text-lg font-semibold text-gray-900"
+                >
                   Comments
                 </h3>
 
@@ -350,7 +340,15 @@ const Blog = () => {
                         <div className="flex justify-between">
                           <div>
                             {" "}
-                            <strong>{comment?.postedBy?.name}</strong>{" "}
+                            <Link
+                              className="hover:text-blue-600 hover:underline"
+                              to="/profile"
+                              onClick={() =>
+                                setUserForProfile(comment?.postedBy?._id)
+                              }
+                            >
+                              <strong>{comment?.postedBy?.name}</strong>{" "}
+                            </Link>
                             <p className="text-sm">{comment?.content}</p>
                           </div>
                           {state?._id == blogData?.postedBy?._id && (
