@@ -43,8 +43,10 @@ const Blog = () => {
   const blog = useSelector((state) => state.blog.currentBlog);
   const [blogData, setBlogData] = useState(blog);
   const user = useSelector((state) => state.auth.user);
-
+  const [userBookmarked, setUserBookmarked] = useState();
   // console.log(blogData);
+
+  console.log(user);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -53,6 +55,8 @@ const Blog = () => {
     const res = Math.ceil(data.length / avgWordsPM);
     setTime(res);
     setBlogData(blog);
+    const result = user?.readingList?.includes(blog?._id);
+    setUserBookmarked(result);
   }, [blogData, blog]);
 
   useEffect(() => {
@@ -120,9 +124,7 @@ const Blog = () => {
       body: JSON.stringify(data1),
     });
     const data = await response.json();
-    // console.log(data);
 
-    // console.log("data     ddd " + JSON.stringify(data));
     if (data.success == true) {
       setBlogData(data.blog);
       console.log(data);
@@ -142,13 +144,10 @@ const Blog = () => {
       body: JSON.stringify(data1),
     });
     const data = await response.json();
-    // console.log(data);
 
-    // console.log("data     ddd " + JSON.stringify(data));
     if (data.success == true) {
       setBlogData(data.blog);
-      // console.log(data);
-      // console.log(data.user);
+
       dispatch(updateUser(data.user));
       dispatch(addBookmark(data.blog));
     }
@@ -209,7 +208,7 @@ const Blog = () => {
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
   };
-
+  console.log("user reading,list", user.readingList);
   const setUserForProfile = (id) => {
     localStorage.setItem("userForProfile", id);
   };
@@ -248,11 +247,7 @@ const Blog = () => {
                 </span>
                 <span className="my-3 flex flex-col text-md">
                   <span>
-                    {/* {console.log(
-                      "user ki reading list" +
-                        user?.readingList?.includes(blog?._id)
-                    )} */}
-                    {user?.readingList?.includes(blog?._id) ? (
+                    {userBookmarked ? (
                       <button onClick={RemoveBookMarkBlog}>
                         {" "}
                         <RemoveBookmark />
@@ -260,6 +255,7 @@ const Blog = () => {
                     ) : (
                       <button onClick={bookmarkBlog}>
                         <BookMark />
+                        {/* <RemoveBookmark /> */}
                       </button>
                     )}
                   </span>

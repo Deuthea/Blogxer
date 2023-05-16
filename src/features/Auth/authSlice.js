@@ -61,6 +61,7 @@ export const {
   registerUser,
   logout,
   updateUser,
+
   addBlogToUser,
 } = authSlice.actions;
 

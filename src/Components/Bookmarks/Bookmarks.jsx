@@ -49,6 +49,10 @@ const Bookmarks = () => {
     })();
   }, []);
 
+  const setUserForProfile = (id) => {
+    localStorage.setItem("userForProfile", id);
+  };
+
   const avgWordsPM = 250;
 
   if (!AuthState.isAuthenticated) return <Navigate to="/login" replace />;
@@ -73,11 +77,7 @@ const Bookmarks = () => {
                 key={blog._id}
                 className="shadow mb-3 mt-2 bg-white border-bottom"
               >
-                <Link
-                  to={`/blog`}
-                  onClick={() => dispatch(currentBlog(blog))}
-                  className="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100"
-                >
+                <a className="mb-10 block    rounded-lg p-4  shadow-3xl  shadow-gray-100">
                   <div className="mt-2">
                     <dl>
                       <div className="flex align-m  mb-2">
@@ -91,7 +91,15 @@ const Bookmarks = () => {
                         <dd className="text-sm text-gray-500 ml-1 flex flex-col">
                           {" "}
                           <span className="font-bold text-black">
-                            {blog?.postedBy?.name}
+                            <Link
+                              className="hover:text-blue-600 hover:underline"
+                              to="/profile"
+                              onClick={() =>
+                                setUserForProfile(blog?.postedBy?._id)
+                              }
+                            >
+                              {blog.postedBy.name}
+                            </Link>
                           </span>{" "}
                           <span>
                             {new Date(blog?.createdAt).toDateString()}{" "}
@@ -102,17 +110,17 @@ const Bookmarks = () => {
                       <div>
                         <dt className="sr-only">Title</dt>
 
-                        <dd className=" text-xl font-bold  mb-2 ml-2">
+                        <Link
+                          to={`/blog`}
+                          onClick={() => dispatch(currentBlog(blog))}
+                        >
                           {" "}
-                          {blog?.title}
-                        </dd>
-                        {/* <dd className=" text-sm  mb-2 ">
-                        {blog?.tags?.map((tag) => (
-                          <span className=" hover:bg-gray-100 hover:rounded-md px-2  py-1 border border-white hover:border hover:border-gray-200">
-                            #{tag}
-                          </span>
-                        ))}
-                      </dd> */}
+                          <dd className=" text-xl font-bold  mb-2 ml-2">
+                            {" "}
+                            {blog?.title}
+                          </dd>
+                        </Link>
+
                         <dd className=" text-sm flex  justify-between mb-2">
                           <span className="flex flex-col md:flex-row align-middle">
                             {" "}
@@ -138,16 +146,6 @@ const Bookmarks = () => {
                               )}{" "}
                               min read
                             </span>
-                            <span
-                              className={`${
-                                blog?.postedBy?.readingList?.includes(
-                                  blog._id
-                                ) &&
-                                "bg-gray-200 border  rounded-md border-gray-200"
-                              } hover:bg-gray-100 hover:rounded-md   py-1 px-1 border border-white hover:border hover:border-gray-200`}
-                            >
-                              <BookMark />
-                            </span>
                           </span>
                         </dd>
                       </div>
@@ -158,7 +156,7 @@ const Bookmarks = () => {
                       </div>
                     </dl>
                   </div>
-                </Link>
+                </a>
               </div>
             ))
           ) : (
