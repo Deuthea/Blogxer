@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, Link } from "react-router-dom";
 import { api } from "../../config.js";
-import { currentBlog, getBlog } from "../../features/blog/blogSlice";
-import { getUser } from "../../features/Auth/authSlice.js";
+import { currentBlog } from "../../features/blog/blogSlice";
 import Navbar from "../Navbar/Navbar";
 import Loader from "../Loader/Loader";
 import moment from "moment/moment";
 import Like from "../Icons/Like";
 import Comment from "../Icons/Comment";
-import BookMark from "../Icons/BookMark";
-import Button from "../Button/Button";
 
 const endPoint = api.endPoint;
 
@@ -23,33 +20,31 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [blogs, setBlogs] = useState([]);
   const userId = localStorage.getItem("userForProfile");
-  // console.log(user);
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => myFun(), 1000);
-  }, []);
 
-  const myFun = async () => {
-    const userData = await fetch(
-      `${endPoint}/api/auth/getUserProfile/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: "Bearer " + token,
-          "content-Type": "application/json",
-        },
-      }
-    );
-    const resp = await userData.json();
-    // console.log(resp);
-    setUser(resp.user);
-    setBlogs(resp.blogs);
-    setLoading(false);
-  };
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const userData = await fetch(
+        `${endPoint}/api/auth/getUserProfile/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: "Bearer " + token,
+            "content-Type": "application/json",
+          },
+        }
+      );
+      const resp = await userData.json();
+      setUser(resp.user);
+       
+      setBlogs(resp.blogs);
+      setLoading(false);
+    })();
+  }, []);
 
   const deleteBlog = async (id) => {
     setLoading(true);
-
     const deletedBlog = await fetch(`${endPoint}/api/blog/deleteBlog/${id}`, {
       method: "DELETE",
       headers: {
@@ -58,20 +53,15 @@ const Profile = () => {
       },
     });
     const resp = await deletedBlog.json();
-    if (resp.success == true) {
-      // console.log(resp);
+    if (resp.success === true) {
       const blogs1 = blogs;
-      // console.log(blogs1);
-      // console.log(blogs1[0]._id == id);
-      const res = blogs1.filter((blog) => blog._id != id);
+      const res = blogs1.filter((blog) => blog._id !== id);
       setBlogs(res);
       setLoading(false);
     }
 
     setLoading(false);
   };
-
-  // console.log(blogs);
 
   if (!Auth.isAuthenticated) return <Navigate to="/login" replace />;
   else {
@@ -134,6 +124,7 @@ const Profile = () => {
                       className="link"
                       href={`${user?.coding?.leetcode}`}
                       target="_blank"
+                      rel="noreferrer"
                       data-tippy-content="@github_handle"
                     >
                       <svg
@@ -150,6 +141,7 @@ const Profile = () => {
                       className="link"
                       href={`${user?.social?.instagram}`}
                       target="_blank"
+                      rel="noreferrer"
                       data-tippy-content="@instagram_handle"
                     >
                       <svg
@@ -166,6 +158,7 @@ const Profile = () => {
                       className="link"
                       href={`${user?.social?.facebook}`}
                       target="_blank"
+                      rel="noreferrer"
                       data-tippy-content="@facebook_handle"
                     >
                       <svg
@@ -182,6 +175,7 @@ const Profile = () => {
                       className="link"
                       href={`${user?.social?.twitter}`}
                       target="_blank"
+                      rel="noreferrer"
                       data-tippy-content="@twitter_handle"
                     >
                       <svg
@@ -198,6 +192,7 @@ const Profile = () => {
                       className="link"
                       href={`${user?.social?.linkedin}`}
                       target="_blank"
+                      rel="noreferrer"
                       data-tippy-content="@twitter_handle"
                     >
                       <svg
@@ -222,7 +217,7 @@ const Profile = () => {
             />
           </div> */}
             </div>
-            {blogs.length > 0 && (
+            {blogs?.length > 0 && (
               <div className="w-5/6 mb-5 md:my-5 md:w-5/6 lg:w-3/6 mx-auto">
                 <h3 className="font-bold text-xl md:text-2xl text-center">
                   User Blogs
@@ -258,7 +253,7 @@ const Profile = () => {
                               </div>
                               <div>
                                 {" "}
-                                {Auth?.user?._id == user?._id && (
+                                {Auth?.user?._id === user?._id && (
                                   <span>
                                     <div className="justify-end mx-2">
                                       <button
@@ -325,7 +320,7 @@ const Profile = () => {
                                     {" "}
                                     <span className="mr-3 pt-1">
                                       {Math.ceil(
-                                        blog?.content.split(" ").length /
+                                        blog?.content?.split(" ")?.length /
                                           avgWordsPM
                                       )}{" "}
                                       min read

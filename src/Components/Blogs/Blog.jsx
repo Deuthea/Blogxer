@@ -64,7 +64,7 @@ const Blog = () => {
   }, []);
 
   const addComment1 = async (e) => {
-    if (comment == "")
+    if (comment === "")
       return toast.error("Please enter some text in comment box!", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -83,7 +83,7 @@ const Blog = () => {
     });
     const data = await response.json();
     // console.log(data);
-    if (data.success == true) {
+    if (data.success === true) {
       // console.log("data.blog    " + data.blog1);
       setBlogData(data.blog1);
       dispatch(addComment(data.blog1));
@@ -125,7 +125,7 @@ const Blog = () => {
     });
     const data = await response.json();
 
-    if (data.success == true) {
+    if (data.success === true) {
       setBlogData(data.blog);
       console.log(data);
       console.log(data.user);
@@ -145,7 +145,7 @@ const Blog = () => {
     });
     const data = await response.json();
 
-    if (data.success == true) {
+    if (data.success === true) {
       setBlogData(data.blog);
 
       dispatch(updateUser(data.user));
@@ -165,7 +165,7 @@ const Blog = () => {
     });
     const data = await response.json();
 
-    if (data.success == true) {
+    if (data.success === true) {
       setBlogData(data.blog);
       dispatch(addUnlike(data.blog));
     }
@@ -185,7 +185,7 @@ const Blog = () => {
         }
       );
       const data = await res.json();
-      if (data.success == true) {
+      if (data.success === true) {
         dispatch(deleteCommentRed(data.blog));
         setBlogData(data.blog);
         toast.warn("Comment Deleted 🚀🚀", {
@@ -347,7 +347,7 @@ const Blog = () => {
                             </Link>
                             <p className="text-sm">{comment?.content}</p>
                           </div>
-                          {state?._id == blogData?.postedBy?._id && (
+                          {state?._id === blogData?.postedBy?._id && (
                             <div>
                               <button
                                 onClick={(e) => deleteComment(e, comment?._id)}

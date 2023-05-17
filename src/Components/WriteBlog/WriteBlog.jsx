@@ -10,7 +10,6 @@ import Loader from "../Loader/Loader";
 import { addBlog } from "../../features/blog/blogSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 
-
 const endPoint = api.endPoint;
 
 let data;
@@ -20,25 +19,24 @@ const WriteBlog = () => {
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
   const token = localStorage.getItem("token");
-  const [tagValue, setTagValue] = useState("");
+  // const [tagValue, setTagValue] = useState("");
   const [blog, setBlog] = useState({
     title: "",
     content: "",
     imageUrl: "",
     tags: [],
   });
-  const [tagCount, setTagCount] = useState(0);
+  // const [tagCount, setTagCount] = useState(0);
 
-  const addTags = (e) => {
-    if (e.keyCode === 13 && tagValue) {
-      const data = { ...blog };
-      blog.tags.push(tagValue);
-      setBlog(data);
-      setTagValue("");
-      setTagCount(tagCount + 1);
-    }
-    // console.log(blog);
-  };
+  // const addTags = (e) => {
+  //   if (e.keyCode === 13 && tagValue) {
+  //     const data = { ...blog };
+  //     blog.tags.push(tagValue);
+  //     setBlog(data);
+  //     setTagValue("");
+  //     setTagCount(tagCount + 1);
+  //   }
+  // };
 
   const handleImageUpload = async (e, files) => {
     setLoading1(true);
@@ -65,7 +63,7 @@ const WriteBlog = () => {
     if (e.keyCode === 13) {
       return e.preventDefault();
     }
-    // console.log(blog);
+
     setLoading(true);
     if (blog.title === "" || blog.content === "") {
       toast.error("All fields are required", {
@@ -99,13 +97,13 @@ const WriteBlog = () => {
     setLoading(false);
   };
 
-  const removeTag = (e, item) => {
-    // console.log(item);
-    const blog1 = { ...blog };
-    blog1.tags = blog1.tags.filter((tag) => tag !== item);
-    setBlog(blog1);
-    setTagCount(tagCount - 1);
-  };
+  // const removeTag = (e, item) => {
+
+  //   const blog1 = { ...blog };
+  //   blog1.tags = blog1.tags.filter((tag) => tag !== item);
+  //   setBlog(blog1);
+  //   setTagCount(tagCount - 1);
+  // };
 
   if (!token) {
     return <Navigate to="/login" replace />;
@@ -123,6 +121,7 @@ const WriteBlog = () => {
                     <img
                       src={blog?.imageUrl}
                       id="image"
+                      alt="blog_image"
                       className="object-contain w-full h-40 rounded-full"
                     />
                   </div>

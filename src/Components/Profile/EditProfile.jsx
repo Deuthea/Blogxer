@@ -77,7 +77,7 @@ const EditProfile = () => {
     });
     const resP = await res.json();
     // console.log(resP);
-    if (resP.success == true) {
+    if (resP.success === true) {
       toast.success(`${resP.message}`, {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -122,7 +122,7 @@ const EditProfile = () => {
               <hr />
             </div>
             <form className="mt-8 space-y-6">
-              {pageNumber == 1 && (
+              {pageNumber === 1 && (
                 <div className="mb-5 text-center">
                   <div className="mx-auto w-32 h-32 mb-2 border rounded-full relative bg-gray-100 mb-4 shadow-inset">
                     <img
@@ -162,7 +162,7 @@ const EditProfile = () => {
                 </div>
               )}
 
-              {pageNumber == 2 && (
+              {pageNumber === 2 && (
                 <div className="-space-y-px rounded-md shadow-sm">
                   <div>
                     <div>
@@ -228,7 +228,7 @@ const EditProfile = () => {
                 </div>
               )}
 
-              {pageNumber == 3 && (
+              {pageNumber === 3 && (
                 <div className="-space-y-px rounded-md shadow-sm">
                   <h2 className="text-center font-bold underline">
                     Social Links

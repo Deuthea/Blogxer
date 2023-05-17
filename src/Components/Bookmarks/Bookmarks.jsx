@@ -40,7 +40,7 @@ const Bookmarks = () => {
       );
       const response = await res.json();
       console.log(response);
-      if (response.success == true) {
+      if (response.success === true) {
         setReadingList(response.blogs);
         dispatch(getUserReadingList(response.blogs));
         setLoading(false);
@@ -61,7 +61,7 @@ const Bookmarks = () => {
       <div className="">
         <Navbar />
         <div className="w-3/6 mx-auto">
-          {!loading && readingList?.length == 0 && (
+          {!loading && readingList?.length === 0 && (
             <p className="text-center my-5 font-bold">
               {" "}
               OOPs! No Bookmarkeds blogs Found <br />{" "}

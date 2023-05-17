@@ -45,7 +45,7 @@ const Blogs = () => {
 
   return (
     <div>
-      {!loading && state?.length == 0 && (
+      {!loading && state?.length === 0 && (
         <p className="text-center my-2 font-bold">
           {" "}
           OOPs! No blogs Found <br />{" "}
