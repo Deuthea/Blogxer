@@ -11,6 +11,8 @@ import About from "../About/About";
 import EditProfile from "../Profile/EditProfile";
 import Bookmarks from "../Bookmarks/Bookmarks";
 import Tags from "../Tags/Tags";
+import Faq from "../Faq/Faq";
+import Contact from "../Contact/Contact";
 
 const PrimaryRoutes = () => {
   return (
@@ -25,6 +27,9 @@ const PrimaryRoutes = () => {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="/tags" element={<Tags />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </div>

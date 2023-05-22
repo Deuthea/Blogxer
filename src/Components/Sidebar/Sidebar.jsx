@@ -14,7 +14,7 @@ export const Sidebar = () => {
     { path: "/faq", content: "💡 FAQ" },
     { path: "/about", content: "📍 About" },
     { path: "/contact", content: "📞 Contact" },
-    { path: "/guides", content: "📑 Guides" },
+    // { path: "/guides", content: "📑 Guides" },
   ]);
   return (
     <div className="sticky top-20">
