@@ -439,20 +439,7 @@ const Blog = () => {
                     </p>
                   </div>
                   <hr className="mt-6" />
-                  <div className="flex  bg-gray-50 ">
-                    <div className="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
-                      <p>
-                        <span className="font-semibold">2.5 k </span> Followers
-                      </p>
-                    </div>
-                    <div className="border"></div>
-                    <div className="text-center w-1/2 p-4 text-sm hover:bg-gray-100 cursor-pointer">
-                      <p>
-                        {" "}
-                        <span className="font-semibold">2.0 k </span> Following
-                      </p>
-                    </div>
-                  </div>
+                 
                 </div>
               </div>
             </div>

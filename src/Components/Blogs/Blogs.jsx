@@ -54,11 +54,11 @@ const Blogs = () => {
           </Link>
         </p>
       )}
-      {state?.length > 1 && (
+      {/* {state?.length > 1 && (
         <span>
           <Button>Latest</Button> <Button>Top</Button>{" "}
         </span>
-      )}
+      )} */}
       {!loading ? (
         state?.map((blog) => (
           <div

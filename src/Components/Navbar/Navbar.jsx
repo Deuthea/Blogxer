@@ -102,7 +102,7 @@ const Navbar = () => {
                 <Link className="flex" to="/">
                   <a className=" logo-design">Blogxer</a>
                 </Link>
-                <div className="hidden md:flex  justify-center">
+                {/* <div className="hidden md:flex  justify-center">
                   <div className="mx-4 xl:w-90">
                     <div className="relative flex w-full flex-wrap items-stretch">
                       <input
@@ -122,7 +122,7 @@ const Navbar = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
